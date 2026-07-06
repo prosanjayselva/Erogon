@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Donor {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  phone     String
+  amount    Float
+  message   String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("donors")
+}
+
+model Event {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  eventDate   DateTime @map("event_date")
+  banner      String?
+  status      String   @default("UPCOMING") // UPCOMING | COMPLETED | CANCELLED
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("events")
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  message   String
+  type      String   // EVENT_REMINDER | ACTIVITY_LOG
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("notifications")
+}
+
+model ActivityLog {
+  id        Int      @id @default(autoincrement())
+  action    String
+  details   String?
+  adminId   Int
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("activity_logs")
+}
