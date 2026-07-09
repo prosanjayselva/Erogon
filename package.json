@@ -1,0 +1,16 @@
+{
+  "name": "ergon-foundation-platform",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "apps/web",
+    "apps/api"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev --workspace @ergon/web",
+    "dev:api": "npm run start:dev --workspace @ergon/api",
+    "build": "npm run build --workspace @ergon/web && npm run build --workspace @ergon/api",
+    "typecheck": "npm run typecheck --workspace @ergon/web && npm run typecheck --workspace @ergon/api"
+  }
+}
+

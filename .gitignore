@@ -1,1 +1,8 @@
 drive-download-20260630T100938Z-3-001.zip
+node_modules/
+dist/
+build/
+.vite/
+.turbo/
+.DS_Store
+coverage/
