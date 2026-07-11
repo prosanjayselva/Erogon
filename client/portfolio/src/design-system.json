@@ -1,0 +1,247 @@
+{
+  "project": {
+    "name": "ERGON Foundation",
+    "tagline": "Rooted in Good Deeds",
+    "type": "NGO / Charitable Trust Portfolio",
+    "framework": "React 19",
+    "styling": "Custom CSS with CSS Custom Properties",
+    "animation": "Framer Motion + Lenis",
+    "routing": "React Router v7"
+  },
+
+  "designSystem": {
+    "colors": {
+      "forest950": "#0F241A",
+      "forest900": "#163A29",
+      "forest800": "#1B4332",
+      "forest700": "#235C42",
+      "forest600": "#2D6A4F",
+      "sage500": "#7A9E7E",
+      "sage300": "#B7CBB4",
+      "gold600": "#B8860B",
+      "gold400": "#D8B03C",
+      "cream50": "#FBF8F1",
+      "cream100": "#F4EFE2",
+      "cream200": "#ECE4D0",
+      "ink900": "#1B221C",
+      "ink700": "#3E4A40",
+      "ink500": "#6B786D",
+      "white": "#FFFFFF",
+      "usage": {
+        "forest800": "primary brand — headings, primary buttons, icons",
+        "gold600": "reserved for donation CTAs and emotional accent moments",
+        "cream50": "page background (warmer than pure white)",
+        "cream100": "alternate section background",
+        "forest950": "dark sections — footer, impact band, mobile menu"
+      }
+    },
+    "gradients": {
+      "primary": "linear-gradient(135deg, var(--forest-800), var(--forest-600))",
+      "gold": "linear-gradient(135deg, var(--gold-600), var(--gold-400))",
+      "hero": "linear-gradient(155deg, var(--forest-800) 0%, var(--forest-600) 40%, var(--cream-50) 100%)",
+      "dark": "linear-gradient(135deg, var(--forest-950), var(--forest-800))"
+    },
+    "borderRadius": {
+      "small": "10px",
+      "medium": "20px",
+      "large": "32px",
+      "pill": "999px"
+    },
+    "shadows": {
+      "soft": "0 4px 24px rgba(27,67,50,0.08)",
+      "card": "0 8px 40px rgba(27,67,50,0.10)",
+      "lift": "0 24px 60px rgba(27,67,50,0.18)"
+    },
+    "typography": {
+      "heading": {
+        "family": "Fraunces",
+        "weight": 500,
+        "letterSpacing": "-0.01em",
+        "lineHeight": 1.08
+      },
+      "body": {
+        "family": "Manrope",
+        "weight": 400,
+        "lineHeight": 1.6
+      },
+      "scale": {
+        "h1": "clamp(2.8rem, 5.6vw, 4.4rem)",
+        "h2": "clamp(1.9rem, 3.4vw, 2.6rem)",
+        "h3": "clamp(1.5rem, 2.4vw, 2rem)",
+        "h4": "clamp(1.15rem, 1.6vw, 1.35rem)",
+        "body": "1rem",
+        "small": "0.78rem",
+        "eyebrow": "0.75rem, 700, uppercase, 0.14em spacing"
+      }
+    },
+    "layout": {
+      "maxWidth": "1280px",
+      "padding": "clamp(20px, 5vw, 64px)",
+      "navbarHeight": "84px",
+      "sectionPadding": "clamp(80px, 10vw, 140px)"
+    }
+  },
+
+  "navbar": {
+    "type": "Floating Glass Pill",
+    "position": "fixed",
+    "top": "20px",
+    "left": "50%",
+    "transform": "translateX(-50%)",
+    "width": "min(92vw, 1280px)",
+    "height": "84px",
+    "borderRadius": "999px",
+    "background": "rgba(255, 255, 255, 0.65)",
+    "backdropFilter": "blur(18px) saturate(1.4)",
+    "border": "1px solid rgba(27, 67, 50, 0.08)",
+    "scrollEffect": {
+      "after": "24px",
+      "background": "rgba(255, 255, 255, 0.88)",
+      "boxShadow": "0 14px 44px rgba(27,67,50,0.12)"
+    },
+    "links": [
+      "Home", "About", "Our Causes", "EduSPro",
+      "Projects", "Reports", "Gallery", "Get Involved", "Contact"
+    ],
+    "cta": {
+      "title": "Donate Now",
+      "style": "forest green gradient",
+      "animation": "magnetic hover"
+    },
+    "mobile": {
+      "breakpoint": "1100px",
+      "background": "#0F241A",
+      "animation": "fadeIn + slide nav items"
+    }
+  },
+
+  "animations": {
+    "scroll": {
+      "library": "Lenis",
+      "smooth": true,
+      "duration": 1.15,
+      "easing": "t => Math.min(1, 1.001 - Math.pow(2, -10 * t))"
+    },
+    "reveal": {
+      "variants": {
+        "up": { "hidden": { "opacity": 0, "y": 48 }, "show": { "opacity": 1, "y": 0 } },
+        "fade": { "hidden": { "opacity": 0 }, "show": { "opacity": 1 } },
+        "left": { "hidden": { "opacity": 0, "x": -56 }, "show": { "opacity": 1, "x": 0 } },
+        "right": { "hidden": { "opacity": 0, "x": 56 }, "show": { "opacity": 1, "x": 0 } },
+        "scale": { "hidden": { "opacity": 0, "scale": 0.92 }, "show": { "opacity": 1, "scale": 1 } }
+      },
+      "defaultDuration": 0.8,
+      "defaultEasing": [0.16, 1, 0.3, 1],
+      "staggerGap": 0.12,
+      "viewportMargin": "-60px"
+    },
+    "wordReveal": {
+      "type": "word by word",
+      "hidden": { "opacity": 0, "y": 50, "rotateX": -60 },
+      "visible": { "opacity": 1, "y": 0, "rotateX": 0 },
+      "staggerDelay": 0.07,
+      "startDelay": 0.3
+    },
+    "counter": {
+      "type": "spring animated",
+      "stiffness": 60,
+      "damping": 15,
+      "duration": 2.5
+    },
+    "cursorFollower": {
+      "enabled": true,
+      "dotSize": "10px",
+      "dotColor": "var(--forest-800)",
+      "mixBlendMode": "difference",
+      "hoverSize": "48px",
+      "hoverColor": "var(--gold-600)",
+      "hoverOpacity": 0.25
+    },
+    "magneticButtons": {
+      "enabled": true,
+      "strength": 0.35
+    },
+    "cardHover": {
+      "lift": "-6px",
+      "shadowTo": "var(--shadow-lg)",
+      "duration": "0.45s"
+    }
+  },
+
+  "homePage": {
+    "hero": {
+      "layout": "Split 60/40",
+      "headline": "Together We Build Hope.",
+      "buttons": ["Donate Now", "Explore Our Work"],
+      "floatingCards": [],
+      "signatureElement": "RootLine ambient background"
+    },
+    "trustSection": {
+      "title": "Why Thousands Trust ERGON Foundation",
+      "layout": "4 Premium Cards",
+      "items": [
+        { "title": "Verified NGO", "icon": "ShieldCheck", "desc": "Registered charitable trust with full transparency." },
+        { "title": "Transparent Reports", "icon": "DocReceipt", "desc": "Detailed impact reports for every project." },
+        { "title": "Direct Impact", "icon": "HeartHands", "desc": "100% of donations reach the cause." },
+        { "title": "Community Driven", "icon": "UsersGroup", "desc": "Built by volunteers, for communities." }
+      ]
+    },
+    "impactCounter": {
+      "background": "var(--forest-950)",
+      "items": [
+        { "label": "Lives Changed", "value": 25000, "icon": "HeartHands" },
+        { "label": "Children Educated", "value": 1800, "icon": "GraduationCap" },
+        { "label": "Trees Planted", "value": 15000, "icon": "Leaf" },
+        { "label": "Meals Served", "value": 100000, "icon": "HomeVillage" }
+      ]
+    },
+    "featuredCauses": {
+      "layout": "Premium Glass Cards with Colored Border",
+      "items": [
+        { "title": "Education For Every Child", "desc": "Supporting 1,800+ children with scholarships.", "color": "#1B4332" },
+        { "title": "Accessible Healthcare", "desc": "Free medical camps reaching 6,200+ people.", "color": "#2D6A4F" },
+        { "title": "Protect Our Planet", "desc": "15,000+ trees planted, beach clean-ups.", "color": "#B8860B" },
+        { "title": "Care For Every Animal", "desc": "Rescue and rehabilitation across Tamil Nadu.", "color": "#235C42" }
+      ]
+    },
+    "cta": {
+      "title": "One Small Donation Can Change A Life.",
+      "button": "Donate Today",
+      "animation": "Glow Pulse (4s infinite)"
+    }
+  },
+
+  "aboutPage": {
+    "sections": ["PageHero", "Founder message", "Mission/Vision split", "6 core values grid", "4-step timeline", "3 pillars", "Governing body + staff", "Partners/donors"]
+  },
+
+  "causesPage": {
+    "layout": "Alternating Story Sections with RootLine dividers",
+    "pillars": ["People", "Pets", "Planet"]
+  },
+
+  "globalEffects": {
+    "buttons": {
+      "hover": "translateY(-2px) + shadow increase",
+      "click": "scale(0.97)",
+      "transition": "0.4s cubic-bezier(0.16, 1, 0.3, 1)"
+    },
+    "cards": {
+      "hover": "translateY(-6px) + shadow-lg",
+      "transition": "0.45s cubic-bezier(0.16, 1, 0.3, 1)"
+    },
+    "images": {
+      "hover": "scale(1.05) - 0.7s"
+    },
+    "links": {
+      "underlineAnimation": "center expand",
+      "transition": "0.35s cubic-bezier(0.16, 1, 0.3, 1)"
+    }
+  },
+
+  "footer": {
+    "background": "#0a1f17",
+    "columns": ["Brand + Socials", "Quick Links", "Explore", "Contact"],
+    "newsletter": true
+  }
+}

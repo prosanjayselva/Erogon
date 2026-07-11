@@ -1,0 +1,218 @@
+import Reveal, { Stagger, StaggerItem } from "../components/Reveal.jsx";
+import RootLine from "../components/RootLine.jsx";
+import PhotoFrame from "../components/PhotoFrame.jsx";
+import { motion } from "framer-motion";
+import { PHOTOS } from "../data/photos.js";
+import { ChevronRightIcon, PeopleIcon, PawIcon, LeafIcon, HeartIcon, UsersGroupIcon, ArrowRightIcon, HeartHandsIcon, GlobeIcon } from "../components/Icons.jsx";
+import { PILLARS, GOVERNING_BODY, STAFF, PARTNERS, DONORS } from "../data/content.js";
+import { NavLink } from "react-router-dom";
+
+const PILLAR_ICON = { people: PeopleIcon, pets: PawIcon, planet: LeafIcon };
+
+const CORE_VALUES = ["Compassion", "Integrity", "Transparency", "Empowerment", "Sustainability", "Community"];
+
+const JOURNEY = [
+  { year: "2024", title: "Foundation Established", desc: "ERGON Foundation was registered as a charitable trust." },
+  { year: "2025", title: "First Education Program", desc: "Launched EduSPro initiative supporting children's education." },
+  { year: "2026", title: "Medical Outreach", desc: "Free medical camp for migrant workers in Avadi, Chennai." },
+  { year: "2026", title: "Environmental Campaign", desc: "Tree plantation and beach clean-up drives across Tamil Nadu." },
+];
+
+export default function AboutPage() {
+  return (
+    <>
+      <section className="editorial-hero">
+        <div className="editorial-hero__inner">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+            <span className="editorial-hero__eyebrow">Who We Are</span>
+            <h1 className="editorial-hero__title">Compassion Creates Lasting Change.</h1>
+            <p className="editorial-hero__sub">Ergon Foundation exists to empower communities through education, healthcare, environmental sustainability and social responsibility.</p>
+            <div className="editorial-hero__divider" />
+            <div className="hero__cta" style={{ justifyContent: "center" }}>
+              <NavLink to="#pillars" className="btn btn--outline">Our Pillars</NavLink>
+              <NavLink to="/get-involved" className="btn btn--primary">Get Involved</NavLink>
+            </div>
+          </motion.div>
+        </div>
+        <motion.img
+          className="editorial-hero__image"
+              src={PHOTOS.aiHero1}
+          alt="ERGON Foundation team planting trees"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        />
+      </section>
+
+      <section className="section" style={{ background: "linear-gradient(180deg, var(--secondary), var(--background))" }}>
+        <div className="container--narrow" style={{ textAlign: "center" }}>
+          <Reveal as="up">
+            <div className="eyebrow" style={{ justifyContent: "center" }}>A Message From Our Founder</div>
+            <h2 className="h-lg">Building A Better Tomorrow, <span className="text-gold">Together</span></h2>
+            <p className="lede mx-auto mt-24" style={{ fontSize: "1.1rem", maxWidth: 600 }}>
+              "ERGON Foundation was born from a simple belief — that every act of kindness, no matter how small,
+              creates ripples that transform lives. We are committed to transparency, compassion, and measurable
+              impact in everything we do."
+            </p>
+            <div className="mt-24" style={{ fontFamily: "var(--font-heading)", fontStyle: "italic", color: "var(--gold)", fontSize: "1.1rem" }}>
+              — Mr. S. S. Antony Joseph, Founder &amp; Chairman
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <Reveal as="up" className="text-center" style={{ maxWidth: 600, marginInline: "auto" }}>
+            <div className="eyebrow" style={{ justifyContent: "center" }}>Our Purpose</div>
+            <h2 className="h-lg">What Drives Us Every Day</h2>
+          </Reveal>
+          <div className="grid-2 mt-48" style={{ gap: 32 }}>
+            <Reveal as="left">
+              <motion.div className="glass-card" style={{ padding: "44px 36px", textAlign: "center" }} whileHover={{ y: -6, boxShadow: "var(--shadow-lg)" }}>
+                <HeartHandsIcon style={{ width: 52, height: 52, color: "var(--primary)", marginBottom: 20 }} />
+                <h3 className="h-md">Our Mission</h3>
+                <p className="lede mx-auto mt-16">Transform lives through education, health, environment and sustainable community development.</p>
+              </motion.div>
+            </Reveal>
+            <Reveal as="right" delay={0.1}>
+              <motion.div className="glass-card" style={{ padding: "44px 36px", textAlign: "center" }} whileHover={{ y: -6, boxShadow: "var(--shadow-lg)" }}>
+                <GlobeIcon style={{ width: 52, height: 52, color: "var(--primary)", marginBottom: 20 }} />
+                <h3 className="h-md">Our Vision</h3>
+                <p className="lede mx-auto mt-16">A world where every individual has equal opportunities to thrive with dignity.</p>
+              </motion.div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{ background: "var(--secondary)" }}>
+        <div className="container">
+          <Reveal as="up" className="text-center" style={{ maxWidth: 600, marginInline: "auto" }}>
+            <div className="eyebrow" style={{ justifyContent: "center" }}>Our Values</div>
+            <h2 className="h-lg">The Principles That Guide Us</h2>
+          </Reveal>
+          <Stagger className="grid-6 mt-48" gap={0.1}>
+            {CORE_VALUES.map((v, i) => (
+              <StaggerItem key={i}>
+                <motion.div className="glass-card" style={{ padding: "28px 16px", textAlign: "center" }} whileHover={{ y: -4, scale: 1.02 }}>
+                  <div className="icon-badge mx-auto" style={{ marginBottom: 12, width: 48, height: 48 }}><HeartIcon /></div>
+                  <h4 style={{ fontFamily: "var(--font-heading)", fontSize: "1rem" }}>{v}</h4>
+                </motion.div>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <Reveal as="up" className="text-center" style={{ maxWidth: 600, marginInline: "auto" }}>
+            <div className="eyebrow" style={{ justifyContent: "center" }}>Our Journey</div>
+            <h2 className="h-lg">How We Started And Where We're Going</h2>
+          </Reveal>
+          <div className="mt-48" style={{ maxWidth: 600, marginInline: "auto" }}>
+            <div className="timeline">
+              {JOURNEY.map((j, i) => (
+                <Reveal as="left" delay={i * 0.1} key={i}>
+                  <div className="timeline-item">
+                    <span className="yr">{j.year}</span>
+                    <h4 className="h-sm" style={{ marginTop: 4 }}>{j.title}</h4>
+                    <p style={{ color: "var(--text-secondary)", fontSize: "0.92rem", marginTop: 4 }}>{j.desc}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{ background: "var(--secondary)" }}>
+        <div className="container">
+          <Reveal as="up" className="text-center" style={{ maxWidth: 600, marginInline: "auto" }}>
+            <div className="eyebrow" style={{ justifyContent: "center" }}>Our Key Activities</div>
+            <h2 className="h-lg">Three Roots, One Purpose</h2>
+          </Reveal>
+          <div className="root-line-wrap mt-32"><RootLine /></div>
+          <Stagger className="grid-3 mt-32">
+            {PILLARS.map((p) => {
+              const Icon = PILLAR_ICON[p.key];
+              return (
+                <StaggerItem key={p.key}>
+                  <div className="card">
+                    <div className="icon-badge"><Icon /></div>
+                    <h3 className="h-sm">{p.title}</h3>
+                    <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginTop: 6 }}>{p.desc}</p>
+                    <ul className="card-list">
+                      {p.points.map((pt, i) => (
+                        <li key={i}><HeartIcon /> {pt}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </StaggerItem>
+              );
+            })}
+          </Stagger>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <Reveal as="up" className="text-center" style={{ maxWidth: 600, marginInline: "auto" }}>
+            <div className="eyebrow" style={{ justifyContent: "center" }}>ERGON Team</div>
+            <h2 className="h-lg">The People Behind The Roots</h2>
+          </Reveal>
+          <div className="mt-48">
+            <Reveal as="up"><h3 className="h-sm mb-16">Governing Body</h3></Reveal>
+            <Stagger className="grid-3">
+              {GOVERNING_BODY.map((m, i) => (
+                <StaggerItem key={i}>
+                  <div className="card" style={{ textAlign: "center" }}>
+                    <div className="testi-avatar mx-auto" style={{ marginBottom: 14 }}><UsersGroupIcon /></div>
+                    <h4 className="h-sm">{m.name}</h4>
+                    <span className="pill mt-8" style={{ display: "inline-block" }}>{m.role}</span>
+                  </div>
+                </StaggerItem>
+              ))}
+            </Stagger>
+          </div>
+          <div className="mt-48">
+            <Reveal as="up"><h3 className="h-sm mb-16">ERGON Staff</h3></Reveal>
+            <Stagger className="grid-3">
+              {STAFF.map((m, i) => (
+                <StaggerItem key={i}>
+                  <div className="card" style={{ textAlign: "center" }}>
+                    <div className="testi-avatar mx-auto" style={{ marginBottom: 14 }}><UsersGroupIcon /></div>
+                    <h4 className="h-sm">{m.name}</h4>
+                    <span className="pill mt-8" style={{ display: "inline-block" }}>{m.role}</span>
+                  </div>
+                </StaggerItem>
+              ))}
+            </Stagger>
+          </div>
+        </div>
+      </section>
+
+      <section className="section section--sm" style={{ background: "var(--secondary)" }}>
+        <div className="container grid-2">
+          <Reveal as="left">
+            <h3 className="h-sm mb-16">Our Partners</h3>
+            <div className="card">
+              {PARTNERS.map((p, i) => (
+                <div key={i} className="flex gap-12" style={{ padding: "10px 0" }}><HeartIcon style={{ color: "var(--primary)", width: 18, height: 18 }} /> <span>{p}</span></div>
+              ))}
+            </div>
+          </Reveal>
+          <Reveal as="right" delay={0.1}>
+            <h3 className="h-sm mb-16">Our Donors</h3>
+            <div className="card">
+              {DONORS.map((p, i) => (
+                <div key={i} className="flex gap-12" style={{ padding: "10px 0" }}><HeartIcon style={{ color: "var(--primary)", width: 18, height: 18 }} /> <span>{p}</span></div>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+    </>
+  );
+}

@@ -1,0 +1,482 @@
+import { useEffect, useRef, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { motion, useInView } from "framer-motion";
+import Reveal, { Stagger, StaggerItem } from "../components/Reveal.jsx";
+import RootLine from "../components/RootLine.jsx";
+import PhotoFrame from "../components/PhotoFrame.jsx";
+import {
+  PeopleIcon, PawIcon, LeafIcon, HeartHandsIcon, GraduationCapIcon, HomeVillageIcon,
+  UsersGroupIcon, HeartIcon, ArrowRightIcon, PlayIcon, QuoteIcon, ShieldCheckIcon,
+  LockIcon, DocReceiptIcon, BellIcon, PinIcon, DonateHeartIcon, VolunteerIcon, TargetIcon,
+  SparkleIcon, BriefcaseIcon,
+} from "../components/Icons.jsx";
+import { STATS, PROJECTS, TESTIMONIALS, PARTNERS, DONORS } from "../data/content.js";
+import { PHOTOS } from "../data/photos.js";
+import {
+  PeopleIllustration, PetsIllustration, PlanetIllustration,
+  CommunityIllustration, VolunteersIllustration, DonateIllustration,
+} from "../components/ActivityIllustrations.jsx";
+
+const KEY_ACTIVITIES = [
+  { icon: PeopleIllustration, title: "People", desc: "Education, women's livelihood, healthcare & careers." },
+  { icon: PetsIllustration, title: "Pets", desc: "Rescue and welfare for animals in need." },
+  { icon: PlanetIllustration, title: "Planet", desc: "Environmental protection & sustainability." },
+  { icon: CommunityIllustration, title: "Community", desc: "Stronger communities through participation." },
+  { icon: VolunteersIllustration, title: "Volunteers", desc: "Be the reason someone smiles today." },
+  { icon: DonateIllustration, title: "Donate", desc: "Your small contribution, big change." },
+];
+
+const TRUST_ITEMS = [
+  { icon: ShieldCheckIcon, title: "Verified NGO", desc: "Registered charitable trust with full transparency." },
+  { icon: DocReceiptIcon, title: "Transparent Reports", desc: "Detailed impact reports for every project." },
+  { icon: HeartHandsIcon, title: "Direct Impact", desc: "100% of donations reach the cause." },
+  { icon: UsersGroupIcon, title: "Community Driven", desc: "Built by volunteers, for communities." },
+];
+
+const IMPACT_STATS = [
+  { icon: HeartHandsIcon, num: 25000, label: "Lives Changed", suffix: "+" },
+  { icon: GraduationCapIcon, num: 1800, label: "Children Educated", suffix: "+" },
+  { icon: LeafIcon, num: 15000, label: "Trees Planted", suffix: "+" },
+  { icon: HomeVillageIcon, num: 100000, label: "Meals Served", suffix: "+" },
+];
+
+const CAUSES_FEATURED = [
+  { title: "Education For Every Child", desc: "Supporting 1,800+ children with scholarships, digital learning and skill development.", icon: GraduationCapIcon, theme: "#1B4332" },
+  { title: "Accessible Healthcare", desc: "Free medical camps reaching 6,200+ people in underserved communities.", icon: HeartHandsIcon, theme: "#2D6A4F" },
+  { title: "Protect Our Planet", desc: "15,000+ trees planted, beach clean-ups and environmental awareness.", icon: LeafIcon, theme: "#B8860B" },
+  { title: "Care For Every Animal", desc: "Rescue and rehabilitation for animals in need across Tamil Nadu.", icon: PawIcon, theme: "#2F855A" },
+];
+
+function AnimatedCounter({ value, suffix = "" }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const [display, setDisplay] = useState(0);
+
+  useEffect(() => {
+    if (!isInView) return;
+    let raf;
+    const startTime = performance.now();
+    const duration = 2000;
+
+    function update(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setDisplay(Math.round(eased * value));
+      if (progress < 1) raf = requestAnimationFrame(update);
+    }
+
+    raf = requestAnimationFrame(update);
+    return () => cancelAnimationFrame(raf);
+  }, [isInView, value]);
+
+  return (
+    <span ref={ref}>
+      <span>{display}</span>{suffix}
+    </span>
+  );
+}
+
+const wordReveal = {
+  hidden: { opacity: 0, y: 50, rotateX: -60 },
+  visible: (i) => ({
+    opacity: 1, y: 0, rotateX: 0,
+    transition: { delay: 0.3 + i * 0.07, duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
+
+function WordReveal({ text, style = {} }) {
+  const words = text.split(" ");
+  return (
+    <h1 style={{ display: "flex", flexWrap: "wrap", gap: "0.15em", ...style }} aria-label={text}>
+      {words.map((w, i) => (
+        <motion.span
+          key={i}
+          custom={i}
+          variants={wordReveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          style={{ display: "inline-block", perspective: 600 }}
+        >
+          {w}
+        </motion.span>
+      ))}
+    </h1>
+  );
+}
+
+function money(n) {
+  return "₹" + n.toLocaleString("en-IN");
+}
+
+export default function HomePage() {
+  return (
+    <>
+      {/* ================================ HERO ================================ */}
+      <section className="page-hero-split">
+        <div className="page-hero-split__inner">
+          <div className="page-hero-split__content">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <div className="home-hero__tag"><span className="dot" /> Registered Charitable Trust · Tamil Nadu</div>
+            </motion.div>
+
+            <WordReveal text="Together We Build Hope." style={{ color: "#fff" }} />
+
+            <motion.p
+              className="home-hero__sub"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            >
+              Every donation creates a better tomorrow for children, families, animals and nature.
+            </motion.p>
+
+            <motion.p
+              className="home-hero__lede"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            >
+              ERGON Foundation is a registered charitable trust dedicated to innovation for the welfare of
+              people, animals and the environment. Together, we can build a kinder, stronger and sustainable world.
+            </motion.p>
+
+            <motion.div
+              className="page-hero-split__ctas"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <NavLink to="/donate" className="btn btn--primary">Donate Now <DonateHeartIcon /></NavLink>
+              <NavLink to="/about" className="btn btn--outline">Explore Our Work <ArrowRightIcon /></NavLink>
+            </motion.div>
+          </div>
+
+          <motion.div
+            className="page-hero-split__media"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <img src={PHOTOS.aiHeroGirlDog} alt="A young girl warmly hugging her golden retriever puppy" />
+            <div className="page-hero-split__media-overlay" />
+            <motion.div
+              className="home-hero__badge"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.3, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <PlayIcon />
+              <div>
+                <b>Watch Our Story</b>
+                <span>See how we create impact</span>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        <div className="hero-stats-bar">
+          <div className="container">
+            <div className="hero-stats-bar__grid" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
+              {IMPACT_STATS.map((s, i) => (
+                <div key={i} className="hero-stats-bar__item">
+                  <span className="hero-stats-bar__num">
+                    <AnimatedCounter value={s.num} suffix={s.suffix} />
+                  </span>
+                  <span className="hero-stats-bar__label">{s.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================ TRUST SECTION ============================ */}
+      <section className="section" style={{ background: "var(--secondary)" }}>
+        <div className="container">
+          <Reveal as="up" style={{ textAlign: "center", maxWidth: 600, marginInline: "auto" }}>
+            <div className="eyebrow" style={{ justifyContent: "center" }}>Why Trust Us</div>
+            <h2 className="h-lg">Why Thousands Trust <span className="text-gold">Ergon Foundation</span></h2>
+          </Reveal>
+          <Stagger className="trust-grid mt-48" gap={0.15}>
+            {TRUST_ITEMS.map((t, i) => (
+              <StaggerItem key={i}>
+                <div className="trust-card">
+                  <t.icon />
+                  <b>{t.title}</b>
+                  <span>{t.desc}</span>
+                </div>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        </div>
+      </section>
+
+      {/* ============================ ABOUT TEASER ============================ */}
+      <section className="section">
+        <div className="container grid-2">
+          <Reveal as="left">
+            <div style={{ position: "relative" }}>
+              <PhotoFrame src={PHOTOS.ramanathapuramGroup} alt="ERGON Foundation team" ratio="1/1" tone="photo-frame--sage" />
+            </div>
+          </Reveal>
+          <Reveal as="right" delay={0.1}>
+            <div className="eyebrow">About Us</div>
+            <h2 className="h-lg">We Exist To Make A <span className="text-gold">Difference</span></h2>
+            <p className="lede mt-16">
+              ERGON Foundation works for the upliftment of communities, animals and the environment.
+              We believe small actions today create a better tomorrow — for Tamil Nadu, and for India.
+            </p>
+            <ul className="card-list mt-24">
+              <li><HeartIcon /> Transparency in all our actions</li>
+              <li><HeartIcon /> 100% donation reaches the cause</li>
+              <li><HeartIcon /> Dedicated team, real, measured impact</li>
+            </ul>
+            <NavLink to="/about" className="btn btn--primary mt-32">Read More About Us <ArrowRightIcon /></NavLink>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============================ QUOTE BAND ============================ */}
+      <section className="section section--sm" style={{ background: "var(--secondary)" }}>
+        <div className="container grid-2">
+          <Reveal as="up">
+            <RootLine />
+          </Reveal>
+          <Reveal as="scale" delay={0.1}>
+            <div className="quote-card">
+              <QuoteIcon />
+              <blockquote>"The best way to find yourself is to lose yourself in the service of others."</blockquote>
+              <cite>— Mahatma Gandhi</cite>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============================ KEY ACTIVITIES ============================ */}
+      <section className="section">
+        <div className="container">
+          <Reveal as="up" style={{ textAlign: "center", maxWidth: 600, marginInline: "auto" }}>
+            <div className="eyebrow" style={{ justifyContent: "center" }}>What We Do</div>
+            <h2 className="h-lg">Our Key Activities</h2>
+          </Reveal>
+          <Stagger className="grid-6 mt-48">
+            {KEY_ACTIVITIES.map((a, i) => (
+              <StaggerItem key={i}>
+                <div className="card activity-card">
+                  <a.icon className="activity-ill" />
+                  <h4 className="h-sm">{a.title}</h4>
+                  <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", marginTop: 6 }}>{a.desc}</p>
+                </div>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        </div>
+      </section>
+
+      {/* ============================ IMPACT COUNTER ============================ */}
+      <section className="container" style={{ marginBlock: "clamp(40px, 6vw, 72px)" }}>
+        <Reveal as="scale">
+          <div className="impact-band">
+            <div className="impact-band__inner">
+              <div className="impact-band__title">
+                <div className="eyebrow">Our Impact</div>
+                <h3 className="h-md" style={{ color: "white" }}>Making A Difference Together</h3>
+                <NavLink to="/reports" className="btn btn--gold btn--sm mt-16">See Our Reports <ArrowRightIcon /></NavLink>
+              </div>
+              <div className="impact-band__stats">
+                {IMPACT_STATS.map((s, i) => (
+                  <div className="impact-stat" key={i}>
+                    <s.icon />
+                    <div className="impact-stat__num">
+                      <AnimatedCounter value={s.num} suffix={s.suffix} />
+                    </div>
+                    <div className="impact-stat__label">{s.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* ============================ FEATURED CAUSES ============================ */}
+      <section className="section" style={{ background: "var(--secondary)" }}>
+        <div className="container">
+          <Reveal as="up" style={{ textAlign: "center" }}>
+            <div className="eyebrow" style={{ justifyContent: "center" }}>Our Causes</div>
+            <h2 className="h-lg">Every Cause Begins With <span className="text-gold">Hope</span></h2>
+            <p className="lede mx-auto mt-16" style={{ maxWidth: 600 }}>Your support creates measurable impact in real lives across education, healthcare, environment and animal welfare.</p>
+          </Reveal>
+
+          <div className="mt-48" style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+            {CAUSES_FEATURED.map((cause, i) => (
+              <Reveal as="up" delay={i * 0.1} key={i}>
+                <motion.div
+                  className="glass-card"
+                  style={{
+                    padding: "24px 28px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 24,
+                    flexWrap: "wrap",
+                    borderLeft: `4px solid ${cause.theme}`,
+                  }}
+                  whileHover={{ x: 6, transition: { duration: 0.3 } }}
+                >
+                  <div className="icon-badge" style={{ marginBottom: 0, flex: "none", width: 60, height: 60, background: cause.theme + "18", color: cause.theme }}>
+                    <cause.icon />
+                  </div>
+                  <div style={{ flex: 1, minWidth: 200 }}>
+                    <h3 className="h-sm" style={{ color: cause.theme }}>{cause.title}</h3>
+                    <p className="lede" style={{ fontSize: "0.95rem", marginTop: 4 }}>{cause.desc}</p>
+                  </div>
+                  <NavLink to="/causes" className="btn btn--ghost btn--sm" style={{ flex: "none" }}>Learn More <ArrowRightIcon /></NavLink>
+                </motion.div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================ FEATURED PROJECTS ============================ */}
+      <section className="section">
+        <div className="container">
+          <Reveal as="up" className="flex-between" style={{ flexWrap: "wrap", gap: 16 }}>
+            <div>
+              <div className="eyebrow">Featured Projects</div>
+              <h2 className="h-lg">Where Your Support Goes</h2>
+            </div>
+            <NavLink to="/projects" className="link-arrow">View All Projects <ArrowRightIcon /></NavLink>
+          </Reveal>
+
+          <Stagger className="grid-4 mt-48">
+            {PROJECTS.map((p, i) => {
+              const pct = Math.round((p.raised / p.goal) * 100);
+              return (
+                <StaggerItem key={i}>
+                  <div className="project-card">
+                    <PhotoFrame
+                      src={p.photo ? PHOTOS[p.photo] : undefined}
+                      alt={p.title}
+                      icon={[LeafIcon, LeafIcon, GraduationCapIcon, PawIcon][i]}
+                      tone={p.tone}
+                      ratio="4/3"
+                    />
+                    <div className="project-card__body">
+                      <h4 className="h-sm">{p.title}</h4>
+                      <div className="project-card__loc"><PinIcon /> {p.loc}</div>
+                      <div className="progress"><div className="progress__bar" style={{ width: pct + "%" }} /></div>
+                      <div className="progress__meta"><span><b>{money(p.raised)}</b> raised of {money(p.goal)}</span><span>{pct}%</span></div>
+                      <NavLink to="/donate" className="btn btn--ghost btn--sm btn--block mt-16">Support Project <DonateHeartIcon /></NavLink>
+                    </div>
+                  </div>
+                </StaggerItem>
+              );
+            })}
+          </Stagger>
+        </div>
+      </section>
+
+      {/* ============================ COMMUNITY MOMENTS ============================ */}
+      <section className="section">
+        <div className="container">
+          <Reveal as="up" style={{ textAlign: "center" }}>
+            <div className="eyebrow" style={{ justifyContent: "center" }}>Community Moments</div>
+            <h2 className="h-lg">Snapshots From The <span className="text-gold">Field</span></h2>
+            <p className="lede mx-auto mt-16" style={{ maxWidth: 540 }}>Real moments from our environment and community programmes across Tamil Nadu.</p>
+          </Reveal>
+          <Stagger className="grid-4 mt-48">
+            {[
+              { src: PHOTOS.ramanathapuramThumbprint, alt: "Environmental pledge commitment", ratio: "4/3" },
+              { src: PHOTOS.yercaudPledge, alt: "Taking the environmental pledge at Yercaud", ratio: "4/3" },
+              { src: PHOTOS.yercaudDance, alt: "Climate dance challenge with children", ratio: "4/3" },
+              { src: PHOTOS.yercaudActivity, alt: "Community activity at Yercaud", ratio: "4/3" },
+            ].map((img, i) => (
+              <StaggerItem key={i}>
+                <PhotoFrame src={img.src} alt={img.alt} ratio={img.ratio} />
+              </StaggerItem>
+            ))}
+          </Stagger>
+          <Reveal as="up" className="text-center mt-32">
+            <NavLink to="/gallery" className="btn btn--ghost">View Full Gallery <ArrowRightIcon /></NavLink>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============================ STORIES ============================ */}
+      <section className="section">
+        <div className="container">
+          <Reveal as="up" style={{ textAlign: "center" }}>
+            <div className="eyebrow" style={{ justifyContent: "center" }}>Stories of Hope</div>
+            <h2 className="h-lg">Voices From The <span className="text-gold">Ground</span></h2>
+          </Reveal>
+
+          <Stagger className="grid-3 mt-48">
+            {TESTIMONIALS.map((t, i) => (
+              <StaggerItem key={i}>
+                <div className="card testi-card">
+                  <div className="testi-avatar"><HeartHandsIcon /></div>
+                  <div className="testi-body">
+                    <p>"{t.quote}"</p>
+                    <cite>— {t.name}, {t.role}</cite>
+                  </div>
+                </div>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        </div>
+      </section>
+
+      {/* ============================ PARTNERS ============================ */}
+      <section className="section section--sm">
+        <div className="container">
+          <Reveal as="up" className="text-center mb-24">
+            <div className="eyebrow" style={{ justifyContent: "center" }}>Our Partners & Supporters</div>
+          </Reveal>
+          <Reveal as="fade" delay={0.1}>
+            <div className="partner-row">
+              {[...PARTNERS, ...DONORS, "Community Circle", "Give Together"].map((p, i) => (
+                <span className="partner-item" key={i}>{p}</span>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============================ CTA ============================ */}
+      <section className="section">
+        <div className="container">
+          <Reveal as="scale">
+            <motion.div
+              className="cta-banner"
+              animate={{
+                boxShadow: [
+                  "0 0 30px rgba(212,175,55,0.08)",
+                  "0 0 50px rgba(212,175,55,0.18)",
+                  "0 0 30px rgba(212,175,55,0.08)",
+                ],
+              }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <div className="cta-banner__inner">
+                <div className="eyebrow" style={{ color: "var(--gold-light)", justifyContent: "center" }}>Make A Difference</div>
+                <h2 className="h-lg">One Small Donation Can Change A Life.</h2>
+                <p>Whether you give an hour or a rupee, it becomes part of something rooted, lasting and shared.</p>
+                <div className="hero__cta">
+                  <NavLink to="/donate" className="btn btn--gold btn--lg">Donate Today <DonateHeartIcon /></NavLink>
+                  <NavLink to="/get-involved" className="btn btn--white">Become a Volunteer <VolunteerIcon /></NavLink>
+                </div>
+              </div>
+            </motion.div>
+          </Reveal>
+        </div>
+      </section>
+    </>
+  );
+}

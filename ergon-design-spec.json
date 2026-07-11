@@ -1,0 +1,122 @@
+{
+  "project": "ERGON Foundation Website",
+  "tagline": "Rooted in Good Deeds",
+  "brief": "Charitable trust site for people, pets and planet causes. Goal: elegant, emotional, trust-building UI with advanced scroll/hover animation that converts visitors into donors.",
+
+  "designTokens": {
+    "colors": {
+      "forest950": "#0F241A",
+      "forest900": "#163A29",
+      "forest800": "#1B4332",
+      "forest700": "#235C42",
+      "forest600": "#2D6A4F",
+      "sage500": "#7A9E7E",
+      "sage300": "#B7CBB4",
+      "gold600": "#B8860B",
+      "gold400": "#D8B03C",
+      "cream50": "#FBF8F1",
+      "cream100": "#F4EFE2",
+      "cream200": "#ECE4D0",
+      "ink900": "#1B221C",
+      "ink700": "#3E4A40",
+      "ink500": "#6B786D",
+      "white": "#FFFFFF",
+      "usage": {
+        "forest800": "primary brand color — headings, primary buttons, icons",
+        "gold600": "reserved ONLY for donation CTAs and emotional accent moments — never used decoratively",
+        "cream50": "page background (not pure white — warmer, more organic)",
+        "cream100": "alternate section background",
+        "forest950": "dark sections — footer, impact band, mobile menu"
+      }
+    },
+    "typography": {
+      "displayFont": "Fraunces (serif, variable, optical size 9..144)",
+      "bodyFont": "Manrope (sans, weights 400-800)",
+      "googleFontsUrl": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap",
+      "usage": {
+        "h1": "Fraunces 500, clamp(2.8rem, 5.6vw, 4.4rem), letter-spacing -0.01em, line-height 1.08",
+        "h2": "Fraunces 500, clamp(1.9rem, 3.4vw, 2.6rem)",
+        "italicEmphasis": "Fraunces italic — used specifically for emotional lines and pull-quotes (e.g. hero 'Good Deeds', testimonial quotes)",
+        "body": "Manrope 400, 16px, line-height 1.6",
+        "eyebrow": "Manrope 700, 0.75rem, letter-spacing 0.14em, uppercase, prefixed with an 18px gold rule"
+      }
+    },
+    "radius": { "sm": "10px", "md": "20px", "lg": "32px", "pill": "999px" },
+    "shadow": {
+      "soft": "0 4px 24px rgba(27,67,50,0.08)",
+      "card": "0 8px 40px rgba(27,67,50,0.10)",
+      "lift": "0 24px 60px rgba(27,67,50,0.18)"
+    },
+    "easing": { "out": "cubic-bezier(0.16,1,0.3,1)", "soft": "cubic-bezier(0.4,0,0.2,1)" },
+    "breakpoints": { "mobile": "640px", "tablet": "1024px", "nav": "1100px" }
+  },
+
+  "signatureElement": {
+    "name": "RootLine",
+    "description": "Hand-drawn root/vine SVG that draws itself (stroke pathLength animated on scroll) — used as section dividers and as an ambient background trace. Literalizes 'Rooted in Good Deeds' instead of using a generic divider or gradient blob.",
+    "variants": ["divider (horizontal, between sections)", "ambient (vertical, low-opacity background accent behind hero/footer/CTA)"]
+  },
+
+  "motionPrinciples": [
+    "Every section reveals on scroll: opacity 0->1 + translate 40-56px, duration 0.7-0.8s, ease cubic-bezier(0.16,1,0.3,1), triggers once at 20-25% in view",
+    "Stat numbers count up from 0 when they enter viewport (spring-based, ~1.8s)",
+    "Primary CTA buttons are 'magnetic': content translates toward cursor on hover (strength 0.35), springs back on leave",
+    "Navbar is floating glass pill, condenses opacity/shadow after 24px scroll",
+    "Custom dot+ring cursor on desktop only, expands and shows a text label over elements tagged data-cursor",
+    "Page scroll uses Lenis for eased inertial scrolling",
+    "All motion respects prefers-reduced-motion: reduce"
+  ],
+
+  "components": [
+    { "name": "Header", "type": "floating glass navbar", "contains": ["Logo", "9 nav links", "Donate Now magnetic button", "hamburger on mobile <1100px", "full-screen dark mobile menu overlay"] },
+    { "name": "Footer", "type": "dark 4-column footer", "contains": ["brand + socials col", "Quick Links col", "Explore col", "Contact Us col (address/email/phone with icons)", "Newsletter signup col", "ambient RootLine background", "bottom legal bar (copyright + privacy/terms/refund links)"] },
+    { "name": "PageHero", "type": "inner-page hero band", "contains": ["breadcrumb trail", "eyebrow label", "large serif title", "supporting paragraph", "ambient RootLine background"] },
+    { "name": "Reveal / Stagger / StaggerItem", "type": "animation primitives", "purpose": "wraps any element for scroll-triggered entrance, with staggered children support" },
+    { "name": "PhotoFrame", "type": "image container", "shapeVariants": ["rounded", "blob (organic clip-path)", "arch"], "features": ["gradient wash overlay", "floating ribbon label", "floating badge chip"] },
+    { "name": "MagneticButton", "type": "CTA button", "variants": ["primary (solid forest green, cream text)", "outline (transparent, forest border)", "ghost (for dark backgrounds)"] },
+    { "name": "Logo", "type": "wordmark", "toneVariants": ["dark (default)", "light (for dark backgrounds/footer)"] },
+    { "name": "Icons", "type": "SVG icon set", "count": "30+", "style": "1.7px stroke, 24x24 viewBox, currentColor — one consistent hand-built family, not a generic icon pack" },
+    { "name": "CursorFollower", "type": "custom cursor", "desktopOnly": true },
+    { "name": "SmoothScroll", "type": "Lenis wrapper" }
+  ],
+
+  "pages": [
+    {
+      "name": "HomePage",
+      "status": "built",
+      "sections": [
+        "Hero — eyebrow, 2-line serif title with italic emphasis word, supporting paragraph, Donate Now + Become a Volunteer buttons, framed hero image with play button and floating stat badge",
+        "Stat strip — 5 stats (Projects/Lives/Children/Animals/Villages) in a white card that overlaps hero and content, count-up numbers",
+        "About teaser — 3-column: framed photo with ribbon | headline + copy + checklist + CTA | Gandhi pull-quote card",
+        "RootLine divider",
+        "Key Activities — 6 cards (People/Pets/Planet/Community Development/Volunteer/Donate With Love), icon + title + checklist",
+        "Impact band — dark forest section, headline + 'See Our Reports' button on left, 6 count-up stats on right",
+        "Featured Projects — 4 cards with image, location, progress bar, raised/goal amounts, Support Project button",
+        "Trust strip — 4 items (100% Transparent / Secure Donations / Tax Benefits / Regular Updates)",
+        "Stories of Hope — 3 testimonial cards with quote icon, avatar, name, role",
+        "Partners — auto-scrolling logo marquee",
+        "Final CTA — centered headline + paragraph + Donate Now + Get In Touch buttons, ambient RootLine background"
+      ]
+    },
+    { "name": "AboutPage", "status": "pending", "sections": ["PageHero", "Founder message", "Mission/Vision split", "6 core values grid", "4-step history timeline", "3 pillars (People/Pets/Planet)", "Governing body + staff cards", "Partners/donors strip"] },
+    { "name": "CausesPage", "status": "pending", "sections": ["PageHero", "Alternating People/Pets/Planet feature sections divided by RootLine", "Closing CTA"] },
+    { "name": "EduSProPage", "status": "pending", "sections": ["PageHero", "Programme description", "4-step process: Identify > Sponsor > Support > Sustain", "Impact stat band"] },
+    { "name": "ProjectsPage", "status": "pending", "sections": ["PageHero", "Filter tabs (All/People/Pets/Planet/Community)", "4 project cards with progress bars"] },
+    { "name": "ReportsPage", "status": "pending", "sections": ["PageHero", "2 featured annual reports", "Impact infographics", "Report timeline/archive", "Request-a-report card"] },
+    { "name": "GalleryPage", "status": "pending", "sections": ["PageHero", "Images/Videos tabs", "Category filter chips", "Masonry grid", "Lightbox viewer"] },
+    { "name": "ContactPage", "status": "pending", "sections": ["PageHero", "Office/Email/Phone info cards", "Social links", "Map placeholder", "Contact form"] },
+    { "name": "DonatePage", "status": "pending", "sections": ["PageHero", "4 sponsorship tiers", "One-time/Monthly frequency toggle", "Amount selector", "Impact calculator (rupees -> outcome)", "Bank transfer details", "Trust/security strip"] },
+    { "name": "GetInvolvedPage", "status": "pending", "sections": ["PageHero", "Volunteer/Careers tabs", "6 ways to help + 3 benefits", "Volunteer seeker form", "Employer/partner form"] },
+    { "name": "LegalPage", "status": "pending", "sections": ["PageHero", "Terms of Service", "Privacy Policy", "Refund Policy"] },
+    { "name": "NotFoundPage", "status": "pending", "sections": ["404 illustration/RootLine moment", "message", "return home CTA"] }
+  ],
+
+  "assetsNeeded": {
+    "logo": "src/assets/logo (SVG preferred) — currently a drawn leaf-mark SVG in Logo.jsx as placeholder",
+    "heroImage": "src/assets/hero/ — girl-and-puppy style warm portrait",
+    "aboutImage": "src/assets/about-hands.jpg — hands holding a sapling",
+    "projectThumbnails": "src/assets/projects/ — 4 images (education, animal rescue, tree plantation, food distribution)",
+    "galleryMedia": "src/assets/gallery/ — images + video files",
+    "partnerLogos": "src/assets/partners/ — TATA, Infosys, Wipro, HCL, Reliance Foundation, Axis Bank, Tech Mahindra"
+  }
+}
