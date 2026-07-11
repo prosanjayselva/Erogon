@@ -31,6 +31,19 @@ app.get('/api/v1/health', (_req, res) => {
 
 startEventReminder();
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+function startServer(port) {
+  const srv = app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
+  });
+  srv.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.log(`Port ${port} in use, retrying...`);
+      setTimeout(() => startServer(port), 1000);
+    } else {
+      console.error(err);
+      process.exit(1);
+    }
+  });
+}
+
+startServer(PORT);
