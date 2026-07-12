@@ -3,6 +3,8 @@ import { NavLink } from "react-router-dom";
 import { MenuFacebook, MenuX, MenuLinkedin, MenuInstagram, MenuYoutube, PinIcon, MailIcon, PhoneIcon } from "./Icons.jsx";
 import api from "../api/client.js";
 
+const B = import.meta.env.BASE_URL;
+
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [msg, setMsg] = useState("");
@@ -28,7 +30,7 @@ export default function Footer() {
       <div className="container footer-grid">
         <div className="footer-about">
           <NavLink to="/" className="brand">
-            <img src="/images/logo-footer.png" alt="ERGON Foundation" className="brand__logo" onError={(e) => { e.target.src = "/images/logo.png"; }} />
+            <img src={`${B}images/logo-footer.png`} alt="ERGON Foundation" className="brand__logo" onError={(e) => { e.target.src = `${B}images/logo.png`; }} />
             <span className="brand__word">
               <b style={{ color: "white" }}>Ergon Foundation</b>
               <span style={{ color: "var(--gold)" }}>Foundation</span>

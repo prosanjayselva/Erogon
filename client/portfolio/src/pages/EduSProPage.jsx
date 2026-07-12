@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import Reveal, { Stagger, StaggerItem } from "../components/Reveal.jsx";
 import PhotoFrame from "../components/PhotoFrame.jsx";
 import RootLine from "../components/RootLine.jsx";
+
+const B = import.meta.env.BASE_URL;
 import { PHOTOS } from "../data/photos.js";
 import { GraduationCapIcon, DonateHeartIcon, TargetIcon, HeartHandsIcon, HeartIcon, UsersGroupIcon, SparkleIcon, ArrowRightIcon, LeafIcon } from "../components/Icons.jsx";
 
@@ -50,7 +52,7 @@ export default function EduSProPage() {
       <section className="section">
         <div className="container grid-2">
           <Reveal as="left">
-            <PhotoFrame src="/images/gallery-06-kids-play.jpg" alt="Children playing together at an ERGON programme" ratio="1/1" blob />
+            <PhotoFrame src={`${B}images/gallery-06-kids-play.jpg`} alt="Children playing together at an ERGON programme" ratio="1/1" blob />
           </Reveal>
           <Reveal as="right" delay={0.1}>
             <div className="eyebrow">About The Programme</div>

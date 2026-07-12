@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import Reveal from "../components/Reveal.jsx";
 import PhotoFrame from "../components/PhotoFrame.jsx";
 import { ImageIcon, VideoIcon, PlayIcon, CloseIcon } from "../components/Icons.jsx";
+
+const B = import.meta.env.BASE_URL;
 import { PHOTOS, GALLERY_WITH_CATEGORIES, GALLERY_CATEGORIES } from "../data/photos.js";
 
 export default function GalleryPage() {
@@ -89,9 +91,9 @@ export default function GalleryPage() {
             <Reveal as="fade" key="videos">
               <div className="grid-3">
                 {[
-                  { src: "/videos/ramanathapuram-glimpses.mp4", title: "Environment Day Ramanathapuram", desc: "Highlights from the World Environment Day 2026 celebrations at Ramanathapuram." },
-                  { src: "/videos/yercaud-climate-dance.mp4", title: "Environment Day Yercaud", desc: "Climate dance challenge with school children at Yercaud." },
-                  { src: "/videos/medical-camp-avadi.mp4", title: "Medical Camp Avadi", desc: "Free medical check-up camp for migrant workers in Avadi, Chennai." },
+                  { src: `${B}videos/ramanathapuram-glimpses.mp4`, title: "Environment Day Ramanathapuram", desc: "Highlights from the World Environment Day 2026 celebrations at Ramanathapuram." },
+                  { src: `${B}videos/yercaud-climate-dance.mp4`, title: "Environment Day Yercaud", desc: "Climate dance challenge with school children at Yercaud." },
+                  { src: `${B}videos/medical-camp-avadi.mp4`, title: "Medical Camp Avadi", desc: "Free medical check-up camp for migrant workers in Avadi, Chennai." },
                 ].map((v, i) => (
                   <div className="project-card" key={i}>
                     <div className="photo-frame" style={{ aspectRatio: "16/9", borderRadius: 0, position: "relative", overflow: "hidden" }}>

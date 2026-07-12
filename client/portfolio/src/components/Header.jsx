@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { DonateHeartIcon } from "./Icons.jsx";
 
+const B = import.meta.env.BASE_URL;
+
 const LINKS = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
@@ -70,7 +72,7 @@ export default function Header() {
       <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
         <div className="site-header__bar">
           <NavLink to="/" className="brand" onClick={() => setOpen(false)}>
-            <img src="/images/logo.png" alt="ERGON Foundation" className="brand__logo" />
+            <img src={`${B}images/logo.png`} alt="ERGON Foundation" className="brand__logo" />
             <span className="brand__word">
               <b>Ergon Foundation</b>
               <span>Rooted in Good Deeds</span>
@@ -109,7 +111,7 @@ export default function Header() {
       <div className={`nav-overlay ${open ? "is-open" : ""}`} onClick={() => setOpen(false)} />
       <nav className={`nav--mobile ${open ? "is-open" : ""}`} aria-hidden={!open}>
         <div className="nav__header">
-          <img src="/images/logo.png" alt="ERGON Foundation" className="nav__logo" />
+          <img src={`${B}images/logo.png`} alt="ERGON Foundation" className="nav__logo" />
           <button className="nav__close" aria-label="Close menu" onClick={() => setOpen(false)}>
             <span /><span />
           </button>
