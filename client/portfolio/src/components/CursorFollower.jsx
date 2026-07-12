@@ -7,6 +7,9 @@ export default function CursorFollower() {
   const pos = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
+    const mq = window.matchMedia("(pointer: fine)");
+    if (!mq.matches) return;
+
     const cursor = cursorRef.current;
     if (!cursor) return;
 

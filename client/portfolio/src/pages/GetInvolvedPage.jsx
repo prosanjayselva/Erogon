@@ -173,7 +173,7 @@ export default function GetInvolvedPage() {
       <section className="section section--paper">
         <div className="wrap">
           <Reveal as="up" className="center mb-32">
-            <div className="tabbar mx-auto" style={{ display: "flex" }}>
+            <div className="tabbar mx-auto">
               <button className={tab === "volunteer" ? "active" : ""} onClick={() => setTab("volunteer")}>Volunteer With Us</button>
               <button className={tab === "career" ? "active" : ""} onClick={() => setTab("career")}>Career Opportunities</button>
             </div>
@@ -275,9 +275,9 @@ export default function GetInvolvedPage() {
 
           {tab === "career" && (
             <Reveal as="fade" id="career">
-              <div className="glass-card mb-48" style={{ maxWidth: 780, margin: "0 auto 48px", padding: "36px 32px", display: "flex", gap: 20, alignItems: "flex-start", flexWrap: "wrap" }}>
+              <div className="glass-card mb-48" style={{ maxWidth: 780, margin: "0 auto 48px", padding: "clamp(20px, 4vw, 36px) clamp(16px, 4vw, 32px)", display: "flex", gap: 20, alignItems: "flex-start", flexWrap: "wrap" }}>
                 <div className="icon-badge" style={{ marginBottom: 0, flex: "none", width: 64, height: 64, background: "var(--gold)", color: "var(--text)" }}><BriefcaseIcon /></div>
-                <div style={{ flex: 1, minWidth: 200 }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
                   <h3 className="h-md">ERGON Career Opportunities</h3>
                   <p style={{ color: "var(--text-secondary)", marginTop: 6 }}>
                     ERGON Foundation supports employers and job seekers by connecting the right talent with the
@@ -306,7 +306,7 @@ export default function GetInvolvedPage() {
               </div>
 
               <div className="center mb-32">
-                <div className="tabbar mx-auto" style={{ display: "flex" }}>
+            <div className="tabbar mx-auto">
                   <button className={role === "seeker" ? "active" : ""} onClick={() => switchRole("seeker")}>For Job Seekers</button>
                   <button className={role === "employer" ? "active" : ""} onClick={() => switchRole("employer")}>For Employers</button>
                 </div>

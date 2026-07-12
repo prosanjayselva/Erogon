@@ -1,7 +1,16 @@
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useEffect, useState } from "react";
 
 export default function MagneticButton({ children, className = "", as: Tag = "div", strength = 0.3, ...rest }) {
   const ref = useRef(null);
+  const [isTouch, setIsTouch] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(pointer: fine)");
+    setIsTouch(!mq.matches);
+    const handler = (e) => setIsTouch(!e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
   const onMove = useCallback((e) => {
     if (!ref.current) return;
@@ -17,7 +26,7 @@ export default function MagneticButton({ children, className = "", as: Tag = "di
   }, []);
 
   return (
-    <Tag ref={ref} className={`magnetic-btn ${className}`} onMouseMove={onMove} onMouseLeave={onLeave} {...rest}>
+    <Tag ref={ref} className={`magnetic-btn ${className}`} onMouseMove={isTouch ? undefined : onMove} onMouseLeave={isTouch ? undefined : onLeave} {...rest}>
       {children}
     </Tag>
   );

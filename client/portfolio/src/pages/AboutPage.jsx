@@ -73,14 +73,14 @@ export default function AboutPage() {
           </Reveal>
           <div className="grid-2 mt-48" style={{ gap: 32 }}>
             <Reveal as="left">
-              <motion.div className="glass-card" style={{ padding: "44px 36px", textAlign: "center" }} whileHover={{ y: -6, boxShadow: "var(--shadow-lg)" }}>
+              <motion.div className="glass-card" style={{ padding: "clamp(24px, 5vw, 44px) clamp(18px, 4vw, 36px)", textAlign: "center" }} whileHover={{ y: -6, boxShadow: "var(--shadow-lg)" }}>
                 <HeartHandsIcon style={{ width: 52, height: 52, color: "var(--primary)", marginBottom: 20 }} />
                 <h3 className="h-md">Our Mission</h3>
                 <p className="lede mx-auto mt-16">Transform lives through education, health, environment and sustainable community development.</p>
               </motion.div>
             </Reveal>
             <Reveal as="right" delay={0.1}>
-              <motion.div className="glass-card" style={{ padding: "44px 36px", textAlign: "center" }} whileHover={{ y: -6, boxShadow: "var(--shadow-lg)" }}>
+              <motion.div className="glass-card" style={{ padding: "clamp(24px, 5vw, 44px) clamp(18px, 4vw, 36px)", textAlign: "center" }} whileHover={{ y: -6, boxShadow: "var(--shadow-lg)" }}>
                 <GlobeIcon style={{ width: 52, height: 52, color: "var(--primary)", marginBottom: 20 }} />
                 <h3 className="h-md">Our Vision</h3>
                 <p className="lede mx-auto mt-16">A world where every individual has equal opportunities to thrive with dignity.</p>

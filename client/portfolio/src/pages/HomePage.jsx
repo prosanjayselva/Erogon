@@ -114,7 +114,7 @@ export default function HomePage() {
   return (
     <>
       {/* ================================ HERO ================================ */}
-      <section className="page-hero-split">
+      <section className="page-hero-split page-hero-split--home">
         <div className="page-hero-split__inner">
           <div className="page-hero-split__content">
             <motion.div
@@ -125,7 +125,7 @@ export default function HomePage() {
               <div className="home-hero__tag"><span className="dot" /> Registered Charitable Trust · Tamil Nadu</div>
             </motion.div>
 
-            <WordReveal text="Together We Build Hope." style={{ color: "#fff" }} />
+            <WordReveal text="Together We Build Hope." />
 
             <motion.p
               className="home-hero__sub"
@@ -332,7 +332,7 @@ export default function HomePage() {
                   <div className="icon-badge" style={{ marginBottom: 0, flex: "none", width: 60, height: 60, background: cause.theme + "18", color: cause.theme }}>
                     <cause.icon />
                   </div>
-                  <div style={{ flex: 1, minWidth: 200 }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
                     <h3 className="h-sm" style={{ color: cause.theme }}>{cause.title}</h3>
                     <p className="lede" style={{ fontSize: "0.95rem", marginTop: 4 }}>{cause.desc}</p>
                   </div>

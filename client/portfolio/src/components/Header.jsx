@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
-import { DonateHeartIcon, MenuFacebook, MenuX, MenuLinkedin, MenuInstagram, MenuYoutube } from "./Icons.jsx";
-import { CONTACT } from "../data/content.js";
+import { useEffect, useRef, useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { DonateHeartIcon } from "./Icons.jsx";
 
 const LINKS = [
   { to: "/", label: "Home" },
@@ -16,8 +15,10 @@ const LINKS = [
 ];
 
 export default function Header() {
+  const { pathname } = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 100);
@@ -27,30 +28,42 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+
     if (open) {
-      const scrollY = window.scrollY;
-      document.body.style.position = "fixed";
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.left = "0";
-      document.body.style.right = "0";
-      document.body.style.width = "100%";
+      lastScrollY.current = window.scrollY;
+      html.classList.add("menu-open");
+      body.classList.add("menu-open");
+      if (window.__lenis) window.__lenis.stop();
     } else {
-      const top = parseInt(document.body.style.top || "0") * -1 || 0;
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.left = "";
-      document.body.style.right = "";
-      document.body.style.width = "";
-      window.scrollTo(0, top);
+      html.classList.remove("menu-open");
+      body.classList.remove("menu-open");
+      if (window.__lenis) window.__lenis.start();
+      window.scrollTo({ top: lastScrollY.current });
     }
+
     return () => {
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.left = "";
-      document.body.style.right = "";
-      document.body.style.width = "";
+      html.classList.remove("menu-open");
+      body.classList.remove("menu-open");
+      if (window.__lenis) window.__lenis.start();
     };
   }, [open]);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth > 1100) {
+        setOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   return (
     <>
@@ -94,7 +107,7 @@ export default function Header() {
       </header>
 
       <div className={`nav-overlay ${open ? "is-open" : ""}`} onClick={() => setOpen(false)} />
-      <nav className={`nav--mobile ${open ? "is-open" : ""}`}>
+      <nav className={`nav--mobile ${open ? "is-open" : ""}`} aria-hidden={!open}>
         <div className="nav__header">
           <img src="/images/logo.png" alt="ERGON Foundation" className="nav__logo" />
           <button className="nav__close" aria-label="Close menu" onClick={() => setOpen(false)}>
@@ -119,13 +132,6 @@ export default function Header() {
           <NavLink to="/donate" className="nav__donate" onClick={() => setOpen(false)}>
             Donate Now <DonateHeartIcon />
           </NavLink>
-          <div className="nav__social">
-            <a href={CONTACT.social.facebook} target="_blank" rel="noreferrer" aria-label="Facebook"><MenuFacebook /></a>
-            <a href={CONTACT.social.x} target="_blank" rel="noreferrer" aria-label="X"><MenuX /></a>
-            <a href={CONTACT.social.instagram} target="_blank" rel="noreferrer" aria-label="Instagram"><MenuInstagram /></a>
-            <a href={CONTACT.social.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn"><MenuLinkedin /></a>
-            <a href={CONTACT.social.youtube} target="_blank" rel="noreferrer" aria-label="YouTube"><MenuYoutube /></a>
-          </div>
           <p className="nav__copyright">&copy; {new Date().getFullYear()} ERGON Foundation. All rights reserved.</p>
         </div>
       </nav>
