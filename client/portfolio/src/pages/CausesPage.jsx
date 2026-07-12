@@ -9,7 +9,7 @@ import { PILLARS } from "../data/content.js";
 
 const PILLAR_ICON = { people: PeopleIcon, pets: PawIcon, planet: LeafIcon };
 const PILLAR_TONE = { people: "", pets: "photo-frame--sage", planet: "photo-frame--gold" };
-const PILLAR_PHOTO = { people: PHOTOS.medicalConsultation, pets: PHOTOS.heroGirlDog, planet: PHOTOS.ramanathapuramTree1 };
+const PILLAR_PHOTO = { people: PHOTOS.medicalConsultation, pets: PHOTOS.aiHero1, planet: PHOTOS.ramanathapuramTree1 };
 
 export default function CausesPage() {
   return (
@@ -48,7 +48,7 @@ export default function CausesPage() {
           <section className={`section ${i % 2 === 0 ? "" : ""}`} style={{ background: i % 2 === 0 ? "var(--background)" : "var(--secondary)" }} key={p.key}>
             <div className="container grid-2">
               <Reveal as={reverse ? "right" : "left"} style={{ order: reverse ? 2 : 1 }}>
-                <PhotoFrame src={PILLAR_PHOTO[p.key]} alt={p.title} icon={Icon} tone={PILLAR_TONE[p.key]} caption={p.title} ratio="4/3.2" blob={i === 1} />
+                <PhotoFrame src={PILLAR_PHOTO[p.key]} alt={p.title} icon={Icon} tone={PILLAR_TONE[p.key]} caption={p.title} ratio="4/3.2" blob={i === 1} objectPosition={p.key === "planet" ? "top" : undefined} />
               </Reveal>
               <Reveal as={reverse ? "left" : "right"} delay={0.1} style={{ order: reverse ? 1 : 2 }}>
                 <div className="eyebrow">{`0${i + 1} · Our Causes`}</div>

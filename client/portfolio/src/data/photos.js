@@ -2,7 +2,6 @@ export const PHOTOS = {
   logo: "/images/logo.png",
   logoFooter: "/images/logo-footer.png",
 
-  heroGirlDog: "/images/hero-girl-dog.jpg",
   handsPlant: "/images/about-plant.jpg",
   treePlantingReal: "/images/about-real.jpg",
 
@@ -39,6 +38,9 @@ export const PHOTOS = {
   aiHero1: "/images/ai-hero-1.png",
   aiHero2: "/images/ai-hero-2.png",
   aiHero3: "/images/ai-hero-3.png",
+  aiAboutHero: "/images/ai-about-hero.png",
+  aiPetHero: "/images/ai-pet-hero.png",
+  aiContactHero: "/images/ai-contact-hero.png",
 };
 
 export const GALLERY_PHOTOS = [
@@ -56,7 +58,6 @@ export const GALLERY_PHOTOS = [
   { src: PHOTOS.medicalAwareness, caption: "Health awareness session", ratio: "4/3" },
   { src: PHOTOS.medicalMedicine, caption: "Medicine distribution", ratio: "4/3" },
   { src: PHOTOS.medicalRegistration, caption: "Patient registration", ratio: "4/3" },
-  { src: PHOTOS.heroGirlDog, caption: "A child and her rescued companion", ratio: "4/5" },
   { src: PHOTOS.medicalGathered, caption: "Migrant workers gathered for awareness", ratio: "4/3" },
   { src: PHOTOS.medicalCampGroup, caption: "Medical outreach team", ratio: "4/3" },
   { src: PHOTOS.reportEnvironment, caption: "World Environment Day 2026", ratio: "16/9" },
@@ -85,9 +86,8 @@ export const GALLERY_WITH_CATEGORIES = [
   { ...GALLERY_PHOTOS[11], category: "medical" },
   { ...GALLERY_PHOTOS[12], category: "medical" },
   { ...GALLERY_PHOTOS[13], category: "medical" },
-  { ...GALLERY_PHOTOS[14], category: "community" },
+  { ...GALLERY_PHOTOS[14], category: "medical" },
   { ...GALLERY_PHOTOS[15], category: "medical" },
-  { ...GALLERY_PHOTOS[16], category: "medical" },
-  { ...GALLERY_PHOTOS[17], category: "environment" },
-  { ...GALLERY_PHOTOS[18], category: "medical" },
+  { ...GALLERY_PHOTOS[16], category: "environment" },
+  { ...GALLERY_PHOTOS[17], category: "medical" },
 ];

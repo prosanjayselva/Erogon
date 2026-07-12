@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../stores/auth-store.js';
 import NotificationBell from './NotificationBell.jsx';
@@ -13,13 +14,13 @@ const menu = [
   { id: 'newsletter', label: 'Newsletter', icon: '📬', path: '/newsletter' },
   { id: 'events', label: 'Event Management', icon: '📅', path: '/events' },
   { id: 'audit', label: 'Audit Logs', icon: '📋', path: '/audit-logs' },
-  { id: 'settings', label: 'Settings', icon: '⚙️', path: '/settings' },
   { id: 'website', label: 'View Website', icon: '🌐', path: import.meta.env.PROD ? '/' : 'http://localhost:5174' },
 ];
 
 export default function AdminLayout() {
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -35,14 +36,18 @@ export default function AdminLayout() {
     <div className="admin-shell">
       <Toasts />
 
+      {/* ─── Mobile overlay ─── */}
+      <div className={`admin-sidebar-overlay ${sidebarOpen ? 'is-open' : ''}`} onClick={() => setSidebarOpen(false)} />
+
       {/* ─── Sidebar ─── */}
-      <aside className="admin-sidebar">
+      <aside className={`admin-sidebar ${sidebarOpen ? 'is-open' : ''}`}>
         <div className="sidebar-logo">
-          <img src="/admin-panel/assets/logo.svg" alt="ERGON" className="sidebar-logo-img" />
+          <img src="/admin-panel/assets/logo.png" alt="ERGON" className="sidebar-logo-img" />
           <div className="sidebar-logo-text">
             <span className="sidebar-logo-name">ERGON</span>
             <span className="sidebar-logo-sub">FOUNDATION</span>
           </div>
+          <button className="sidebar-close-btn" onClick={() => setSidebarOpen(false)} aria-label="Close sidebar">&times;</button>
         </div>
         <div className="sidebar-tagline">ROOTED IN GOOD DEEDS</div>
 
@@ -71,7 +76,12 @@ export default function AdminLayout() {
       <div className="admin-main">
         <header className="admin-header">
           <div className="admin-header-left">
-            <span className="admin-header-title">Admin Panel</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <button className="sidebar-toggle" onClick={() => setSidebarOpen(true)} aria-label="Open sidebar">
+                &#9776;
+              </button>
+              <span className="admin-header-title">Admin Panel</span>
+            </div>
             <span className="admin-header-subtitle">Welcome back, Admin! 👋</span>
           </div>
           <div className="admin-header-right">

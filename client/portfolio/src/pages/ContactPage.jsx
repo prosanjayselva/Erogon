@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Reveal from "../components/Reveal.jsx";
+import PhotoFrame from "../components/PhotoFrame.jsx";
 import { PinIcon, MailIcon, PhoneIcon, CheckIcon, MenuFacebook, MenuX, MenuLinkedin, MenuInstagram, MenuYoutube } from "../components/Icons.jsx";
+import { PHOTOS } from "../data/photos.js";
 import { CONTACT } from "../data/content.js";
 import api from "../api/client.js";
 
@@ -109,10 +111,7 @@ export default function ContactPage() {
               <a href={CONTACT.social.youtube} target="_blank" rel="noreferrer" style={{ borderColor: "var(--divider)", color: "var(--primary)" }}><MenuYoutube /></a>
             </div>
 
-            <div className="photo-frame mt-32" style={{ aspectRatio: "16/9" }}>
-              <div className="pf-mark"><PinIcon /></div>
-              <span className="pf-caption">Map — Kodambakkam, Chennai</span>
-            </div>
+            <PhotoFrame src={PHOTOS.aiContactHero} alt="ERGON Foundation" ratio="16/9" caption="ERGON Foundation — Kodambakkam, Chennai" />
           </Reveal>
 
           <Reveal as="right" delay={0.1}>

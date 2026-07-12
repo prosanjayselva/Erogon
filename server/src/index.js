@@ -1,6 +1,9 @@
+import fs from 'fs';
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 import { fileURLToPath } from 'url';
 import { PrismaClient } from '@prisma/client';
 import authRoutes from './routes/v1/auth-routes.js';
@@ -23,9 +26,34 @@ const PORT = process.env.PORT || 3000;
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-app.use(cors());
-app.use(express.json());
-app.use('/uploads', express.static('uploads'));
+// Warn if JWT secrets are weak defaults
+if (!process.env.JWT_ACCESS_SECRET || process.env.JWT_ACCESS_SECRET.length < 20) {
+  console.warn('⚠️  WEAK JWT_ACCESS_SECRET — generate a strong random secret for production');
+}
+if (!process.env.JWT_REFRESH_SECRET || process.env.JWT_REFRESH_SECRET.length < 20) {
+  console.warn('⚠️  WEAK JWT_REFRESH_SECRET — generate a strong random secret for production');
+}
+
+// Security
+app.use(helmet());
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  credentials: true,
+}));
+app.use(express.json({ limit: '1mb' }));
+const uploadsDir = path.join(__dirname, '../../uploads');
+if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+app.use('/uploads', express.static(uploadsDir));
+
+// Rate limiting
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests, please try again later.' },
+});
+app.use('/api/', apiLimiter);
 
 // API routes
 app.use('/api/v1/auth', authRoutes);

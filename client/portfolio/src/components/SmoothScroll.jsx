@@ -9,6 +9,7 @@ export default function SmoothScroll({ children }) {
       orientation: "vertical",
       smoothWheel: true,
     });
+    window.__lenis = lenis;
 
     function raf(time) {
       lenis.raf(time);
@@ -16,7 +17,10 @@ export default function SmoothScroll({ children }) {
     }
     requestAnimationFrame(raf);
 
-    return () => lenis.destroy();
+    return () => {
+      window.__lenis = null;
+      lenis.destroy();
+    };
   }, []);
 
   return children;

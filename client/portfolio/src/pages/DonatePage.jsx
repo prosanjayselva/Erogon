@@ -1,10 +1,10 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import Reveal, { Stagger, StaggerItem } from "../components/Reveal.jsx";
 import {
   BankIcon, CopyIcon, DonateHeartIcon, ShieldCheckIcon, LockIcon, DocReceiptIcon, ChevronRightIcon,
-  GraduationCapIcon, PawIcon, LeafIcon, CheckIcon, SparkleIcon, TargetIcon, HeartHandsIcon,
+  GraduationCapIcon, PawIcon, LeafIcon, CheckIcon, SparkleIcon, TargetIcon, HeartHandsIcon, CloseIcon,
 } from "../components/Icons.jsx";
 import { PHOTOS } from "../data/photos.js";
 import { BANK_DETAILS } from "../data/content.js";
@@ -36,6 +36,8 @@ export default function DonatePage() {
   const [freq, setFreq] = useState("One-Time");
   const [copied, setCopied] = useState("");
   const [activeTier, setActiveTier] = useState(null);
+  const [showComingSoon, setShowComingSoon] = useState(false);
+  useEffect(() => { if (showComingSoon) { const t = setTimeout(() => setShowComingSoon(false), 4000); return () => clearTimeout(t); } }, [showComingSoon]);
 
   const copy = (label, value) => {
     navigator.clipboard?.writeText(value).catch(() => {});
@@ -98,7 +100,7 @@ export default function DonatePage() {
       </section>
 
       {/* Sponsorship Tiers */}
-      <section className="section section--paper" style={{ paddingBottom: 0 }}>
+      <section id="tiers" className="section section--paper" style={{ paddingBottom: 0 }}>
         <div className="wrap">
           <Reveal as="up" className="text-center">
             <div className="eyebrow" style={{ justifyContent: "center" }}>Become A Sustainer</div>
@@ -144,8 +146,8 @@ export default function DonatePage() {
       </section>
 
       {/* Donation Form + Impact */}
-      <section className="section section--paper">
-        <div className="wrap grid-2" style={{ alignItems: "flex-start" }}>
+      <section id="donate-form" className="section section--paper">
+          <div className="wrap grid-2 grid-2--top">
           <Reveal as="left">
             <div className="form-card">
               <div className="eyebrow"><DonateHeartIcon style={{ width: 16, height: 16, marginRight: 6, verticalAlign: -3 }} />Make A Donation</div>
@@ -183,7 +185,7 @@ export default function DonatePage() {
                 <span className="donate-summary__amt">₹{amount ? amount.toLocaleString("en-IN") : "0"}</span>
               </div>
 
-              <button className="btn btn--primary btn--block mt-24" type="button">
+              <button className="btn btn--primary btn--block mt-24" type="button" onClick={() => setShowComingSoon(true)}>
                 {freq === "Monthly" ? "Subscribe" : freq === "Yearly" ? "Subscribe Annually" : "Donate"} ₹{amount ? amount.toLocaleString("en-IN") : "0"} Now <DonateHeartIcon />
               </button>
               <p style={{ fontSize: "0.78rem", color: "var(--text-secondary)", marginTop: 12, textAlign: "center" }}>
@@ -191,7 +193,7 @@ export default function DonatePage() {
               </p>
             </div>
 
-            <div className="mt-32 trust-strip" style={{ flexDirection: "column", alignItems: "flex-start", gap: 18 }}>
+            <div className="mt-32 trust-strip trust-strip--stacked">
               <div className="trust-item"><ShieldCheckIcon /><div><b>100% Transparent</b><span>We ensure transparency in every step.</span></div></div>
               <div className="trust-item"><LockIcon /><div><b>Secure Donations</b><span>Your donation is safe and protected.</span></div></div>
               <div className="trust-item"><DocReceiptIcon /><div><b>Tax Benefits</b><span>80G applicable for eligible donations.</span></div></div>
@@ -297,7 +299,7 @@ export default function DonatePage() {
                 <div className="icon-badge mx-auto"><HeartHandsIcon /></div>
                 <h3 className="h-sm">Volunteer Your Time</h3>
                 <p className="lede mt-8" style={{ fontSize: "0.9rem" }}>Your skills and time are just as valuable as financial support.</p>
-                <a href="/get-involved" className="btn btn--ghost btn--sm mt-16">Get Involved</a>
+                <NavLink to="/get-involved" className="btn btn--ghost btn--sm mt-16">Get Involved</NavLink>
               </div>
             </StaggerItem>
             <StaggerItem>
@@ -305,7 +307,7 @@ export default function DonatePage() {
                 <div className="icon-badge mx-auto"><TargetIcon /></div>
                 <h3 className="h-sm">Corporate Sponsorship</h3>
                 <p className="lede mt-8" style={{ fontSize: "0.9rem" }}>Partner with us through CSR initiatives and employee engagement.</p>
-                <a href="/contact" className="btn btn--ghost btn--sm mt-16">Contact Us</a>
+                <NavLink to="/contact" className="btn btn--ghost btn--sm mt-16">Contact Us</NavLink>
               </div>
             </StaggerItem>
             <StaggerItem>
@@ -313,7 +315,7 @@ export default function DonatePage() {
                 <div className="icon-badge mx-auto"><LeafIcon /></div>
                 <h3 className="h-sm">Fundraise For Us</h3>
                 <p className="lede mt-8" style={{ fontSize: "0.9rem" }}>Organise a fundraiser in your community or workplace.</p>
-                <a href="/contact" className="btn btn--ghost btn--sm mt-16">Learn More</a>
+                <NavLink to="/contact" className="btn btn--ghost btn--sm mt-16">Learn More</NavLink>
               </div>
             </StaggerItem>
           </Stagger>
@@ -330,14 +332,31 @@ export default function DonatePage() {
                 <h2 className="h-lg">Your Contribution Creates Ripples That Last Generations.</h2>
                 <p>Whether it's ₹500 or ₹50,000 — every rupee is a seed planted in the soil of hope.</p>
                 <div className="hero__cta">
-                  <a href="/get-involved" className="btn btn--gold btn--lg">Join The Mission <DonateHeartIcon /></a>
-                  <a href="/causes" className="btn btn--white">Explore Our Causes <LeafIcon /></a>
+                  <NavLink to="/get-involved" className="btn btn--gold btn--lg">Join The Mission <DonateHeartIcon /></NavLink>
+                  <NavLink to="/causes" className="btn btn--white">Explore Our Causes <LeafIcon /></NavLink>
                 </div>
               </div>
             </div>
           </Reveal>
         </div>
       </section>
+
+      <AnimatePresence>
+        {showComingSoon && (
+          <motion.div className="modal-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <motion.div className="modal" initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 40 }}>
+              <button className="modal__close" onClick={() => setShowComingSoon(false)}><CloseIcon /></button>
+              <div className="icon-badge mx-auto" style={{ background: "var(--gold)", color: "var(--text)" }}><DonateHeartIcon /></div>
+              <h3 className="h-md mt-16" style={{ textAlign: "center" }}>Online Payment Coming Soon</h3>
+              <p className="mt-8" style={{ textAlign: "center", color: "var(--text-secondary)", fontSize: "0.92rem" }}>
+                We're setting up our secure payment gateway.<br/>
+                Until then, please use the bank transfer details on this page.
+              </p>
+              <button className="btn btn--primary btn--block mt-24" onClick={() => setShowComingSoon(false)}>Got It</button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

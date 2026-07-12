@@ -8,7 +8,11 @@ import CursorFollower from "./components/CursorFollower.jsx";
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
-    window.scrollTo({ top: 0 });
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo({ top: 0 });
+    }
   }, [pathname]);
   return null;
 }

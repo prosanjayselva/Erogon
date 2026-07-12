@@ -21,27 +21,31 @@ const JOURNEY = [
 export default function AboutPage() {
   return (
     <>
-      <section className="editorial-hero">
-        <div className="editorial-hero__inner">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <span className="editorial-hero__eyebrow">Who We Are</span>
-            <h1 className="editorial-hero__title">Compassion Creates Lasting Change.</h1>
-            <p className="editorial-hero__sub">Ergon Foundation exists to empower communities through education, healthcare, environmental sustainability and social responsibility.</p>
-            <div className="editorial-hero__divider" />
-            <div className="hero__cta" style={{ justifyContent: "center" }}>
-              <NavLink to="#pillars" className="btn btn--outline">Our Pillars</NavLink>
-              <NavLink to="/get-involved" className="btn btn--primary">Get Involved</NavLink>
+      <section className="bg-hero">
+        <div className="bg-hero__bg">
+          <img src={PHOTOS.aiAboutHero} alt="ERGON Foundation community impact" />
+        </div>
+        <div className="bg-hero__overlay" />
+        <div className="bg-hero__content">
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+            <div className="bg-hero__breadcrumb">
+              <NavLink to="/">Home</NavLink>
+              <ChevronRightIcon />
+              <span>About Us</span>
+            </div>
+            <span className="bg-hero__eyebrow">Who We Are</span>
+            <h1 className="bg-hero__title">Compassion Creates Lasting Change.</h1>
+            <p className="bg-hero__desc">Ergon Foundation exists to empower communities through education, healthcare, environmental sustainability and social responsibility.</p>
+            <div className="hero__cta" style={{ justifyContent: "center", marginTop: "2rem" }}>
+              <NavLink to="/donate" className="btn btn--primary">Support Our Mission</NavLink>
+              <NavLink to="/get-involved" className="btn btn--outline">Get Involved</NavLink>
             </div>
           </motion.div>
         </div>
-        <motion.img
-          className="editorial-hero__image"
-              src={PHOTOS.aiHero1}
-          alt="ERGON Foundation team planting trees"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-        />
+        <div className="bg-hero__scroll">
+          <span>Scroll</span>
+          <div className="bg-hero__scroll-line" />
+        </div>
       </section>
 
       <section className="section" style={{ background: "linear-gradient(180deg, var(--secondary), var(--background))" }}>
@@ -83,6 +87,14 @@ export default function AboutPage() {
               </motion.div>
             </Reveal>
           </div>
+        </div>
+      </section>
+
+      <section className="section section--sm" style={{ background: "var(--secondary)" }}>
+        <div className="container--narrow text-center">
+          <Reveal as="up">
+            <PhotoFrame src={PHOTOS.aiPetHero} alt="ERGON Foundation pet care" ratio="16/9" caption="Compassion for every soul — our pet welfare initiative" />
+          </Reveal>
         </div>
       </section>
 

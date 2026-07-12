@@ -6,3 +6,14 @@ build/
 .turbo/
 .DS_Store
 coverage/
+
+# Environment files with secrets
+.env
+.env.local
+.env.production
+
+# Uploads (user-generated content, shouldn't be in repo)
+server/uploads/
+
+# OS junk
+Thumbs.db

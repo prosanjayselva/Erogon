@@ -39,12 +39,12 @@ export default function GalleryPage() {
     <>
       <section className="mosaic-hero">
         <div className="mosaic-hero__grid">
-          <img className="mosaic-hero__grid-img1" src={PHOTOS.yercaudGroup} alt="" />
-          <img className="mosaic-hero__grid-img2" src={PHOTOS.ramanathapuramThumbprint} alt="" />
-          <img className="mosaic-hero__grid-img3" src={PHOTOS.heroGirlDog} alt="" />
-          <img className="mosaic-hero__grid-img4" src={PHOTOS.yercaudDance} alt="" />
-          <img className="mosaic-hero__grid-img5" src={PHOTOS.treePlantingReal} alt="" />
-          <img className="mosaic-hero__grid-img6" src={PHOTOS.ramanathapuramSaplings} alt="" />
+          <img className="mosaic-hero__grid-img1" src={PHOTOS.aiCausesBg} alt="" />
+          <img className="mosaic-hero__grid-img2" src={PHOTOS.aiHero1} alt="" />
+          <img className="mosaic-hero__grid-img3" src={PHOTOS.aiHero2} alt="" />
+          <img className="mosaic-hero__grid-img4" src={PHOTOS.aiHero3} alt="" />
+          <img className="mosaic-hero__grid-img5" src={PHOTOS.aiAboutHero} alt="" />
+          <img className="mosaic-hero__grid-img6" src={PHOTOS.yercaudGroup} alt="" />
           <img className="mosaic-hero__grid-img7" src={PHOTOS.medicalConsultation} alt="" />
         </div>
         <div className="mosaic-hero__overlay" />

@@ -182,7 +182,7 @@ export default function HomePage() {
 
         <div className="hero-stats-bar">
           <div className="container">
-            <div className="hero-stats-bar__grid" style={{ gridTemplateColumns: "repeat(4, 1fr)" }}>
+            <div className="hero-stats-bar__grid">
               {IMPACT_STATS.map((s, i) => (
                 <div key={i} className="hero-stats-bar__item">
                   <span className="hero-stats-bar__num">

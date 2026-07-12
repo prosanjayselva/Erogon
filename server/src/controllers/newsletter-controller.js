@@ -1,5 +1,6 @@
 import { createNewsletterSchema } from '../validators/index.js';
 import { prisma } from '../index.js';
+import { createNotification } from '../services/notification.js';
 
 export async function subscribe(req, res) {
   try {
@@ -7,6 +8,7 @@ export async function subscribe(req, res) {
     const existing = await prisma.newsletter.findUnique({ where: { email } });
     if (existing) return res.status(409).json({ error: 'Email already subscribed' });
     const sub = await prisma.newsletter.create({ data: { email } });
+    await createNotification('NEWSLETTER', `New newsletter subscriber: ${email}`);
     res.status(201).json({ success: true, message: 'Subscribed successfully!', data: sub });
   } catch (err) {
     if (err.name === 'ZodError') return res.status(400).json({ error: err.errors[0].message });

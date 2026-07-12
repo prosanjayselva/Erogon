@@ -25,7 +25,7 @@ export default function EduSProPage() {
               <p className="diagonal-hero__sub">An educational support programme reaching young students at the school level who face the most difficult circumstances of their lives.</p>
               <div className="diagonal-hero__ctas">
                 <NavLink to="/donate" className="btn btn--primary">Sponsor a Child <DonateHeartIcon /></NavLink>
-                <NavLink to="#how-it-works" className="btn btn--outline">How It Works</NavLink>
+                <button className="btn btn--outline" onClick={() => document.getElementById("how-it-works")?.scrollIntoView({ behavior: "smooth" })}>How It Works</button>
               </div>
             </motion.div>
           </div>
@@ -69,7 +69,7 @@ export default function EduSProPage() {
         </div>
       </section>
 
-      <section className="section" style={{ background: "var(--secondary)" }}>
+      <section id="how-it-works" className="section" style={{ background: "var(--secondary)" }}>
         <div className="container">
           <Reveal as="up" className="text-center" style={{ maxWidth: 600, marginInline: "auto" }}>
             <div className="eyebrow" style={{ justifyContent: "center" }}>How It Works</div>
@@ -100,7 +100,7 @@ export default function EduSProPage() {
                   <h3 className="h-md" style={{ color: "white" }}>₹1,00,000 per child, fully sponsored</h3>
                   <NavLink to="/donate" className="btn btn--gold btn--sm mt-16">Become A Sponsor <DonateHeartIcon /></NavLink>
                 </div>
-                <div className="impact-band__stats" style={{ gridTemplateColumns: "repeat(2, 1fr)" }}>
+                <div className="impact-band__stats impact-band__stats--two">
                   <div className="impact-stat"><GraduationCapIcon /><div className="impact-stat__num">1,200+</div><div className="impact-stat__label">Children Supported</div></div>
                   <div className="impact-stat"><UsersGroupIcon /><div className="impact-stat__num">35+</div><div className="impact-stat__label">Villages Reached</div></div>
                 </div>

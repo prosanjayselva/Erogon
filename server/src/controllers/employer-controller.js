@@ -1,11 +1,13 @@
 import { createEmployerSchema } from '../validators/index.js';
 import { prisma } from '../index.js';
+import { createNotification } from '../services/notification.js';
 
 export async function create(req, res) {
   try {
     const data = createEmployerSchema.parse(req.body);
     const jd = req.file ? req.file.filename : null;
     const employer = await prisma.employer.create({ data: { ...data, jd } });
+    await createNotification('EMPLOYER', `New employer requirement from ${employer.organization}`);
     res.status(201).json({ success: true, message: 'Requirement submitted successfully!', data: employer });
   } catch (err) {
     if (err.name === 'ZodError') return res.status(400).json({ error: err.errors[0].message });

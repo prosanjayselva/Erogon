@@ -163,8 +163,8 @@ export default function GetInvolvedPage() {
               <div className="volunteer-hero__stat"><b>3</b><span>Districts</span></div>
             </div>
             <div className="volunteer-hero__actions">
-              <NavLink to="#volunteer" className="btn btn--primary">Become a Volunteer <VolunteerIcon /></NavLink>
-              <NavLink to="#career" className="btn btn--outline">Explore Careers</NavLink>
+              <button className="btn btn--primary" onClick={() => { setTab("volunteer"); setTimeout(() => document.getElementById("volunteer")?.scrollIntoView({ behavior: "smooth" }), 50); }}>Become a Volunteer <VolunteerIcon /></button>
+              <button className="btn btn--outline" onClick={() => { setTab("career"); setTimeout(() => document.getElementById("career")?.scrollIntoView({ behavior: "smooth" }), 50); }}>Explore Careers</button>
             </div>
           </motion.div>
         </div>
@@ -180,7 +180,7 @@ export default function GetInvolvedPage() {
           </Reveal>
 
           {tab === "volunteer" && (
-            <Reveal as="fade">
+            <Reveal as="fade" id="volunteer">
               <div className="grid-2 mb-48" style={{ alignItems: "center" }}>
                 <PhotoFrame src={PHOTOS.yercaudPledge} alt="Volunteers and children taking the ERGON pledge together" ratio="16/10" />
                 <div>
@@ -210,12 +210,12 @@ export default function GetInvolvedPage() {
               </Stagger>
 
               <div className="impact-band mb-48" style={{ background: "var(--primary)" }}>
-                <div className="impact-band__inner" style={{ gridTemplateColumns: "1fr 2fr", gap: 32 }}>
+                <div className="impact-band__inner impact-band__inner--alt">
                   <div className="impact-band__title">
                     <div className="eyebrow">Why Volunteer</div>
                     <h3 className="h-md" style={{ color: "white" }}>What You'll Gain</h3>
                   </div>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+                  <div className="benefits-grid">
                     {VOLUNTEER_BENEFITS.map((b, i) => (
                       <div className="impact-stat" key={i} style={{ textAlign: "left", padding: "20px" }}>
                         <b.icon />
@@ -274,7 +274,7 @@ export default function GetInvolvedPage() {
           )}
 
           {tab === "career" && (
-            <Reveal as="fade">
+            <Reveal as="fade" id="career">
               <div className="glass-card mb-48" style={{ maxWidth: 780, margin: "0 auto 48px", padding: "36px 32px", display: "flex", gap: 20, alignItems: "flex-start", flexWrap: "wrap" }}>
                 <div className="icon-badge" style={{ marginBottom: 0, flex: "none", width: 64, height: 64, background: "var(--gold)", color: "var(--text)" }}><BriefcaseIcon /></div>
                 <div style={{ flex: 1, minWidth: 200 }}>
@@ -288,12 +288,12 @@ export default function GetInvolvedPage() {
               </div>
 
               <div className="impact-band mb-48" style={{ background: "var(--primary)" }}>
-                <div className="impact-band__inner" style={{ gridTemplateColumns: "1fr 2fr", gap: 32 }}>
+                <div className="impact-band__inner impact-band__inner--alt">
                   <div className="impact-band__title">
                     <div className="eyebrow">Why Work With Us</div>
                     <h3 className="h-md" style={{ color: "white" }}>Benefits</h3>
                   </div>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+                  <div className="benefits-grid">
                     {CAREER_BENEFITS.map((b, i) => (
                       <div className="impact-stat" key={i} style={{ textAlign: "left", padding: "20px" }}>
                         <b.icon />
@@ -413,8 +413,8 @@ export default function GetInvolvedPage() {
                 <h2 className="h-lg">We'd Love To Hear From You</h2>
                 <p>Reach out to our team and we'll help you find the right way to get involved.</p>
                 <div className="hero__cta">
-                  <a href="/contact" className="btn btn--gold btn--lg">Contact Us <ArrowRightIcon /></a>
-                  <a href="/donate" className="btn btn--white">Support Our Work <HeartHandsIcon /></a>
+                  <NavLink to="/contact" className="btn btn--gold btn--lg">Contact Us <ArrowRightIcon /></NavLink>
+                  <NavLink to="/donate" className="btn btn--white">Support Our Work <HeartHandsIcon /></NavLink>
                 </div>
               </div>
             </div>

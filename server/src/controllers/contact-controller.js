@@ -1,10 +1,12 @@
 import { createContactSchema } from '../validators/index.js';
 import { prisma } from '../index.js';
+import { createNotification } from '../services/notification.js';
 
 export async function create(req, res) {
   try {
     const data = createContactSchema.parse(req.body);
     const contact = await prisma.contact.create({ data });
+    await createNotification('CONTACT', `New contact message from ${contact.fullName}`);
     res.status(201).json({ success: true, message: 'Message sent successfully!', data: contact });
   } catch (err) {
     if (err.name === 'ZodError') return res.status(400).json({ error: err.errors[0].message });

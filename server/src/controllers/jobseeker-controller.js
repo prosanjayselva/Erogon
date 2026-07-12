@@ -1,11 +1,13 @@
 import { createJobSeekerSchema } from '../validators/index.js';
 import { prisma } from '../index.js';
+import { createNotification } from '../services/notification.js';
 
 export async function create(req, res) {
   try {
     const data = createJobSeekerSchema.parse(req.body);
     const resume = req.file ? req.file.filename : null;
     const jobSeeker = await prisma.jobSeeker.create({ data: { ...data, resume } });
+    await createNotification('JOB_SEEKER', `New job seeker profile from ${jobSeeker.fullName}`);
     res.status(201).json({ success: true, message: 'Profile submitted successfully!', data: jobSeeker });
   } catch (err) {
     if (err.name === 'ZodError') return res.status(400).json({ error: err.errors[0].message });
