@@ -1,16 +1,34 @@
+const B = import.meta.env.BASE_URL;
+
+export const HOME_BANNER =
+  "ERGON Foundation is a registered charitable trust dedicated to innovation for the welfare of people, animals, and the environment. Guided by the vision, ROOTED IN GOOD DEEDS for the People, Pets and Planet.";
+
+export const ABOUT_VISION =
+  "The vision of ERGON Foundation is to work for the welfare of People, Pets, and the Planet through charitable and sustainable initiatives. The Foundation is committed to supporting poor and needy communities, caring for animals, and protecting the environment in Tamil Nadu and across India.";
+
+export const ABOUT_MISSION =
+  "ERGON Foundation is dedicated to innovation for the welfare of people, animals, and the environment through education support, skill development, women empowerment, healthcare, animal welfare, environmental protection, awareness, volunteer participation and community development programmes.";
+
 export const STATS = [
-  { num: "50+", label: "Projects Completed" },
-  { num: "25,000+", label: "Lives Impacted" },
-  { num: "1,200+", label: "Children Supported" },
-  { num: "400+", label: "Animals Rescued" },
-  { num: "35+", label: "Villages Reached" },
+  { num: "0", label: "Projects Completed" },
+  { num: "0", label: "Lives Impacted" },
+  { num: "0", label: "Children Supported" },
+  { num: "0", label: "Animals Rescued" },
+  { num: "0", label: "Villages Reached" },
+];
+
+export const ABOUT_IMPACT_STATS = [
+  { num: "0", label: "Lives Changed" },
+  { num: "0", label: "Children Educated" },
+  { num: "0", label: "Animals Rescued" },
+  { num: "43+", label: "Trees Planted" },
 ];
 
 export const PILLARS = [
   {
     key: "people",
     title: "People",
-    desc: "Uplifting communities through education, livelihood, health and dignity.",
+    desc: "Supporting poor and needy communities with education, livelihood, healthcare, dignity and opportunity.",
     points: [
       "Education Support & Skill Development",
       "Women Empowerment & Livelihood Support",
@@ -21,13 +39,13 @@ export const PILLARS = [
   {
     key: "pets",
     title: "Pets",
-    desc: "Protecting and caring for animals who cannot ask for help themselves.",
+    desc: "Caring for animals through rescue, welfare and compassionate field support.",
     points: ["Animal Rescue & Welfare Activities"],
   },
   {
     key: "planet",
     title: "Planet",
-    desc: "Safeguarding the environment for the generations who will inherit it.",
+    desc: "Protecting the environment in Tamil Nadu and across India through sustainable initiatives.",
     points: ["Environmental Protection & Sustainability", "Awareness, Volunteer & Community Development Programmes"],
   },
 ];
@@ -44,8 +62,24 @@ export const STAFF = [
   { name: "Mr. John Milton", role: "Director, Projects & Resource Mobilisation" },
 ];
 
-export const PARTNERS = ["Tech Tycoon Digital Solution LLP"];
-export const DONORS = ["LOGOS Constructions PVT Ltd.", "Rhema Resorts PVT Ltd."];
+export const PATRONS = [];
+
+export const PARTNERS = [
+  { name: "Tech Tycoon Digital Solution LLP", logo: "TT", logoSrc: `${B}images/partners/tech-tycoon.svg` },
+];
+
+export const DONORS = [
+  { name: "LOGOS Constructions PVT Ltd.", logo: "LC", logoSrc: `${B}images/partners/logos-constructions.svg` },
+  { name: "Rhema Resorts PVT Ltd.", logo: "RR", logoSrc: `${B}images/partners/rhema-resorts.svg` },
+];
+
+export const NEWSLETTER_CONTENT = {
+  title: "Newsletter",
+  points: ["Monthly updates", "Impact Stories"],
+};
+
+export const CAREER_INTRO =
+  "ERGON Foundation supports employers and job seekers by connecting the right talent with the right opportunities. Candidates can submit their profiles and career expectations, while employers can share their manpower requirements. Based on skills, qualifications, and expectations, ERGON Foundation helps facilitate suitable placements and employment opportunities.";
 
 export const PROJECTS = [
   { title: "Tree Plantation Drive", loc: "Ramanathapuram & Yercaud, TN", raised: 2250000, goal: 3000000, tone: "photo-frame--gold", photo: "projectTree" },
@@ -62,16 +96,16 @@ export const TESTIMONIALS = [
 
 export const BANK_DETAILS = [
   { label: "Name of the Account", value: "ERGON FOUNDATION" },
-  { label: "Name of the Bank", value: "State Bank of India" },
+  { label: "Name of the Bank", value: "STATE BANK OF INDIA" },
   { label: "Account Number", value: "45185422472" },
   { label: "Branch", value: "SBI HNI Ashok Nagar, Chennai" },
   { label: "IFSC Code", value: "SBIN0018228" },
 ];
 
 export const CONTACT = {
-  address: ["ERGON Foundation", "10/13, 2nd Floor, 1st Street,", "Dr. Subbarayan Nagar, Kodambakkam,", "Chennai - 600024"],
+  address: ["ERGON Foundation", "10/13, 2nd Floor, 1st Street,", "Dr. Subbarayan Nagar,", "Kodambakkam,", "Chennai - 600024"],
   email: "admin@ergonfoundation.org",
-  phone: "+91 84385 40850",
+  phone: "+91 8438540850",
   social: {
     facebook: "https://www.facebook.com/share/14r5MoatD84/",
     x: "https://x.com/ERGONFoundation",
@@ -82,25 +116,63 @@ export const CONTACT = {
 };
 
 export const REPORTS = [
-  { year: "Jun 2026", title: "World Environment Day 2026", desc: "Tree plantation and beach clean-up drives across Ramanathapuram and Yercaud." },
-  { year: "May 2026", title: "Medical Camp 2026", desc: "First community welfare programme — a free medical camp for migrant workers in Avadi, Chennai." },
-  { year: "2025 – 26", title: "Annual Report", desc: "A full account of programmes, finances and impact across the year." },
-  { year: "2024 – 25", title: "Annual Report", desc: "ERGON's founding year: the first programmes launched across Tamil Nadu villages." },
+  {
+    id: "environment-day-2026",
+    category: "Activity Report",
+    title: "Environment Day 2026",
+    desc: "Tree plantation and beach clean-up drives across Ramanathapuram and Yercaud.",
+    image: "reportEnvImpact",
+    primaryUrl: `${B}reports/world-environment-day-2026-ramanathapuram.pdf`,
+    files: [
+      { label: "Impact Infographic", type: "Image", url: `${B}reports/environment-day-2026-impact-infographic.png` },
+      { label: "Ramanathapuram Activity Report", type: "PDF", url: `${B}reports/world-environment-day-2026-ramanathapuram.pdf` },
+      { label: "Yercaud Activity Report", type: "PDF", url: `${B}reports/yercaud-environment-day-activity-report-2026.pdf` },
+    ],
+  },
+  {
+    id: "medical-camp-2026",
+    category: "Activity Report",
+    title: "Medical Camp 2026",
+    desc: "Free medical camp for migrant workers in Avadi, Chennai.",
+    image: "reportMedicalImpact",
+    primaryUrl: `${B}reports/medical-camp-report.pdf`,
+    files: [
+      { label: "Pictorial Impact Report", type: "Image", url: `${B}reports/medical-camp-impact-pictorial-report.png` },
+      { label: "Medical Camp Report", type: "PDF", url: `${B}reports/medical-camp-report.pdf` },
+    ],
+  },
+  {
+    id: "annual-report-2025-2026",
+    category: "Annual Report",
+    title: "2025-2026 Report",
+    desc: "Full annual record of programmes, finances and community impact.",
+    image: "reportEnvironment",
+    primaryUrl: "",
+    files: [],
+  },
 ];
 
 export const FEATURED_REPORTS = [
   {
-    title: "World Environment Day 2026",
-    subtitle: "Growing A Greener Future Together",
-    date: "5–6 June 2026",
-    desc: "41 saplings planted and 119 people engaged across Ramanathapuram and Yercaud — migrant worker families, fisherfolk and children took the environmental pledge together.",
+    title: "Environment Day 2026",
+    subtitle: "Activity Report",
+    date: "Activity Report",
+    desc: "Tree plantation and beach clean-up drives across Ramanathapuram and Yercaud.",
     image: "reportEnvironment",
   },
   {
     title: "Medical Camp 2026",
-    subtitle: "First Community Welfare Programme",
-    date: "15 May 2026 · Avadi, Chennai",
-    desc: "91 migrant construction workers received free health check-ups, blood pressure and SpO2 screening, with support from Sri Lalithambigai Medical College & Hospital.",
+    subtitle: "Activity Report",
+    date: "Activity Report",
+    desc: "First community welfare programme - a free medical camp for migrant workers in Avadi, Chennai.",
     image: "reportMedical",
   },
 ];
+
+export const EDUSPRO_CONTENT = {
+  title: "EduSPro - Educational Sponsors Programme",
+  subtitle:
+    "It is an EDUCATIONAL SUPPORT Programme that will reach out to young students at the school level who are in the most difficult situation of their lives, particularly without parents or with single parents in absolute poverty and raise 100,000/- (One lakh only) from various sponsors for their education.",
+  amount: "100,000/-",
+  amountLabel: "One lakh only",
+};

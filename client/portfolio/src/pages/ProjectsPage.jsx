@@ -11,7 +11,9 @@ const FILTERS = ["All", "Environment", "Healthcare", "Community"];
 const CATEGORY = ["Environment", "Environment", "Healthcare", "Community"];
 const ICONS = [LeafIcon, LeafIcon, GraduationCapIcon, PawIcon];
 
-function money(n) { return "₹" + n.toLocaleString("en-IN"); }
+function money(n) {
+  return "Rs. " + n.toLocaleString("en-IN");
+}
 
 export default function ProjectsPage() {
   const [filter, setFilter] = useState("All");
@@ -28,11 +30,14 @@ export default function ProjectsPage() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7 }}
           >
-            <img src={PHOTOS.aiHero3} alt="Tree plantation project" />
+            <img src={PHOTOS.ramanathapuramGroup} alt="ERGON Foundation project field work" />
             <div className="bento-hero__featured-overlay">
+              <span className="pill">Projects</span>
               <h2>Projects Growing Across Tamil Nadu</h2>
               <p>From sapling drives to shoreline clean-ups to free medical camps.</p>
-              <NavLink to="/donate" className="btn btn--primary btn--sm mt-16" style={{ alignSelf: "flex-start" }}>Support a Project <DonateHeartIcon /></NavLink>
+              <NavLink to="/donate" className="btn btn--gold btn--sm mt-16" style={{ alignSelf: "flex-start" }}>
+                Support a Project <DonateHeartIcon />
+              </NavLink>
             </div>
           </motion.div>
 
@@ -44,18 +49,18 @@ export default function ProjectsPage() {
           >
             <span className="pill">Ongoing & Completed</span>
             <h3 style={{ marginTop: 8 }}>10 Active Projects</h3>
-            <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.6)", marginTop: 4 }}>Each project is a root ERGON is actively tending.</p>
+            <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.72)", marginTop: 4 }}>Each project is a root ERGON is actively tending.</p>
           </motion.div>
 
           <motion.div
-            className="bento-hero__card"
+            className="bento-hero__card bento-hero__card--funds"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.06)" }}
           >
-            <h3 style={{ fontSize: "1.6rem", color: "var(--gold-light)" }}>₹50L+</h3>
-            <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)", textTransform: "uppercase", letterSpacing: "0.06em" }}>Funds Raised</p>
+            <span className="pill">Donor Support</span>
+            <h3>Rs. 50L+</h3>
+            <p>Funds raised for education, welfare, environment and healthcare programmes.</p>
           </motion.div>
 
           <div className="bento-hero__stat-row">
@@ -68,7 +73,7 @@ export default function ProjectsPage() {
               <span>Volunteers Engaged</span>
             </motion.div>
             <motion.div className="bento-hero__stat-item" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.5 }}>
-              <b>₹50L+</b>
+              <b>Rs. 50L+</b>
               <span>Funds Raised</span>
             </motion.div>
           </div>

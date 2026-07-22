@@ -1,36 +1,61 @@
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Reveal, { Stagger, StaggerItem } from "../components/Reveal.jsx";
 import PhotoFrame from "../components/PhotoFrame.jsx";
 import { PHOTOS } from "../data/photos.js";
-import { DocReceiptIcon, ArrowRightIcon, DownloadIcon } from "../components/Icons.jsx";
-import { REPORTS, FEATURED_REPORTS } from "../data/content.js";
+import { DocReceiptIcon, ArrowRightIcon } from "../components/Icons.jsx";
+import { REPORTS } from "../data/content.js";
 
 export default function ReportsPage() {
+  const defaultReport = REPORTS.find((report) => report.primaryUrl);
+  const availableReports = REPORTS.filter((report) => report.primaryUrl);
+  const [selectedReportId, setSelectedReportId] = useState(defaultReport?.id ?? REPORTS[0]?.id);
+  const viewerRef = useRef(null);
+  const selectedReport = REPORTS.find((report) => report.id === selectedReportId) ?? defaultReport;
+  const activeFile = selectedReport?.files?.[0] ?? null;
+
+  const scrollToViewer = () => {
+    window.requestAnimationFrame(() => {
+      viewerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  };
+
+  const selectReport = (report) => {
+    if (!report.primaryUrl) {
+      setSelectedReportId(report.id);
+      scrollToViewer();
+      return;
+    }
+    setSelectedReportId(report.id);
+    scrollToViewer();
+  };
+
   return (
     <>
       <section className="glass-hero">
         <div className="glass-hero__inner">
           <motion.div className="glass-hero__content" initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}>
-            <span className="glass-hero__eyebrow">Transparency</span>
-            <h1 className="glass-hero__title">Our Reports</h1>
-            <p className="glass-hero__sub">A running record of what your trust made possible — activity reports and full annual accounts, published as they're ready.</p>
+            <span className="glass-hero__eyebrow">Reports</span>
+            <h1 className="glass-hero__title">Activity Report & Annual Report</h1>
+            <p className="glass-hero__sub">
+              Activity Report and Annual Report records from ERGON Foundation programmes.
+              Select a report row to preview the document inside the website.
+            </p>
           </motion.div>
-          <motion.div className="glass-hero__cards" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.2 }}>
-            <div className="glass-hero__card">
-              <span className="pill">Environment Day 2026</span>
-              <h4>Impact Report</h4>
-              <p>Tree plantation and beach clean-up drives across Ramanathapuram and Yercaud.</p>
-            </div>
-            <div className="glass-hero__card">
-              <span className="pill">Medical Camp 2026</span>
-              <h4>Impact Report</h4>
-              <p>Free medical camp for migrant workers in Avadi, Chennai.</p>
-            </div>
-            <div className="glass-hero__card">
-              <span className="pill">Annual Activity</span>
-              <h4>2025-2026 Report</h4>
-              <p>Full annual record of programmes, finances and community impact.</p>
-            </div>
+
+          <motion.div className="glass-hero__cards report-picker" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.2 }}>
+            {availableReports.map((report) => (
+              <button
+                type="button"
+                onClick={() => selectReport(report)}
+                className={`glass-hero__card report-link-card ${selectedReport?.id === report.id ? "is-active" : ""}`}
+                key={report.id}
+              >
+                <span className="pill">{report.category}</span>
+                <h4>{report.title}</h4>
+                <p>{report.desc}</p>
+              </button>
+            ))}
           </motion.div>
         </div>
       </section>
@@ -38,69 +63,88 @@ export default function ReportsPage() {
       <section className="section">
         <div className="container">
           <Reveal as="up" className="mb-24">
-            <div className="eyebrow">Latest Activity</div>
-            <h2 className="h-lg">Straight From The Field</h2>
+            <div className="eyebrow">Reports Library</div>
+            <h2 className="h-lg">Available Reports</h2>
           </Reveal>
 
-          <Stagger className="grid-2">
-            {FEATURED_REPORTS.map((r, i) => (
-              <StaggerItem key={i}>
-                <div className="project-card">
-                  <PhotoFrame src={PHOTOS[r.image]} alt={r.title} ratio="2/3" fit="contain" style={{ background: "var(--secondary)" }} />
-                  <div className="project-card__body">
-                    <span className="pill">{r.date}</span>
-                    <h3 className="h-sm mt-8">{r.title}</h3>
-                    <p style={{ color: "var(--gold)", fontWeight: 600, fontSize: "0.86rem", marginTop: 2 }}>{r.subtitle}</p>
-                    <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginTop: 10 }}>{r.desc}</p>
+          <Stagger className="report-list">
+            {availableReports.map((report) => (
+              <StaggerItem key={report.id}>
+                <button
+                  type="button"
+                  onClick={() => selectReport(report)}
+                  className={`project-card report-card report-card--clickable ${selectedReport?.id === report.id ? "is-active" : ""}`}
+                >
+                  <div className="report-card__media">
+                    <PhotoFrame src={PHOTOS[report.image]} alt={report.title} ratio="4/5" fit="contain" style={{ background: "var(--secondary)" }} />
                   </div>
-                </div>
+                  <div className="project-card__body">
+                    <span className="pill">{report.category}</span>
+                    <h3 className="h-sm mt-8">{report.title}</h3>
+                    <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginTop: 10 }}>{report.desc}</p>
+                    <span className="link-arrow mt-24">
+                      {report.primaryUrl ? "Open Report" : "Request Report"} <ArrowRightIcon />
+                    </span>
+                  </div>
+                </button>
               </StaggerItem>
             ))}
           </Stagger>
+
+          {selectedReport && (
+            <div ref={viewerRef}>
+              <Reveal as="up" className="report-inline-viewer mt-48">
+                <div className="report-inline-viewer__head">
+                  <div>
+                    <span className="pill">{selectedReport.category}</span>
+                    <h3 className="h-md mt-8">{selectedReport.title}</h3>
+                    <p>{selectedReport.desc}</p>
+                  </div>
+                  {selectedReport.primaryUrl && (
+                    <a href={selectedReport.primaryUrl} target="_blank" rel="noreferrer" className="btn btn--primary btn--sm">
+                      Open Full Screen <ArrowRightIcon />
+                    </a>
+                  )}
+                </div>
+
+                {activeFile ? (
+                  activeFile.type === "Image" ? (
+                    <img className="report-inline-viewer__media" src={activeFile.url} alt={activeFile.label} />
+                  ) : (
+                    <iframe className="report-inline-viewer__frame" src={activeFile.url} title={activeFile.label} />
+                  )
+                ) : (
+                  <div className="report-inline-viewer__empty">
+                    <div className="report-coming-soon">
+                      <DocReceiptIcon />
+                      <strong>Coming Soon</strong>
+                      <span>Annual Report</span>
+                    </div>
+                  </div>
+                )}
+              </Reveal>
+            </div>
+          )}
         </div>
       </section>
 
       <section className="section" style={{ background: "var(--secondary)" }}>
-        <div className="container">
-          <Reveal as="up" style={{ textAlign: "center", maxWidth: 600, marginInline: "auto" }}>
-            <div className="eyebrow" style={{ justifyContent: "center" }}>Impact In Pictures</div>
-            <h2 className="h-lg">Visual Impact Reports</h2>
-          </Reveal>
-          <Stagger className="grid-2 mt-48">
-            <StaggerItem>
-              <div className="project-card">
-                <PhotoFrame src={PHOTOS.reportMedicalImpact} alt="Medical Camp Impact Report" ratio="4/3" />
-                <div className="project-card__body">
-                  <h3 className="h-sm">Medical Camp 2026 — Impact</h3>
-                  <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginTop: 4 }}>Pictorial impact report from the free medical camp for migrant workers in Avadi, Chennai.</p>
-                </div>
-              </div>
-            </StaggerItem>
-            <StaggerItem>
-              <div className="project-card">
-                <PhotoFrame src={PHOTOS.reportEnvImpact} alt="Environment Day Impact Report" ratio="4/3" />
-                <div className="project-card__body">
-                  <h3 className="h-sm">Environment Day 2026 — Impact</h3>
-                  <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginTop: 4 }}>Infographic report of tree plantation and beach clean-up drives across Ramanathapuram and Yercaud.</p>
-                </div>
-              </div>
-            </StaggerItem>
-          </Stagger>
-        </div>
-      </section>
-
-      <section className="section">
         <div className="container grid-2" style={{ alignItems: "flex-start" }}>
           <Reveal as="left">
-            <div className="eyebrow">The Record</div>
-            <h2 className="h-lg">Report Timeline</h2>
+            <div className="eyebrow">Report Timeline</div>
+            <h2 className="h-lg">Activity And Annual Records</h2>
             <div className="timeline mt-32">
-              {REPORTS.map((r, i) => (
-                <div className="timeline-item" key={i}>
-                  <span className="yr">{r.year}</span>
-                  <h4>{r.title}</h4>
-                  <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginTop: 4 }}>{r.desc}</p>
-                </div>
+              {REPORTS.map((report) => (
+                <button
+                  type="button"
+                  onClick={() => selectReport(report)}
+                  className="timeline-item timeline-item--link"
+                  key={report.id}
+                >
+                  <span className="yr">{report.category}</span>
+                  <h4>{report.title}</h4>
+                  <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginTop: 4 }}>{report.desc}</p>
+                </button>
               ))}
             </div>
           </Reveal>
@@ -110,8 +154,7 @@ export default function ReportsPage() {
               <div className="icon-badge"><DocReceiptIcon /></div>
               <h3 className="h-sm">Request A Report</h3>
               <p style={{ color: "var(--text-secondary)", fontSize: "0.92rem", marginTop: 8 }}>
-                Activity and Annual Reports are shared with donors, partners and the public on request, and
-                published here as PDFs once finalised for the year.
+                Annual Report documents are shared with donors, partners and the public on request when the final file is not yet uploaded.
               </p>
               <a href="mailto:admin@ergonfoundation.org?subject=Report%20Request" className="link-arrow mt-24" style={{ display: "inline-flex" }}>
                 Email admin@ergonfoundation.org <ArrowRightIcon />

@@ -5,12 +5,12 @@ import Reveal, { Stagger, StaggerItem } from "../components/Reveal.jsx";
 import RootLine from "../components/RootLine.jsx";
 import PhotoFrame from "../components/PhotoFrame.jsx";
 import {
-  PeopleIcon, PawIcon, LeafIcon, HeartHandsIcon, GraduationCapIcon, HomeVillageIcon,
+  PeopleIcon, PawIcon, LeafIcon, HeartHandsIcon, GraduationCapIcon,
   UsersGroupIcon, HeartIcon, ArrowRightIcon, PlayIcon, QuoteIcon, ShieldCheckIcon,
   LockIcon, DocReceiptIcon, BellIcon, PinIcon, DonateHeartIcon, VolunteerIcon, TargetIcon,
   SparkleIcon, BriefcaseIcon,
 } from "../components/Icons.jsx";
-import { STATS, PROJECTS, TESTIMONIALS, PARTNERS, DONORS } from "../data/content.js";
+import { HOME_BANNER, STATS, PROJECTS, TESTIMONIALS, PARTNERS, DONORS } from "../data/content.js";
 import { PHOTOS } from "../data/photos.js";
 import {
   PeopleIllustration, PetsIllustration, PlanetIllustration,
@@ -34,16 +34,16 @@ const TRUST_ITEMS = [
 ];
 
 const IMPACT_STATS = [
-  { icon: HeartHandsIcon, num: 25000, label: "Lives Changed", suffix: "+" },
-  { icon: GraduationCapIcon, num: 1800, label: "Children Educated", suffix: "+" },
-  { icon: LeafIcon, num: 15000, label: "Trees Planted", suffix: "+" },
-  { icon: HomeVillageIcon, num: 100000, label: "Meals Served", suffix: "+" },
+  { icon: HeartHandsIcon, num: 0, label: "Lives Changed", suffix: "" },
+  { icon: GraduationCapIcon, num: 0, label: "Children Educated", suffix: "" },
+  { icon: LeafIcon, num: 43, label: "Trees Planted", suffix: "+" },
+  { icon: PawIcon, num: 0, label: "Animals Fed", suffix: "" },
 ];
 
 const CAUSES_FEATURED = [
-  { title: "Education For Every Child", desc: "Supporting 1,800+ children with scholarships, digital learning and skill development.", icon: GraduationCapIcon, theme: "#1B4332" },
-  { title: "Accessible Healthcare", desc: "Free medical camps reaching 6,200+ people in underserved communities.", icon: HeartHandsIcon, theme: "#2D6A4F" },
-  { title: "Protect Our Planet", desc: "15,000+ trees planted, beach clean-ups and environmental awareness.", icon: LeafIcon, theme: "#B8860B" },
+  { title: "Education For Every Child", desc: "Supporting children with scholarships, digital learning and skill development.", icon: GraduationCapIcon, theme: "#1B4332" },
+  { title: "Accessible Healthcare", desc: "Free medical camps supporting underserved communities.", icon: HeartHandsIcon, theme: "#2D6A4F" },
+  { title: "Protect Our Planet", desc: "43+ trees planted, beach clean-ups and environmental awareness.", icon: LeafIcon, theme: "#B8860B" },
   { title: "Care For Every Animal", desc: "Rescue and rehabilitation for animals in need across Tamil Nadu.", icon: PawIcon, theme: "#2F855A" },
 ];
 
@@ -72,7 +72,7 @@ function AnimatedCounter({ value, suffix = "" }) {
 
   return (
     <span ref={ref}>
-      <span>{display}</span>{suffix}
+      <span>{display.toLocaleString("en-IN")}</span>{suffix}
     </span>
   );
 }
@@ -111,6 +111,60 @@ function money(n) {
 }
 
 export default function HomePage() {
+  const [storyOpen, setStoryOpen] = useState(false);
+  const [storyImage, setStoryImage] = useState({
+    src: PHOTOS.ramanathapuramGroup,
+    alt: "ERGON Foundation field impact",
+    time: "",
+  });
+
+  const openStory = () => {
+    const images = [
+      { src: PHOTOS.ramanathapuramGroup, alt: "ERGON Foundation community programme" },
+      { src: PHOTOS.ramanathapuramSaplings, alt: "ERGON Foundation tree plantation activity" },
+      { src: PHOTOS.ramanathapuramBeachClean, alt: "ERGON Foundation beach clean-up activity" },
+      { src: PHOTOS.medicalCampGroup, alt: "ERGON Foundation medical camp" },
+    ];
+    const next = images[Math.floor(Math.random() * images.length)];
+    const time = new Date().toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" });
+    const imageUrl = new URL(next.src, window.location.origin).href;
+    const svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+        <defs>
+          <linearGradient id="shade" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stop-color="#0f241a" stop-opacity="0.92"/>
+            <stop offset="0.54" stop-color="#0f241a" stop-opacity="0.38"/>
+            <stop offset="1" stop-color="#d8b03c" stop-opacity="0.26"/>
+          </linearGradient>
+        </defs>
+        <image href="${imageUrl}" x="0" y="0" width="1200" height="760" preserveAspectRatio="xMidYMid slice"/>
+        <rect width="1200" height="760" fill="url(#shade)"/>
+        <rect x="54" y="54" width="1092" height="652" rx="34" fill="none" stroke="#f3eddc" stroke-opacity="0.42" stroke-width="2"/>
+        <text x="80" y="130" fill="#d8b03c" font-family="Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="3">LIVE FIELD SNAPSHOT - ${time}</text>
+        <text x="80" y="235" fill="#ffffff" font-family="Georgia, serif" font-size="76" font-weight="700">People, Pets</text>
+        <text x="80" y="320" fill="#ffffff" font-family="Georgia, serif" font-size="76" font-weight="700">And Planet</text>
+        <text x="80" y="392" fill="#f3eddc" font-family="Arial, sans-serif" font-size="28">Generated instantly from ERGON's field work moments.</text>
+        <g transform="translate(80 518)">
+          <rect width="230" height="96" rx="20" fill="#ffffff" fill-opacity="0.88"/>
+          <text x="28" y="44" fill="#1b4332" font-family="Georgia, serif" font-size="34" font-weight="700">0</text>
+          <text x="28" y="72" fill="#3e4a40" font-family="Arial, sans-serif" font-size="16" font-weight="700">LIVES CHANGED</text>
+        </g>
+        <g transform="translate(334 518)">
+          <rect width="230" height="96" rx="20" fill="#ffffff" fill-opacity="0.88"/>
+          <text x="28" y="44" fill="#1b4332" font-family="Georgia, serif" font-size="34" font-weight="700">0</text>
+          <text x="28" y="72" fill="#3e4a40" font-family="Arial, sans-serif" font-size="16" font-weight="700">ANIMALS RESCUED</text>
+        </g>
+        <g transform="translate(588 518)">
+          <rect width="230" height="96" rx="20" fill="#ffffff" fill-opacity="0.88"/>
+          <text x="28" y="44" fill="#1b4332" font-family="Georgia, serif" font-size="34" font-weight="700">43+</text>
+          <text x="28" y="72" fill="#3e4a40" font-family="Arial, sans-serif" font-size="16" font-weight="700">TREES PLANTED</text>
+        </g>
+      </svg>`;
+    const generatedSrc = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+    setStoryImage({ src: generatedSrc, alt: `${next.alt} generated live impact card`, time });
+    setStoryOpen(true);
+  };
+
   return (
     <>
       {/* ================================ HERO ================================ */}
@@ -142,8 +196,7 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
-              ERGON Foundation is a registered charitable trust dedicated to innovation for the welfare of
-              people, animals and the environment. Together, we can build a kinder, stronger and sustainable world.
+              {HOME_BANNER}
             </motion.p>
 
             <motion.div
@@ -154,6 +207,7 @@ export default function HomePage() {
             >
               <NavLink to="/donate" className="btn btn--primary">Donate Now <DonateHeartIcon /></NavLink>
               <NavLink to="/about" className="btn btn--outline">Explore Our Work <ArrowRightIcon /></NavLink>
+              <button type="button" className="btn btn--ghost" onClick={openStory}>Live Impact Image <PlayIcon /></button>
             </motion.div>
           </div>
 
@@ -165,18 +219,20 @@ export default function HomePage() {
           >
             <img src={PHOTOS.aiHeroGirlDog} alt="A young girl warmly hugging her golden retriever puppy" />
             <div className="page-hero-split__media-overlay" />
-            <motion.div
+            <motion.button
+              type="button"
               className="home-hero__badge"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.3, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              onClick={openStory}
             >
               <PlayIcon />
               <div>
                 <b>Watch Our Story</b>
                 <span>See how we create impact</span>
               </div>
-            </motion.div>
+            </motion.button>
           </motion.div>
         </div>
 
@@ -195,6 +251,35 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {storyOpen && (
+        <motion.div
+          className="story-modal"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          role="dialog"
+          aria-modal="true"
+          aria-label="ERGON live impact story"
+          onClick={() => setStoryOpen(false)}
+        >
+          <motion.div
+            className="story-modal__panel"
+            initial={{ opacity: 0, y: 24, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button className="story-modal__close" type="button" aria-label="Close story popup" onClick={() => setStoryOpen(false)}>x</button>
+            <img src={storyImage.src} alt={storyImage.alt} />
+            <div className="story-modal__content">
+              <span>Live Field Snapshot{storyImage.time ? ` - ${storyImage.time}` : ""}</span>
+              <h3>People, Pets And Planet In Action</h3>
+              <p>This instant preview generates a fresh ERGON field snapshot inside the popup when the story button is clicked.</p>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
 
       {/* ============================ TRUST SECTION ============================ */}
       <section className="section" style={{ background: "var(--secondary)" }}>
@@ -221,8 +306,8 @@ export default function HomePage() {
       <section className="section">
         <div className="container grid-2">
           <Reveal as="left">
-            <div style={{ position: "relative" }}>
-              <PhotoFrame src={PHOTOS.ramanathapuramGroup} alt="ERGON Foundation team" ratio="1/1" tone="photo-frame--sage" />
+            <div className="about-logo-card" aria-label="ERGON Foundation logo">
+              <img src={`${import.meta.env.BASE_URL}images/footer-pillars.png`} alt="ERGON Foundation - The People, The Pets, The Planet" />
             </div>
           </Reveal>
           <Reveal as="right" delay={0.1}>
@@ -441,8 +526,8 @@ export default function HomePage() {
           </Reveal>
           <Reveal as="fade" delay={0.1}>
             <div className="partner-row">
-              {[...PARTNERS, ...DONORS, "Community Circle", "Give Together"].map((p, i) => (
-                <span className="partner-item" key={i}>{p}</span>
+              {[...PARTNERS, ...DONORS].map((p, i) => (
+                <span className="partner-item" key={i}>{p.name}</span>
               ))}
             </div>
           </Reveal>

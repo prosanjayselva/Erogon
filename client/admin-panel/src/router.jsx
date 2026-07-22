@@ -37,7 +37,7 @@ const router = createBrowserRouter([
       },
     ],
   },
-], { basename: '/admin-panel' });
+], { basename: `${import.meta.env.BASE_URL}admin-panel` });
 
 export default function Router() {
   return <RouterProvider router={router} />;

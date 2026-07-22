@@ -34,7 +34,7 @@ api.interceptors.response.use(
           return api(original);
         } catch {
           localStorage.removeItem('ergon-auth');
-          window.location.href = '/admin-panel/login';
+          window.location.href = `${import.meta.env.BASE_URL}admin-panel/login`;
         }
       }
     }

@@ -45,12 +45,12 @@ export default function CausesPage() {
         const Icon = PILLAR_ICON[p.key];
         const reverse = i % 2 === 1;
         return (
-          <section className={`section ${i % 2 === 0 ? "" : ""}`} style={{ background: i % 2 === 0 ? "var(--background)" : "var(--secondary)" }} key={p.key}>
-            <div className="container grid-2">
-              <Reveal as={reverse ? "right" : "left"} style={{ order: reverse ? 2 : 1 }}>
+          <section className="section cause-section" style={{ background: i % 2 === 0 ? "var(--background)" : "var(--secondary)" }} key={p.key}>
+            <div className="container grid-2 cause-section__inner">
+              <Reveal as={reverse ? "right" : "left"} className="cause-section__media" style={{ order: reverse ? 2 : 1 }}>
                 <PhotoFrame src={PILLAR_PHOTO[p.key]} alt={p.title} icon={Icon} tone={PILLAR_TONE[p.key]} caption={p.title} ratio="4/3.2" blob={i === 1} objectPosition={p.key === "planet" ? "top" : undefined} />
               </Reveal>
-              <Reveal as={reverse ? "left" : "right"} delay={0.1} style={{ order: reverse ? 1 : 2 }}>
+              <Reveal as={reverse ? "left" : "right"} delay={0.1} className="cause-section__content" style={{ order: reverse ? 1 : 2 }}>
                 <div className="eyebrow">{`0${i + 1} · Our Causes`}</div>
                 <h2 className="h-lg">{p.title}</h2>
                 <p className="lede mt-16">{p.desc}</p>

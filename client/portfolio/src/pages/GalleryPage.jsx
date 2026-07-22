@@ -91,9 +91,9 @@ export default function GalleryPage() {
             <Reveal as="fade" key="videos">
               <div className="grid-3">
                 {[
-                  { src: `${B}videos/ramanathapuram-glimpses.mp4`, title: "Environment Day Ramanathapuram", desc: "Highlights from the World Environment Day 2026 celebrations at Ramanathapuram." },
-                  { src: `${B}videos/yercaud-climate-dance.mp4`, title: "Environment Day Yercaud", desc: "Climate dance challenge with school children at Yercaud." },
-                  { src: `${B}videos/medical-camp-avadi.mp4`, title: "Medical Camp Avadi", desc: "Free medical check-up camp for migrant workers in Avadi, Chennai." },
+                  { src: `${B}videos/ramanathapuram-glimpses.mp4`, title: "Plants - Ramanathapuram", desc: "Tree planting and coastal care moments from Ramanathapuram." },
+                  { src: `${B}videos/yercaud-climate-dance.mp4`, title: "People - Yercaud", desc: "Children and volunteers taking part in climate awareness activities." },
+                  { src: `${B}videos/medical-camp-avadi.mp4`, title: "People - Avadi", desc: "Free health support and care for migrant workers in Avadi, Chennai." },
                 ].map((v, i) => (
                   <div className="project-card" key={i}>
                     <div className="photo-frame" style={{ aspectRatio: "16/9", borderRadius: 0, position: "relative", overflow: "hidden" }}>

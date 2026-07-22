@@ -10,6 +10,7 @@ import {
   UsersGroupIcon, PinIcon, ArrowRightIcon, DonateHeartIcon,
 } from "../components/Icons.jsx";
 import api from "../api/client.js";
+import { CAREER_INTRO } from "../data/content.js";
 
 const VOLUNTEER_WAYS = [
   { icon: HeartHandsIcon, title: "Community Drives", desc: "Join education, healthcare and livelihood outreach in the field." },
@@ -158,7 +159,7 @@ export default function GetInvolvedPage() {
             <h1 className="volunteer-hero__title">Be The Reason Someone Smiles Today</h1>
             <p className="volunteer-hero__sub">Give your time as a volunteer, or connect through ERGON's Career Opportunities programme — for job seekers and employers alike.</p>
             <div className="volunteer-hero__stats">
-              <div className="volunteer-hero__stat"><b>50+</b><span>Active Volunteers</span></div>
+              <div className="volunteer-hero__stat"><b>0</b><span>Active Volunteers</span></div>
               <div className="volunteer-hero__stat"><b>6</b><span>Ways to Help</span></div>
               <div className="volunteer-hero__stat"><b>3</b><span>Districts</span></div>
             </div>
@@ -280,9 +281,7 @@ export default function GetInvolvedPage() {
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <h3 className="h-md">ERGON Career Opportunities</h3>
                   <p style={{ color: "var(--text-secondary)", marginTop: 6 }}>
-                    ERGON Foundation supports employers and job seekers by connecting the right talent with the
-                    right opportunities. Candidates can submit their profiles and career expectations, while
-                    employers can share their manpower requirements — ERGON helps facilitate suitable placements.
+                    {CAREER_INTRO}
                   </p>
                 </div>
               </div>

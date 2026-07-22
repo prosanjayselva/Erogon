@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { MenuFacebook, MenuX, MenuLinkedin, MenuInstagram, MenuYoutube, PinIcon, MailIcon, PhoneIcon } from "./Icons.jsx";
 import api from "../api/client.js";
+import { NEWSLETTER_CONTENT } from "../data/content.js";
 
 const B = import.meta.env.BASE_URL;
 
@@ -30,13 +31,13 @@ export default function Footer() {
       <div className="container footer-grid">
         <div className="footer-about">
           <NavLink to="/" className="brand">
-            <img src={`${B}images/logo-footer.png`} alt="ERGON Foundation" className="brand__logo" onError={(e) => { e.target.src = `${B}images/logo.png`; }} />
+            <img src={`${B}images/logo.png`} alt="ERGON Foundation" className="brand__logo" />
             <span className="brand__word">
               <b style={{ color: "white" }}>Ergon Foundation</b>
-              <span style={{ color: "var(--gold)" }}>Foundation</span>
+              <span style={{ color: "var(--gold)" }}>Rooted in Good Deeds</span>
             </span>
           </NavLink>
-          <p>Rooted in good deeds — a registered charitable trust working for the welfare of People, Pets and the Planet across Tamil Nadu and India.</p>
+          <p>Rooted in good deeds for <b>People &bull; Pets &bull; Planet</b> - a registered charitable trust working across Tamil Nadu and India.</p>
           <div className="footer-social">
             <a href="https://www.facebook.com/share/14r5MoatD84/" target="_blank" rel="noreferrer" aria-label="Facebook"><MenuFacebook /></a>
             <a href="https://x.com/ERGONFoundation" target="_blank" rel="noreferrer" aria-label="X"><MenuX /></a>
@@ -75,7 +76,8 @@ export default function Footer() {
             <li><MailIcon /><span>admin@ergonfoundation.org</span></li>
             <li><PhoneIcon /><span>+91 84385 40850</span></li>
           </ul>
-          <h5 style={{ marginTop: 24 }}>Stay Connected</h5>
+          <h5 style={{ marginTop: 24 }}>{NEWSLETTER_CONTENT.title}</h5>
+          <p className="newsletter-copy">{NEWSLETTER_CONTENT.points.join(" • ")}</p>
           <form className="newsletter-form" onSubmit={subscribe}>
             <input type="email" placeholder="Your email address" required value={email} onChange={(e) => setEmail(e.target.value)} />
             <button type="submit">Join</button>

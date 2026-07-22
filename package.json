@@ -2,18 +2,23 @@
   "name": "ergon-foundation-platform",
   "private": true,
   "version": "1.0.0",
+  "packageManager": "npm@10.9.2",
   "workspaces": [
-    "apps/web",
-    "apps/api"
+    "client/portfolio",
+    "client/admin-panel",
+    "server"
   ],
   "scripts": {
-    "dev": "concurrently -k -n client,server -c cyan,green \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
-    "dev:web": "npm run dev --workspace @ergon/web",
-    "dev:api": "npm run start:dev --workspace @ergon/api",
-    "build": "npm run build --workspace @ergon/web && npm run build --workspace @ergon/api",
-    "typecheck": "npm run typecheck --workspace @ergon/web && npm run typecheck --workspace @ergon/api"
+    "dev": "turbo dev",
+    "dev:web": "npm run dev --workspace ergon-foundation",
+    "dev:admin": "npm run dev --workspace ergon-admin-panel",
+    "dev:api": "npm run dev --workspace ergon-server",
+    "build": "turbo build",
+    "build:web": "npm run build --workspace ergon-foundation",
+    "build:admin": "npm run build --workspace ergon-admin-panel"
   },
   "devDependencies": {
-    "concurrently": "^10.0.3"
+    "concurrently": "^10.0.3",
+    "turbo": "^2.10.5"
   }
 }

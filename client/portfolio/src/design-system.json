@@ -191,16 +191,16 @@
       "items": [
         { "label": "Lives Changed", "value": 25000, "icon": "HeartHands" },
         { "label": "Children Educated", "value": 1800, "icon": "GraduationCap" },
-        { "label": "Trees Planted", "value": 15000, "icon": "Leaf" },
-        { "label": "Meals Served", "value": 100000, "icon": "HomeVillage" }
+        { "label": "Trees Planted", "value": 43, "icon": "Leaf" },
+        { "label": "Animals Fed", "value": 0, "icon": "Paw" }
       ]
     },
     "featuredCauses": {
       "layout": "Premium Glass Cards with Colored Border",
       "items": [
-        { "title": "Education For Every Child", "desc": "Supporting 1,800+ children with scholarships.", "color": "#1B4332" },
+        { "title": "Education For Every Child", "desc": "Supporting children with scholarships.", "color": "#1B4332" },
         { "title": "Accessible Healthcare", "desc": "Free medical camps reaching 6,200+ people.", "color": "#2D6A4F" },
-        { "title": "Protect Our Planet", "desc": "15,000+ trees planted, beach clean-ups.", "color": "#B8860B" },
+        { "title": "Protect Our Planet", "desc": "43+ trees planted, beach clean-ups.", "color": "#B8860B" },
         { "title": "Care For Every Animal", "desc": "Rescue and rehabilitation across Tamil Nadu.", "color": "#235C42" }
       ]
     },

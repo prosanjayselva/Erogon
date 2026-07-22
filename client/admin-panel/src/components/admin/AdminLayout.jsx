@@ -14,7 +14,7 @@ const menu = [
   { id: 'newsletter', label: 'Newsletter', icon: '📬', path: '/newsletter' },
   { id: 'events', label: 'Event Management', icon: '📅', path: '/events' },
   { id: 'audit', label: 'Audit Logs', icon: '📋', path: '/audit-logs' },
-  { id: 'website', label: 'View Website', icon: '🌐', path: import.meta.env.PROD ? '/' : 'http://localhost:5174' },
+  { id: 'website', label: 'View Website', icon: '🌐', path: import.meta.env.PROD ? `${import.meta.env.BASE_URL}` : 'http://localhost:5174' },
 ];
 
 export default function AdminLayout() {
@@ -42,7 +42,7 @@ export default function AdminLayout() {
       {/* ─── Sidebar ─── */}
       <aside className={`admin-sidebar ${sidebarOpen ? 'is-open' : ''}`}>
         <div className="sidebar-logo">
-          <img src="/admin-panel/assets/logo.png" alt="ERGON" className="sidebar-logo-img" />
+          <img src={`${import.meta.env.BASE_URL}images/logo.png`} alt="ERGON" className="sidebar-logo-img" />
           <div className="sidebar-logo-text">
             <span className="sidebar-logo-name">ERGON</span>
             <span className="sidebar-logo-sub">FOUNDATION</span>

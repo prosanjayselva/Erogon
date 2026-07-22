@@ -4,7 +4,7 @@ import PhotoFrame from "../components/PhotoFrame.jsx";
 import { motion } from "framer-motion";
 import { PHOTOS } from "../data/photos.js";
 import { ChevronRightIcon, PeopleIcon, PawIcon, LeafIcon, HeartIcon, UsersGroupIcon, ArrowRightIcon, HeartHandsIcon, GlobeIcon } from "../components/Icons.jsx";
-import { PILLARS, GOVERNING_BODY, STAFF, PARTNERS, DONORS } from "../data/content.js";
+import { PILLARS, GOVERNING_BODY, STAFF, PATRONS, PARTNERS, DONORS, ABOUT_IMPACT_STATS, ABOUT_MISSION, ABOUT_VISION } from "../data/content.js";
 import { NavLink } from "react-router-dom";
 
 const PILLAR_ICON = { people: PeopleIcon, pets: PawIcon, planet: LeafIcon };
@@ -12,10 +12,10 @@ const PILLAR_ICON = { people: PeopleIcon, pets: PawIcon, planet: LeafIcon };
 const CORE_VALUES = ["Compassion", "Integrity", "Transparency", "Empowerment", "Sustainability", "Community"];
 
 const JOURNEY = [
-  { year: "2024", title: "Foundation Established", desc: "ERGON Foundation was registered as a charitable trust." },
-  { year: "2025", title: "First Education Program", desc: "Launched EduSPro initiative supporting children's education." },
-  { year: "2026", title: "Medical Outreach", desc: "Free medical camp for migrant workers in Avadi, Chennai." },
-  { year: "2026", title: "Environmental Campaign", desc: "Tree plantation and beach clean-up drives across Tamil Nadu." },
+  { year: "2024", title: "Foundation Registered", desc: "ERGON Foundation began as a registered charitable trust with a focus on People, Pets and Planet." },
+  { year: "2025", title: "Field Work Began", desc: "The team started identifying schools, communities and local partners for education, welfare and environment work." },
+  { year: "2026", title: "First Community Programmes", desc: "Medical camp, tree plantation and beach clean-up activities were conducted with volunteers and partner support." },
+  { year: "Next", title: "Programme Expansion", desc: "ERGON is building sponsor networks for EduSPro, animal welfare support and more structured village outreach." },
 ];
 
 export default function AboutPage() {
@@ -76,16 +76,35 @@ export default function AboutPage() {
               <motion.div className="glass-card" style={{ padding: "clamp(24px, 5vw, 44px) clamp(18px, 4vw, 36px)", textAlign: "center" }} whileHover={{ y: -6, boxShadow: "var(--shadow-lg)" }}>
                 <HeartHandsIcon style={{ width: 52, height: 52, color: "var(--primary)", marginBottom: 20 }} />
                 <h3 className="h-md">Our Mission</h3>
-                <p className="lede mx-auto mt-16">Transform lives through education, health, environment and sustainable community development.</p>
+                <p className="lede mx-auto mt-16">{ABOUT_MISSION}</p>
               </motion.div>
             </Reveal>
             <Reveal as="right" delay={0.1}>
               <motion.div className="glass-card" style={{ padding: "clamp(24px, 5vw, 44px) clamp(18px, 4vw, 36px)", textAlign: "center" }} whileHover={{ y: -6, boxShadow: "var(--shadow-lg)" }}>
                 <GlobeIcon style={{ width: 52, height: 52, color: "var(--primary)", marginBottom: 20 }} />
                 <h3 className="h-md">Our Vision</h3>
-                <p className="lede mx-auto mt-16">A world where every individual has equal opportunities to thrive with dignity.</p>
+                <p className="lede mx-auto mt-16">{ABOUT_VISION}</p>
               </motion.div>
             </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <section className="section section--sm" style={{ background: "var(--secondary)" }}>
+        <div className="container">
+          <Reveal as="up" className="text-center" style={{ maxWidth: 620, marginInline: "auto" }}>
+            <div className="eyebrow" style={{ justifyContent: "center" }}>Impact In Numbers</div>
+            <h2 className="h-lg">People, Pets And Planet In Action</h2>
+          </Reveal>
+          <div className="about-impact-grid mt-32">
+            {ABOUT_IMPACT_STATS.map((s, i) => (
+              <Reveal as="up" delay={i * 0.06} key={s.label}>
+                <div className="about-impact-card">
+                  <strong>{s.num}</strong>
+                  <span>{s.label}</span>
+                </div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
@@ -189,6 +208,14 @@ export default function AboutPage() {
             </Stagger>
           </div>
           <div className="mt-48">
+            <Reveal as="up"><h3 className="h-sm mb-16">ERGON Patrons</h3></Reveal>
+            <div className="empty-panel">
+              {PATRONS.length ? PATRONS.map((m, i) => (
+                <div key={i}>{m.name}</div>
+              )) : <span>Patron details will be updated soon.</span>}
+            </div>
+          </div>
+          <div className="mt-48">
             <Reveal as="up"><h3 className="h-sm mb-16">ERGON Staff</h3></Reveal>
             <Stagger className="grid-3">
               {STAFF.map((m, i) => (
@@ -196,7 +223,7 @@ export default function AboutPage() {
                   <div className="card" style={{ textAlign: "center" }}>
                     <div className="testi-avatar mx-auto" style={{ marginBottom: 14 }}><UsersGroupIcon /></div>
                     <h4 className="h-sm">{m.name}</h4>
-                    <span className="pill mt-8" style={{ display: "inline-block" }}>{m.role}</span>
+                    {m.role ? <span className="pill mt-8" style={{ display: "inline-block" }}>{m.role}</span> : <span className="role-placeholder" aria-label="Designation pending" />}
                   </div>
                 </StaggerItem>
               ))}
@@ -208,18 +235,24 @@ export default function AboutPage() {
       <section className="section section--sm" style={{ background: "var(--secondary)" }}>
         <div className="container grid-2">
           <Reveal as="left">
-            <h3 className="h-sm mb-16">Our Partners</h3>
-            <div className="card">
+            <h3 className="h-sm mb-16">Our Partners & Donors</h3>
+            <div className="partner-logo-grid">
               {PARTNERS.map((p, i) => (
-                <div key={i} className="flex gap-12" style={{ padding: "10px 0" }}><HeartIcon style={{ color: "var(--primary)", width: 18, height: 18 }} /> <span>{p}</span></div>
+                <div key={i} className="partner-logo-card">
+                  {p.logoSrc ? <img src={p.logoSrc} alt={`${p.name} logo`} /> : <span>{p.logo}</span>}
+                  <b>{p.name}</b>
+                </div>
               ))}
             </div>
           </Reveal>
           <Reveal as="right" delay={0.1}>
-            <h3 className="h-sm mb-16">Our Donors</h3>
-            <div className="card">
+            <h3 className="h-sm mb-16">Supporters</h3>
+            <div className="partner-logo-grid">
               {DONORS.map((p, i) => (
-                <div key={i} className="flex gap-12" style={{ padding: "10px 0" }}><HeartIcon style={{ color: "var(--primary)", width: 18, height: 18 }} /> <span>{p}</span></div>
+                <div key={i} className="partner-logo-card">
+                  {p.logoSrc ? <img src={p.logoSrc} alt={`${p.name} logo`} /> : <span>{p.logo}</span>}
+                  <b>{p.name}</b>
+                </div>
               ))}
             </div>
           </Reveal>
