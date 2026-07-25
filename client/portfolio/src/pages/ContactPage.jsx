@@ -60,6 +60,7 @@ export default function ContactPage() {
               <div>
                 <h4>Email</h4>
                 <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+                <a href={`mailto:${CONTACT.secretaryEmail}`}>{CONTACT.secretaryEmail}</a>
               </div>
             </div>
             <div className="contact-hero__card">
@@ -89,7 +90,7 @@ export default function ContactPage() {
             <div className="mt-32" style={{ display: "flex", flexDirection: "column", gap: 24 }}>
               {[
                 { icon: PinIcon, title: "Office Address", content: CONTACT.address.map((l, i) => <span key={i} style={{ display: "block", color: "var(--text-secondary)", fontSize: "0.92rem" }}>{l}</span>) },
-                { icon: MailIcon, title: "Email", content: <a href={`mailto:${CONTACT.email}`} style={{ color: "var(--text-secondary)", fontSize: "0.92rem" }}>{CONTACT.email}</a> },
+                { icon: MailIcon, title: "Email", content: <><a href={`mailto:${CONTACT.email}`} style={{ display: "block", color: "var(--text-secondary)", fontSize: "0.92rem" }}>{CONTACT.email}</a><a href={`mailto:${CONTACT.secretaryEmail}`} style={{ display: "block", color: "var(--text-secondary)", fontSize: "0.92rem" }}>{CONTACT.secretaryEmail}</a></> },
                 { icon: PhoneIcon, title: "Mobile", content: <a href={`tel:${CONTACT.phone.replace(/\s/g, "")}`} style={{ color: "var(--text-secondary)", fontSize: "0.92rem" }}>{CONTACT.phone}</a> },
               ].map((item, i) => (
                 <div className="flex gap-16" style={{ alignItems: "flex-start" }} key={i}>
@@ -111,7 +112,7 @@ export default function ContactPage() {
               <a href={CONTACT.social.youtube} target="_blank" rel="noreferrer" style={{ borderColor: "var(--divider)", color: "var(--primary)" }}><MenuYoutube /></a>
             </div>
 
-            <PhotoFrame src={PHOTOS.aiContactHero} alt="ERGON Foundation" ratio="16/9" caption="ERGON Foundation — Kodambakkam, Chennai" />
+            <PhotoFrame src={PHOTOS.ramanathapuramGroup} alt="ERGON Foundation" ratio="16/9" caption="ERGON Foundation - Kodambakkam, Chennai" />
           </Reveal>
 
           <Reveal as="right" delay={0.1}>

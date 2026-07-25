@@ -7,23 +7,18 @@ import PhotoFrame from "../components/PhotoFrame.jsx";
 import {
   PeopleIcon, PawIcon, LeafIcon, HeartHandsIcon, GraduationCapIcon,
   UsersGroupIcon, HeartIcon, ArrowRightIcon, PlayIcon, QuoteIcon, ShieldCheckIcon,
-  LockIcon, DocReceiptIcon, BellIcon, PinIcon, DonateHeartIcon, VolunteerIcon, TargetIcon,
-  SparkleIcon, BriefcaseIcon,
+  DocReceiptIcon, DonateHeartIcon, VolunteerIcon,
 } from "../components/Icons.jsx";
-import { HOME_BANNER, STATS, PROJECTS, TESTIMONIALS, PARTNERS, DONORS } from "../data/content.js";
+import { HOME_BANNER, STATS, TESTIMONIALS, PARTNERS, DONORS } from "../data/content.js";
 import { PHOTOS } from "../data/photos.js";
 import {
   PeopleIllustration, PetsIllustration, PlanetIllustration,
-  CommunityIllustration, VolunteersIllustration, DonateIllustration,
 } from "../components/ActivityIllustrations.jsx";
 
 const KEY_ACTIVITIES = [
   { icon: PeopleIllustration, title: "People", desc: "Education, women's livelihood, healthcare & careers." },
   { icon: PetsIllustration, title: "Pets", desc: "Rescue and welfare for animals in need." },
   { icon: PlanetIllustration, title: "Planet", desc: "Environmental protection & sustainability." },
-  { icon: CommunityIllustration, title: "Community", desc: "Stronger communities through participation." },
-  { icon: VolunteersIllustration, title: "Volunteers", desc: "Be the reason someone smiles today." },
-  { icon: DonateIllustration, title: "Donate", desc: "Your small contribution, big change." },
 ];
 
 const TRUST_ITEMS = [
@@ -34,16 +29,21 @@ const TRUST_ITEMS = [
 ];
 
 const IMPACT_STATS = [
-  { icon: HeartHandsIcon, num: 0, label: "Lives Changed", suffix: "" },
-  { icon: GraduationCapIcon, num: 0, label: "Children Educated", suffix: "" },
-  { icon: LeafIcon, num: 43, label: "Trees Planted", suffix: "+" },
-  { icon: PawIcon, num: 0, label: "Animals Fed", suffix: "" },
+  { icon: HeartHandsIcon, num: 373, label: "Lives Impacted", suffix: "" },
+  { icon: HeartHandsIcon, num: 1, label: "Free Medical Camp", suffix: "" },
+  { icon: GraduationCapIcon, num: 3, label: "Education Support", suffix: "" },
+  { icon: UsersGroupIcon, num: 160, label: "Meals Served", suffix: "" },
+  { icon: LeafIcon, num: 41, label: "Trees Planted", suffix: "" },
+  { icon: UsersGroupIcon, num: 0, label: "Placement Support", suffix: "" },
+  { icon: PeopleIcon, num: 0, label: "Women Empowered", suffix: "" },
+  { icon: GraduationCapIcon, num: 0, label: "Youth Skilled", suffix: "" },
+  { icon: PawIcon, num: 0, label: "Animals Rescued & Care", suffix: "" },
 ];
 
 const CAUSES_FEATURED = [
   { title: "Education For Every Child", desc: "Supporting children with scholarships, digital learning and skill development.", icon: GraduationCapIcon, theme: "#1B4332" },
   { title: "Accessible Healthcare", desc: "Free medical camps supporting underserved communities.", icon: HeartHandsIcon, theme: "#2D6A4F" },
-  { title: "Protect Our Planet", desc: "43+ trees planted, beach clean-ups and environmental awareness.", icon: LeafIcon, theme: "#B8860B" },
+  { title: "Protect Our Planet", desc: "41 trees planted, beach clean-ups and environmental awareness.", icon: LeafIcon, theme: "#B8860B" },
   { title: "Care For Every Animal", desc: "Rescue and rehabilitation for animals in need across Tamil Nadu.", icon: PawIcon, theme: "#2F855A" },
 ];
 
@@ -146,17 +146,17 @@ export default function HomePage() {
         <text x="80" y="392" fill="#f3eddc" font-family="Arial, sans-serif" font-size="28">Generated instantly from ERGON's field work moments.</text>
         <g transform="translate(80 518)">
           <rect width="230" height="96" rx="20" fill="#ffffff" fill-opacity="0.88"/>
-          <text x="28" y="44" fill="#1b4332" font-family="Georgia, serif" font-size="34" font-weight="700">0</text>
-          <text x="28" y="72" fill="#3e4a40" font-family="Arial, sans-serif" font-size="16" font-weight="700">LIVES CHANGED</text>
+          <text x="28" y="44" fill="#1b4332" font-family="Georgia, serif" font-size="34" font-weight="700">373</text>
+          <text x="28" y="72" fill="#3e4a40" font-family="Arial, sans-serif" font-size="16" font-weight="700">LIVES IMPACTED</text>
         </g>
         <g transform="translate(334 518)">
           <rect width="230" height="96" rx="20" fill="#ffffff" fill-opacity="0.88"/>
-          <text x="28" y="44" fill="#1b4332" font-family="Georgia, serif" font-size="34" font-weight="700">0</text>
-          <text x="28" y="72" fill="#3e4a40" font-family="Arial, sans-serif" font-size="16" font-weight="700">ANIMALS RESCUED</text>
+          <text x="28" y="44" fill="#1b4332" font-family="Georgia, serif" font-size="34" font-weight="700">160</text>
+          <text x="28" y="72" fill="#3e4a40" font-family="Arial, sans-serif" font-size="16" font-weight="700">MEALS SERVED</text>
         </g>
         <g transform="translate(588 518)">
           <rect width="230" height="96" rx="20" fill="#ffffff" fill-opacity="0.88"/>
-          <text x="28" y="44" fill="#1b4332" font-family="Georgia, serif" font-size="34" font-weight="700">43+</text>
+          <text x="28" y="44" fill="#1b4332" font-family="Georgia, serif" font-size="34" font-weight="700">41</text>
           <text x="28" y="72" fill="#3e4a40" font-family="Arial, sans-serif" font-size="16" font-weight="700">TREES PLANTED</text>
         </g>
       </svg>`;
@@ -217,7 +217,7 @@ export default function HomePage() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           >
-            <img src={PHOTOS.aiHeroGirlDog} alt="A young girl warmly hugging her golden retriever puppy" />
+            <img src={PHOTOS.ramanathapuramGroup} alt="ERGON Foundation field activity" />
             <div className="page-hero-split__media-overlay" />
             <motion.button
               type="button"
@@ -429,45 +429,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ============================ FEATURED PROJECTS ============================ */}
-      <section className="section">
-        <div className="container">
-          <Reveal as="up" className="flex-between" style={{ flexWrap: "wrap", gap: 16 }}>
-            <div>
-              <div className="eyebrow">Featured Projects</div>
-              <h2 className="h-lg">Where Your Support Goes</h2>
-            </div>
-            <NavLink to="/projects" className="link-arrow">View All Projects <ArrowRightIcon /></NavLink>
-          </Reveal>
-
-          <Stagger className="grid-4 mt-48">
-            {PROJECTS.map((p, i) => {
-              const pct = Math.round((p.raised / p.goal) * 100);
-              return (
-                <StaggerItem key={i}>
-                  <div className="project-card">
-                    <PhotoFrame
-                      src={p.photo ? PHOTOS[p.photo] : undefined}
-                      alt={p.title}
-                      icon={[LeafIcon, LeafIcon, GraduationCapIcon, PawIcon][i]}
-                      tone={p.tone}
-                      ratio="4/3"
-                    />
-                    <div className="project-card__body">
-                      <h4 className="h-sm">{p.title}</h4>
-                      <div className="project-card__loc"><PinIcon /> {p.loc}</div>
-                      <div className="progress"><div className="progress__bar" style={{ width: pct + "%" }} /></div>
-                      <div className="progress__meta"><span><b>{money(p.raised)}</b> raised of {money(p.goal)}</span><span>{pct}%</span></div>
-                      <NavLink to="/donate" className="btn btn--ghost btn--sm btn--block mt-16">Support Project <DonateHeartIcon /></NavLink>
-                    </div>
-                  </div>
-                </StaggerItem>
-              );
-            })}
-          </Stagger>
-        </div>
-      </section>
-
       {/* ============================ COMMUNITY MOMENTS ============================ */}
       <section className="section">
         <div className="container">
@@ -495,7 +456,7 @@ export default function HomePage() {
       </section>
 
       {/* ============================ STORIES ============================ */}
-      <section className="section">
+      <section className="section" hidden>
         <div className="container">
           <Reveal as="up" style={{ textAlign: "center" }}>
             <div className="eyebrow" style={{ justifyContent: "center" }}>Stories of Hope</div>
@@ -519,7 +480,7 @@ export default function HomePage() {
       </section>
 
       {/* ============================ PARTNERS ============================ */}
-      <section className="section section--sm">
+      <section className="section section--sm" hidden>
         <div className="container">
           <Reveal as="up" className="text-center mb-24">
             <div className="eyebrow" style={{ justifyContent: "center" }}>Our Partners & Supporters</div>

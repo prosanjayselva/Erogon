@@ -3,8 +3,8 @@ import RootLine from "../components/RootLine.jsx";
 import PhotoFrame from "../components/PhotoFrame.jsx";
 import { motion } from "framer-motion";
 import { PHOTOS } from "../data/photos.js";
-import { ChevronRightIcon, PeopleIcon, PawIcon, LeafIcon, HeartIcon, UsersGroupIcon, ArrowRightIcon, HeartHandsIcon, GlobeIcon } from "../components/Icons.jsx";
-import { PILLARS, GOVERNING_BODY, STAFF, PATRONS, PARTNERS, DONORS, ABOUT_IMPACT_STATS, ABOUT_MISSION, ABOUT_VISION } from "../data/content.js";
+import { ChevronRightIcon, PeopleIcon, PawIcon, LeafIcon, HeartIcon, UsersGroupIcon, GlobeIcon } from "../components/Icons.jsx";
+import { PILLARS, GOVERNING_BODY, STAFF, PATRONS, PARTNERS, DONORS, ABOUT_IMPACT_STATS, ABOUT_VISION } from "../data/content.js";
 import { NavLink } from "react-router-dom";
 
 const PILLAR_ICON = { people: PeopleIcon, pets: PawIcon, planet: LeafIcon };
@@ -12,10 +12,10 @@ const PILLAR_ICON = { people: PeopleIcon, pets: PawIcon, planet: LeafIcon };
 const CORE_VALUES = ["Compassion", "Integrity", "Transparency", "Empowerment", "Sustainability", "Community"];
 
 const JOURNEY = [
-  { year: "2024", title: "Foundation Registered", desc: "ERGON Foundation began as a registered charitable trust with a focus on People, Pets and Planet." },
-  { year: "2025", title: "Field Work Began", desc: "The team started identifying schools, communities and local partners for education, welfare and environment work." },
-  { year: "2026", title: "First Community Programmes", desc: "Medical camp, tree plantation and beach clean-up activities were conducted with volunteers and partner support." },
-  { year: "Next", title: "Programme Expansion", desc: "ERGON is building sponsor networks for EduSPro, animal welfare support and more structured village outreach." },
+  { year: "11th Apr, 2026", title: "Foundation Established", desc: "ERGON Foundation was established as a charitable trust." },
+  { year: "15th May, 2026", title: "Medical Camp For Migrant Workers", desc: "Free medical camp for migrant workers in Avadi, Chennai." },
+  { year: "5th June, 2026", title: "Environment Day @ Ramanathapuram", desc: "Tree plantation and beach clean-up activity at Ramanathapuram." },
+  { year: "6th June, 2026", title: "Environment Day @ Yercaud", desc: "Awareness and environment activity at Yercaud." },
 ];
 
 export default function AboutPage() {
@@ -23,7 +23,7 @@ export default function AboutPage() {
     <>
       <section className="bg-hero">
         <div className="bg-hero__bg">
-          <img src={PHOTOS.aiAboutHero} alt="ERGON Foundation community impact" />
+          <img src={PHOTOS.ramanathapuramGroup} alt="ERGON Foundation community impact" />
         </div>
         <div className="bg-hero__overlay" />
         <div className="bg-hero__content">
@@ -37,7 +37,7 @@ export default function AboutPage() {
             <h1 className="bg-hero__title">Compassion Creates Lasting Change.</h1>
             <p className="bg-hero__desc">Ergon Foundation exists to empower communities through education, healthcare, environmental sustainability and social responsibility.</p>
             <div className="hero__cta" style={{ justifyContent: "center", marginTop: "2rem" }}>
-              <NavLink to="/donate" className="btn btn--primary">Support Our Mission</NavLink>
+              <NavLink to="/donate" className="btn btn--primary">Support Our Vision</NavLink>
               <NavLink to="/get-involved" className="btn btn--outline">Get Involved</NavLink>
             </div>
           </motion.div>
@@ -71,15 +71,8 @@ export default function AboutPage() {
             <div className="eyebrow" style={{ justifyContent: "center" }}>Our Purpose</div>
             <h2 className="h-lg">What Drives Us Every Day</h2>
           </Reveal>
-          <div className="grid-2 mt-48" style={{ gap: 32 }}>
-            <Reveal as="left">
-              <motion.div className="glass-card" style={{ padding: "clamp(24px, 5vw, 44px) clamp(18px, 4vw, 36px)", textAlign: "center" }} whileHover={{ y: -6, boxShadow: "var(--shadow-lg)" }}>
-                <HeartHandsIcon style={{ width: 52, height: 52, color: "var(--primary)", marginBottom: 20 }} />
-                <h3 className="h-md">Our Mission</h3>
-                <p className="lede mx-auto mt-16">{ABOUT_MISSION}</p>
-              </motion.div>
-            </Reveal>
-            <Reveal as="right" delay={0.1}>
+          <div className="mt-48" style={{ maxWidth: 900, marginInline: "auto" }}>
+            <Reveal as="up">
               <motion.div className="glass-card" style={{ padding: "clamp(24px, 5vw, 44px) clamp(18px, 4vw, 36px)", textAlign: "center" }} whileHover={{ y: -6, boxShadow: "var(--shadow-lg)" }}>
                 <GlobeIcon style={{ width: 52, height: 52, color: "var(--primary)", marginBottom: 20 }} />
                 <h3 className="h-md">Our Vision</h3>

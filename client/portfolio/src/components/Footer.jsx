@@ -34,7 +34,6 @@ export default function Footer() {
             <img src={`${B}images/logo.png`} alt="ERGON Foundation" className="brand__logo" />
             <span className="brand__word">
               <b style={{ color: "white" }}>Ergon Foundation</b>
-              <span style={{ color: "var(--gold)" }}>Rooted in Good Deeds</span>
             </span>
           </NavLink>
           <p>Rooted in good deeds for <b>People &bull; Pets &bull; Planet</b> - a registered charitable trust working across Tamil Nadu and India.</p>
@@ -73,7 +72,7 @@ export default function Footer() {
           <h5>Contact Us</h5>
           <ul className="footer-contact">
             <li><PinIcon /><span>10/13, 2nd Floor, 1st Street, Dr. Subbarayan Nagar, Kodambakkam, Chennai - 600024</span></li>
-            <li><MailIcon /><span>admin@ergonfoundation.org</span></li>
+            <li><MailIcon /><span>admin@ergonfoundation.org<br />secretary@ergonfoundation.org</span></li>
             <li><PhoneIcon /><span>+91 84385 40850</span></li>
           </ul>
           <h5 style={{ marginTop: 24 }}>{NEWSLETTER_CONTENT.title}</h5>

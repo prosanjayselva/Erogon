@@ -13,7 +13,7 @@ export default function GalleryPage() {
   const [lightbox, setLightbox] = useState(null);
 
   const filtered = category === "all"
-    ? GALLERY_WITH_CATEGORIES
+    ? ["people", "pets", "planet"].flatMap((group) => GALLERY_WITH_CATEGORIES.filter((g) => g.category === group).slice(0, 3))
     : GALLERY_WITH_CATEGORIES.filter((g) => g.category === category);
 
   const closeLb = useCallback(() => setLightbox(null), []);
@@ -45,7 +45,7 @@ export default function GalleryPage() {
           <img className="mosaic-hero__grid-img2" src={PHOTOS.aiHero1} alt="" />
           <img className="mosaic-hero__grid-img3" src={PHOTOS.aiHero2} alt="" />
           <img className="mosaic-hero__grid-img4" src={PHOTOS.aiHero3} alt="" />
-          <img className="mosaic-hero__grid-img5" src={PHOTOS.aiAboutHero} alt="" />
+          <img className="mosaic-hero__grid-img5" src={PHOTOS.ramanathapuramGroup} alt="" />
           <img className="mosaic-hero__grid-img6" src={PHOTOS.yercaudGroup} alt="" />
           <img className="mosaic-hero__grid-img7" src={PHOTOS.medicalConsultation} alt="" />
         </div>
@@ -91,7 +91,7 @@ export default function GalleryPage() {
             <Reveal as="fade" key="videos">
               <div className="grid-3">
                 {[
-                  { src: `${B}videos/ramanathapuram-glimpses.mp4`, title: "Plants - Ramanathapuram", desc: "Tree planting and coastal care moments from Ramanathapuram." },
+                  { src: `${B}videos/ramanathapuram-glimpses.mp4`, title: "Planet - Ramanathapuram", desc: "Tree planting and coastal care moments from Ramanathapuram." },
                   { src: `${B}videos/yercaud-climate-dance.mp4`, title: "People - Yercaud", desc: "Children and volunteers taking part in climate awareness activities." },
                   { src: `${B}videos/medical-camp-avadi.mp4`, title: "People - Avadi", desc: "Free health support and care for migrant workers in Avadi, Chennai." },
                 ].map((v, i) => (

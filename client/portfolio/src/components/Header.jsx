@@ -13,6 +13,7 @@ const LINKS = [
   { to: "/reports", label: "Reports" },
   { to: "/gallery", label: "Gallery" },
   { to: "/get-involved", label: "Get Involved" },
+  { to: "/get-involved?tab=career", label: "Career Opportunities" },
   { to: "/contact", label: "Contact" },
 ];
 
@@ -75,7 +76,6 @@ export default function Header() {
             <img src={`${B}images/logo.png`} alt="ERGON Foundation" className="brand__logo" />
             <span className="brand__word">
               <b>Ergon Foundation</b>
-              <span>Rooted in Good Deeds</span>
             </span>
           </NavLink>
 

@@ -10,18 +10,22 @@ export const ABOUT_MISSION =
   "ERGON Foundation is dedicated to innovation for the welfare of people, animals, and the environment through education support, skill development, women empowerment, healthcare, animal welfare, environmental protection, awareness, volunteer participation and community development programmes.";
 
 export const STATS = [
-  { num: "0", label: "Projects Completed" },
-  { num: "0", label: "Lives Impacted" },
-  { num: "0", label: "Children Supported" },
-  { num: "0", label: "Animals Rescued" },
-  { num: "0", label: "Villages Reached" },
+  { num: "373", label: "Lives Impacted" },
+  { num: "01", label: "Free Medical Camp" },
+  { num: "03", label: "Education Support" },
+  { num: "160", label: "Meals Served" },
+  { num: "41", label: "Trees Planted" },
+  { num: "00", label: "Placement Support" },
+  { num: "00", label: "Women Empowered" },
+  { num: "00", label: "Youth Skilled" },
+  { num: "00", label: "Animals Rescued & Care" },
 ];
 
 export const ABOUT_IMPACT_STATS = [
-  { num: "0", label: "Lives Changed" },
-  { num: "0", label: "Children Educated" },
-  { num: "0", label: "Animals Rescued" },
-  { num: "43+", label: "Trees Planted" },
+  { num: "373", label: "Lives Impacted" },
+  { num: "01", label: "Free Medical Camp" },
+  { num: "03", label: "Education Support" },
+  { num: "41", label: "Trees Planted" },
 ];
 
 export const PILLARS = [
@@ -105,6 +109,7 @@ export const BANK_DETAILS = [
 export const CONTACT = {
   address: ["ERGON Foundation", "10/13, 2nd Floor, 1st Street,", "Dr. Subbarayan Nagar,", "Kodambakkam,", "Chennai - 600024"],
   email: "admin@ergonfoundation.org",
+  secretaryEmail: "secretary@ergonfoundation.org",
   phone: "+91 8438540850",
   social: {
     facebook: "https://www.facebook.com/share/14r5MoatD84/",

@@ -1599,6 +1599,22 @@ a:focus-visible, button:focus-visible {
   position: absolute;
   inset: 0;
 }
+
+.projects-empty-visual {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(216, 176, 60, 0.22), transparent 30%),
+    linear-gradient(135deg, #0f241a, #214d33);
+}
+
+.projects-empty-visual svg {
+  width: min(220px, 42vw);
+  height: min(220px, 42vw);
+  color: rgba(255, 255, 255, 0.74);
+}
 .bento-hero__featured-overlay {
   position: absolute;
   inset: 0;

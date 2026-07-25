@@ -129,8 +129,8 @@ export default function ReportsPage() {
       </section>
 
       <section className="section" style={{ background: "var(--secondary)" }}>
-        <div className="container grid-2" style={{ alignItems: "flex-start" }}>
-          <Reveal as="left">
+        <div className="container">
+          <Reveal as="up">
             <div className="eyebrow">Report Timeline</div>
             <h2 className="h-lg">Activity And Annual Records</h2>
             <div className="timeline mt-32">
@@ -146,19 +146,6 @@ export default function ReportsPage() {
                   <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginTop: 4 }}>{report.desc}</p>
                 </button>
               ))}
-            </div>
-          </Reveal>
-
-          <Reveal as="right" delay={0.1}>
-            <div className="card">
-              <div className="icon-badge"><DocReceiptIcon /></div>
-              <h3 className="h-sm">Request A Report</h3>
-              <p style={{ color: "var(--text-secondary)", fontSize: "0.92rem", marginTop: 8 }}>
-                Annual Report documents are shared with donors, partners and the public on request when the final file is not yet uploaded.
-              </p>
-              <a href="mailto:admin@ergonfoundation.org?subject=Report%20Request" className="link-arrow mt-24" style={{ display: "inline-flex" }}>
-                Email admin@ergonfoundation.org <ArrowRightIcon />
-              </a>
             </div>
           </Reveal>
         </div>
