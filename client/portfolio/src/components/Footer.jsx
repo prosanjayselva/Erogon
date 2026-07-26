@@ -36,7 +36,7 @@ export default function Footer() {
               <b style={{ color: "white" }}>Ergon Foundation</b>
             </span>
           </NavLink>
-          <p>Rooted in good deeds for <b>People &bull; Pets &bull; Planet</b> - a registered charitable trust working across Tamil Nadu and India.</p>
+          <p>A registered charitable trust working across Tamil Nadu and India.</p>
           <div className="footer-social">
             <a href="https://www.facebook.com/share/14r5MoatD84/" target="_blank" rel="noreferrer" aria-label="Facebook"><MenuFacebook /></a>
             <a href="https://x.com/ERGONFoundation" target="_blank" rel="noreferrer" aria-label="X"><MenuX /></a>
@@ -62,7 +62,6 @@ export default function Footer() {
           <ul>
             <li><NavLink to="/gallery">Gallery</NavLink></li>
             <li><NavLink to="/get-involved">Volunteer</NavLink></li>
-            <li><NavLink to="/get-involved?tab=career">Careers</NavLink></li>
             <li><NavLink to="/donate">Donate</NavLink></li>
             <li><NavLink to="/contact">Contact</NavLink></li>
           </ul>

@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../../api/client.js';
 import { useToastStore } from '../../stores/toast-store.js';
+import ConfirmDialog from '../../components/admin/ConfirmDialog.jsx';
 
 export default function VolunteerManagementPage() {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
+  const [deleteTarget, setDeleteTarget] = useState(null);
   const queryClient = useQueryClient();
   const toast = useToastStore((s) => s.add);
 
@@ -56,7 +58,7 @@ export default function VolunteerManagementPage() {
                   <td style={{ whiteSpace: 'nowrap', fontSize: 13 }}>{new Date(v.createdAt).toLocaleDateString()}</td>
                   <td>
                     <button className="btn-icon btn-icon-delete" title="Delete"
-                      onClick={() => { if (confirm('Delete this volunteer?')) deleteMutation.mutate(v.id); }}>🗑️</button>
+                      onClick={() => setDeleteTarget(v)}>🗑️</button>
                   </td>
                 </tr>
               ))}
@@ -78,6 +80,14 @@ export default function VolunteerManagementPage() {
           )}
         </div>
       )}
+
+      <ConfirmDialog
+        open={!!deleteTarget}
+        title="Delete Volunteer"
+        message={`Are you sure you want to delete "${deleteTarget?.fullName}"? This action cannot be undone.`}
+        onConfirm={() => { deleteMutation.mutate(deleteTarget.id); setDeleteTarget(null); }}
+        onCancel={() => setDeleteTarget(null)}
+      />
     </div>
   );
 }

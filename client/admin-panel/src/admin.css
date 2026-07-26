@@ -199,13 +199,27 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robo
   font-size: 14px; transition: all 0.15s; background: var(--background);
 }
 .login-form input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(46,125,50,0.12); }
-.login-form button {
+.login-form > button[type="submit"] {
   width: 100%; padding: 12px; background: var(--primary); color: #fff; border: none;
   border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.15s;
 }
-.login-form button:hover { background: var(--primary-dark); }
-.login-form button:disabled { opacity: 0.5; cursor: not-allowed; }
+.login-form > button[type="submit"]:hover { background: var(--primary-dark); }
+.login-form > button[type="submit"]:disabled { opacity: 0.5; cursor: not-allowed; }
 .login-error { background: #FEF2F2; color: var(--danger); padding: 12px 16px; border-radius: 10px; font-size: 14px; margin-bottom: 18px; }
+.login-lockout { background: #FEF2F2; color: #DC2626; padding: 12px 16px; border-radius: 10px; font-size: 14px; margin-bottom: 18px; font-weight: 600; text-align: center; }
+.login-warning { background: #FEF3C7; color: #92400E; padding: 10px 16px; border-radius: 10px; font-size: 13px; margin-bottom: 18px; text-align: center; }
+.login-info { background: var(--primary-bg); color: #1B5E20; padding: 10px 16px; border-radius: 10px; font-size: 13px; margin-bottom: 18px; text-align: center; }
+.login-attempts { margin-bottom: 18px; }
+.login-password-wrap { position: relative; }
+.login-password-wrap input { padding-right: 46px !important; }
+.login-eye-btn {
+  position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+  background: none; border: 1px solid transparent; cursor: pointer; font-size: 16px;
+  padding: 6px 8px; border-radius: 6px; line-height: 1; color: #6B7280;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s; width: 34px; height: 34px;
+}
+.login-eye-btn:hover { background: #F3F4F6; border-color: #E5E7EB; color: #374151; }
 
 /* ───── Donor Table ───── */
 .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
@@ -464,3 +478,156 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robo
 }
 a:focus, button:focus { outline: none; }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 4px; }
+
+/* ─── Reminder Modal ─── */
+.reminder-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+.reminder-modal {
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease;
+}
+.reminder-modal-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+.reminder-modal-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 12px;
+}
+.reminder-modal-msg {
+  font-size: 15px;
+  color: #444;
+  margin: 0 0 8px;
+}
+.reminder-modal-date {
+  font-size: 13px;
+  color: #888;
+  margin: 0 0 8px;
+}
+.reminder-modal-count {
+  font-size: 12px;
+  color: #aaa;
+  margin: 0 0 16px;
+}
+.reminder-modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
+}
+.reminder-btn-snooze {
+  background: #B8860B;
+  color: #fff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.reminder-btn-snooze:hover { background: #996f09; }
+.reminder-btn-dismiss {
+  background: transparent;
+  color: #888;
+  border: 1px solid #ddd;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.reminder-btn-dismiss:hover { background: #f5f5f5; color: #333; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Pagination & Filter Tabs ─── */
+.pagination-dots {
+  padding: 0 6px;
+  color: #9CA3AF;
+  font-size: 14px;
+}
+.toolbar {
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.filter-tab {
+  white-space: nowrap;
+}
+
+/* ───── Confirm Dialog ───── */
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.15s ease;
+}
+.confirm-dialog {
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+.confirm-icon { font-size: 40px; margin-bottom: 12px; }
+.confirm-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+.confirm-msg { font-size: 14px; color: var(--muted); margin-bottom: 24px; line-height: 1.5; }
+.confirm-actions { display: flex; gap: 12px; justify-content: center; }
+.confirm-btn {
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+.confirm-btn.cancel {
+  background: var(--surface);
+  color: var(--text);
+}
+.confirm-btn.cancel:hover { background: var(--secondary); }
+.confirm-btn.danger {
+  background: var(--danger);
+  color: #fff;
+  border-color: var(--danger);
+}
+.confirm-btn.danger:hover { background: #DC2626; }

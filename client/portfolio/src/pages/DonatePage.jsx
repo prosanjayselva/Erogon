@@ -58,7 +58,7 @@ export default function DonatePage() {
     <>
       <section className="donation-hero">
         <div className="donation-hero__bg">
-          <img src={PHOTOS.ramanathapuramGroup} alt="ERGON Foundation community support" />
+          <img src={PHOTOS.medicalCampGroup} alt="ERGON Foundation community support" />
         </div>
         <div className="donation-hero__bg-anim" />
         <div className="donation-hero__overlay" />

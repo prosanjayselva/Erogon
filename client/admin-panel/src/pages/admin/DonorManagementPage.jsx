@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../../api/client.js';
 import { useToastStore } from '../../stores/toast-store.js';
+import ConfirmDialog from '../../components/admin/ConfirmDialog.jsx';
 
 const avatarColors = ['#2E7D32', '#2563EB', '#7C3AED', '#DC2626', '#D97706', '#0891B2', '#DB2777', '#4F46E5'];
 
@@ -24,6 +25,7 @@ function getPaymentBadge(mode) {
 export default function DonorManagementPage() {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
+  const [deleteTarget, setDeleteTarget] = useState(null);
   const queryClient = useQueryClient();
   const toast = useToastStore((s) => s.add);
 
@@ -109,9 +111,7 @@ export default function DonorManagementPage() {
                       <button
                         className="btn-icon btn-icon-delete"
                         title="Delete"
-                        onClick={() => {
-                          if (confirm('Delete this donor?')) deleteMutation.mutate(donor.id);
-                        }}
+                        onClick={() => setDeleteTarget(donor)}
                       >🗑️</button>
                     </div>
                   </td>
@@ -143,6 +143,14 @@ export default function DonorManagementPage() {
           )}
         </div>
       )}
+
+      <ConfirmDialog
+        open={!!deleteTarget}
+        title="Delete Donor"
+        message={`Are you sure you want to delete "${deleteTarget?.name}"? This action cannot be undone.`}
+        onConfirm={() => { deleteMutation.mutate(deleteTarget.id); setDeleteTarget(null); }}
+        onCancel={() => setDeleteTarget(null)}
+      />
     </div>
   );
 }

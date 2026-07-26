@@ -60,6 +60,7 @@ export default function ContactPage() {
               <div>
                 <h4>Email</h4>
                 <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+                <br />
                 <a href={`mailto:${CONTACT.secretaryEmail}`}>{CONTACT.secretaryEmail}</a>
               </div>
             </div>

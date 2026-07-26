@@ -176,7 +176,7 @@ export default function GetInvolvedPage() {
           <Reveal as="up" className="center mb-32">
             <div className="tabbar mx-auto">
               <button className={tab === "volunteer" ? "active" : ""} onClick={() => setTab("volunteer")}>Volunteer With Us</button>
-              <button className={tab === "career" ? "active" : ""} onClick={() => setTab("career")}>Career Opportunities</button>
+              <button className={tab === "career" ? "active" : ""} onClick={() => { setTab("career"); setRole("employer"); }}>Career Opportunities</button>
             </div>
           </Reveal>
 

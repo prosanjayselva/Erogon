@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../../api/client.js';
 import { useToastStore } from '../../stores/toast-store.js';
+import ConfirmDialog from '../../components/admin/ConfirmDialog.jsx';
 
 export default function NewsletterManagementPage() {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
+  const [deleteTarget, setDeleteTarget] = useState(null);
   const queryClient = useQueryClient();
   const toast = useToastStore((s) => s.add);
 
@@ -57,7 +59,7 @@ export default function NewsletterManagementPage() {
                   <td style={{ fontSize: 13 }}>{new Date(s.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
                   <td>
                     <button className="btn-icon btn-icon-delete" title="Delete"
-                      onClick={() => { if (confirm('Remove this subscriber?')) deleteMutation.mutate(s.id); }}>🗑️</button>
+                      onClick={() => setDeleteTarget(s)}>🗑️</button>
                   </td>
                 </tr>
               ))}
@@ -79,6 +81,14 @@ export default function NewsletterManagementPage() {
           )}
         </div>
       )}
+
+      <ConfirmDialog
+        open={!!deleteTarget}
+        title="Remove Subscriber"
+        message={`Are you sure you want to remove "${deleteTarget?.email}"? This action cannot be undone.`}
+        onConfirm={() => { deleteMutation.mutate(deleteTarget.id); setDeleteTarget(null); }}
+        onCancel={() => setDeleteTarget(null)}
+      />
     </div>
   );
 }

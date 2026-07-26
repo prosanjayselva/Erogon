@@ -8,14 +8,31 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  name      String
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id              Int       @id @default(autoincrement())
+  email           String    @unique
+  password        String
+  name            String
+  activeSessionId String?   @map("active_session_id")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  refreshTokens RefreshToken[]
+  loginLogs     LoginLog[]
 
   @@map("users")
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    Int      @map("user_id")
+  revoked   Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+  expiresAt DateTime @map("expires_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("refresh_tokens")
 }
 
 model Donor {
@@ -31,24 +48,26 @@ model Donor {
 }
 
 model Event {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String
-  eventDate   DateTime @map("event_date")
-  banner      String?
-  status      String   @default("UPCOMING") // UPCOMING | COMPLETED | CANCELLED
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  id                 Int      @id @default(autoincrement())
+  title              String
+  description        String
+  eventDate          DateTime @map("event_date")
+  banner             String?
+  status             String   @default("UPCOMING") // UPCOMING | COMPLETED | CANCELLED
+  reminderDaysBefore Int?     @map("reminder_days_before")
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
 
   @@map("events")
 }
 
 model Notification {
-  id        Int      @id @default(autoincrement())
-  message   String
-  type      String   // EVENT_REMINDER | ACTIVITY_LOG
-  read      Boolean  @default(false)
-  createdAt DateTime @default(now()) @map("created_at")
+  id          Int       @id @default(autoincrement())
+  message     String
+  type        String    // EVENT_REMINDER | ACTIVITY_LOG | CONTACT | VOLUNTEER | JOB_SEEKER | EMPLOYER | NEWSLETTER
+  read        Boolean   @default(false)
+  eventId     Int?      @map("event_id")
+  createdAt   DateTime  @default(now()) @map("created_at")
 
   @@map("notifications")
 }
@@ -141,4 +160,19 @@ model Newsletter {
   createdAt DateTime @default(now()) @map("created_at")
 
   @@map("newsletters")
+}
+
+model LoginLog {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  ip        String?
+  city      String?
+  country   String?
+  device    String?
+  success   Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("login_logs")
 }

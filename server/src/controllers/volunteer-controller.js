@@ -1,12 +1,14 @@
 import { createVolunteerSchema } from '../validators/index.js';
 import { prisma } from '../index.js';
 import { createNotification } from '../services/notification.js';
+import { logActivity } from '../services/activity-log.js';
 
 export async function create(req, res) {
   try {
     const data = createVolunteerSchema.parse(req.body);
     const volunteer = await prisma.volunteer.create({ data });
     await createNotification('VOLUNTEER', `New volunteer sign-up from ${volunteer.fullName}`);
+    await logActivity(0, 'NEW_VOLUNTEER', `New volunteer sign-up: ${volunteer.fullName} (${volunteer.email})`);
     res.status(201).json({ success: true, message: 'Thank you for your interest!', data: volunteer });
   } catch (err) {
     if (err.name === 'ZodError') return res.status(400).json({ error: err.errors[0].message });
@@ -36,7 +38,8 @@ export async function list(req, res) {
 export async function remove(req, res) {
   try {
     const { id } = req.params;
-    await prisma.volunteer.delete({ where: { id: parseInt(id) } });
+    const volunteer = await prisma.volunteer.delete({ where: { id: parseInt(id) } });
+    await logActivity(req.user.id, 'DELETE_VOLUNTEER', `Deleted volunteer: ${volunteer.fullName} (${volunteer.email})`);
     res.json({ success: true, message: 'Volunteer deleted successfully' });
   } catch {
     res.status(500).json({ error: 'Failed to delete volunteer' });

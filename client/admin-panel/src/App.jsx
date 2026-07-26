@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Router from './router.jsx';
+import ErrorBoundary from './components/admin/ErrorBoundary.jsx';
 import './admin.css';
 
 const queryClient = new QueryClient({
@@ -8,8 +9,10 @@ const queryClient = new QueryClient({
 
 export default function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Router />
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <Router />
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }

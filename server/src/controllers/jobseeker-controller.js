@@ -1,6 +1,7 @@
 import { createJobSeekerSchema } from '../validators/index.js';
 import { prisma } from '../index.js';
 import { createNotification } from '../services/notification.js';
+import { logActivity } from '../services/activity-log.js';
 
 export async function create(req, res) {
   try {
@@ -8,6 +9,7 @@ export async function create(req, res) {
     const resume = req.file ? req.file.filename : null;
     const jobSeeker = await prisma.jobSeeker.create({ data: { ...data, resume } });
     await createNotification('JOB_SEEKER', `New job seeker profile from ${jobSeeker.fullName}`);
+    await logActivity(0, 'NEW_JOB_SEEKER', `New job seeker profile: ${jobSeeker.fullName} (${jobSeeker.email})`);
     res.status(201).json({ success: true, message: 'Profile submitted successfully!', data: jobSeeker });
   } catch (err) {
     if (err.name === 'ZodError') return res.status(400).json({ error: err.errors[0].message });
@@ -37,7 +39,8 @@ export async function list(req, res) {
 export async function remove(req, res) {
   try {
     const { id } = req.params;
-    await prisma.jobSeeker.delete({ where: { id: parseInt(id) } });
+    const seeker = await prisma.jobSeeker.delete({ where: { id: parseInt(id) } });
+    await logActivity(req.user.id, 'DELETE_JOB_SEEKER', `Deleted job seeker: ${seeker.fullName} (${seeker.email})`);
     res.json({ success: true, message: 'Job seeker deleted successfully' });
   } catch {
     res.status(500).json({ error: 'Failed to delete job seeker' });

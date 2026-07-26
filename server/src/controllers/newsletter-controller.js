@@ -1,6 +1,7 @@
 import { createNewsletterSchema } from '../validators/index.js';
 import { prisma } from '../index.js';
 import { createNotification } from '../services/notification.js';
+import { logActivity } from '../services/activity-log.js';
 
 export async function subscribe(req, res) {
   try {
@@ -9,6 +10,7 @@ export async function subscribe(req, res) {
     if (existing) return res.status(409).json({ error: 'Email already subscribed' });
     const sub = await prisma.newsletter.create({ data: { email } });
     await createNotification('NEWSLETTER', `New newsletter subscriber: ${email}`);
+    await logActivity(0, 'NEW_NEWSLETTER_SUB', `New newsletter subscriber: ${email}`);
     res.status(201).json({ success: true, message: 'Subscribed successfully!', data: sub });
   } catch (err) {
     if (err.name === 'ZodError') return res.status(400).json({ error: err.errors[0].message });
@@ -35,7 +37,8 @@ export async function list(req, res) {
 export async function remove(req, res) {
   try {
     const { id } = req.params;
-    await prisma.newsletter.delete({ where: { id: parseInt(id) } });
+    const sub = await prisma.newsletter.delete({ where: { id: parseInt(id) } });
+    await logActivity(req.user.id, 'DELETE_NEWSLETTER_SUB', `Deleted subscriber: ${sub.email}`);
     res.json({ success: true, message: 'Subscriber deleted successfully' });
   } catch {
     res.status(500).json({ error: 'Failed to delete subscriber' });

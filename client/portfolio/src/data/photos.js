@@ -43,11 +43,16 @@ export const PHOTOS = {
   aiAboutHero: `${B}images/ai-about-hero.png`,
   aiPetHero: `${B}images/ai-pet-hero.png`,
   aiContactHero: `${B}images/ai-contact-hero.png`,
+
+  heroGirlDog: `${B}images/hero-girl-dog.jpg`,
+  galleryBeachGroup: `${B}images/gallery-07-group-beach.jpg`,
+  galleryOffice: `${B}images/gallery-08-office.jpg`,
 };
 
 export const GALLERY_PHOTOS = [
-  { src: `${B}images/footer-pillars.png`, caption: "Pets welfare commitment", ratio: "16/9" },
-  { src: `${B}images/footer-pillars.png`, caption: "People, pets and planet commitment", ratio: "16/9" },
+  { src: PHOTOS.heroGirlDog, caption: "Compassion for every soul", ratio: "4/3" },
+  { src: PHOTOS.galleryBeachGroup, caption: "Community beach cleanup drive", ratio: "16/9" },
+  { src: PHOTOS.galleryOffice, caption: "ERGON Foundation office", ratio: "16/9" },
   { src: PHOTOS.ramanathapuramGroup, caption: "People gathered for plantation work", ratio: "4/3" },
   { src: PHOTOS.ramanathapuramSaplings, caption: "Neem saplings ready for planting", ratio: "4/3" },
   { src: PHOTOS.ramanathapuramTree1, caption: "Tree plantation drive in action", ratio: "3/4" },
@@ -70,16 +75,22 @@ export const GALLERY_PHOTOS = [
 
 export const GALLERY_CATEGORIES = [
   { id: "all", label: "All" },
+  { id: "people", label: "People" },
   { id: "pets", label: "Pets" },
   { id: "planet", label: "Planet" },
-  { id: "people", label: "People" },
+];
+
+export const VIDEOS = [
+  { src: `${B}videos/ramanathapuram-glimpses.mp4`, title: "Ramanathapuram Glimpses", desc: "Tree planting and coastal care moments from Ramanathapuram.", category: "planet" },
+  { src: `${B}videos/yercaud-climate-dance.mp4`, title: "Yercaud Climate Dance", desc: "Children and volunteers taking part in climate awareness activities.", category: "people" },
+  { src: `${B}videos/medical-camp-avadi.mp4`, title: "Medical Camp — Avadi", desc: "Free health support and care for migrant workers in Avadi, Chennai.", category: "people" },
 ];
 
 export const GALLERY_WITH_CATEGORIES = [
   { ...GALLERY_PHOTOS[0], category: "pets" },
-  { ...GALLERY_PHOTOS[1], category: "pets" },
+  { ...GALLERY_PHOTOS[1], category: "people" },
   { ...GALLERY_PHOTOS[2], category: "people" },
-  { ...GALLERY_PHOTOS[3], category: "planet" },
+  { ...GALLERY_PHOTOS[3], category: "people" },
   { ...GALLERY_PHOTOS[4], category: "planet" },
   { ...GALLERY_PHOTOS[5], category: "planet" },
   { ...GALLERY_PHOTOS[6], category: "planet" },

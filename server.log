@@ -1,0 +1,4 @@
+Server running on http://localhost:3000
+  Portfolio: http://localhost:3000/
+  Admin:     http://localhost:3000/admin-panel/
+  Security:  CSP enabled, brute-force protection active

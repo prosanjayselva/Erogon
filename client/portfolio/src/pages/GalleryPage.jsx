@@ -5,7 +5,7 @@ import PhotoFrame from "../components/PhotoFrame.jsx";
 import { ImageIcon, VideoIcon, PlayIcon, CloseIcon } from "../components/Icons.jsx";
 
 const B = import.meta.env.BASE_URL;
-import { PHOTOS, GALLERY_WITH_CATEGORIES, GALLERY_CATEGORIES } from "../data/photos.js";
+import { PHOTOS, GALLERY_WITH_CATEGORIES, GALLERY_CATEGORIES, VIDEOS } from "../data/photos.js";
 
 export default function GalleryPage() {
   const [tab, setTab] = useState("images");
@@ -41,12 +41,12 @@ export default function GalleryPage() {
     <>
       <section className="mosaic-hero">
         <div className="mosaic-hero__grid">
-          <img className="mosaic-hero__grid-img1" src={PHOTOS.aiCausesBg} alt="" />
-          <img className="mosaic-hero__grid-img2" src={PHOTOS.aiHero1} alt="" />
-          <img className="mosaic-hero__grid-img3" src={PHOTOS.aiHero2} alt="" />
-          <img className="mosaic-hero__grid-img4" src={PHOTOS.aiHero3} alt="" />
-          <img className="mosaic-hero__grid-img5" src={PHOTOS.ramanathapuramGroup} alt="" />
-          <img className="mosaic-hero__grid-img6" src={PHOTOS.yercaudGroup} alt="" />
+          <img className="mosaic-hero__grid-img1" src={PHOTOS.ramanathapuramBeachClean} alt="" />
+          <img className="mosaic-hero__grid-img2" src={PHOTOS.medicalCampGroup} alt="" />
+          <img className="mosaic-hero__grid-img3" src={PHOTOS.yercaudPledge} alt="" />
+          <img className="mosaic-hero__grid-img4" src={PHOTOS.ramanathapuramSaplings} alt="" />
+          <img className="mosaic-hero__grid-img5" src={PHOTOS.heroGirlDog} alt="" />
+          <img className="mosaic-hero__grid-img6" src={PHOTOS.ramanathapuramGroup} alt="" />
           <img className="mosaic-hero__grid-img7" src={PHOTOS.medicalConsultation} alt="" />
         </div>
         <div className="mosaic-hero__overlay" />
@@ -89,12 +89,19 @@ export default function GalleryPage() {
             </Reveal>
           ) : (
             <Reveal as="fade" key="videos">
+              <div className="flex-center gap-8 mb-24" style={{ flexWrap: "wrap" }}>
+                {GALLERY_CATEGORIES.map((c) => (
+                  <button
+                    key={c.id}
+                    className={`btn btn--sm ${category === c.id ? "btn--primary" : "btn--ghost"}`}
+                    onClick={() => setCategory(c.id)}
+                  >
+                    {c.label}
+                  </button>
+                ))}
+              </div>
               <div className="grid-3">
-                {[
-                  { src: `${B}videos/ramanathapuram-glimpses.mp4`, title: "Planet - Ramanathapuram", desc: "Tree planting and coastal care moments from Ramanathapuram." },
-                  { src: `${B}videos/yercaud-climate-dance.mp4`, title: "People - Yercaud", desc: "Children and volunteers taking part in climate awareness activities." },
-                  { src: `${B}videos/medical-camp-avadi.mp4`, title: "People - Avadi", desc: "Free health support and care for migrant workers in Avadi, Chennai." },
-                ].map((v, i) => (
+                {(category === "all" ? VIDEOS : VIDEOS.filter((v) => v.category === category)).map((v, i) => (
                   <div className="project-card" key={i}>
                     <div className="photo-frame" style={{ aspectRatio: "16/9", borderRadius: 0, position: "relative", overflow: "hidden" }}>
                       <video src={v.src} controls playsInline preload="metadata" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />

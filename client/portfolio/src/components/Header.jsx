@@ -13,7 +13,6 @@ const LINKS = [
   { to: "/reports", label: "Reports" },
   { to: "/gallery", label: "Gallery" },
   { to: "/get-involved", label: "Get Involved" },
-  { to: "/get-involved?tab=career", label: "Career Opportunities" },
   { to: "/contact", label: "Contact" },
 ];
 

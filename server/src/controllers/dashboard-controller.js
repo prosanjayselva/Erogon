@@ -6,6 +6,7 @@ export async function stats(_req, res) {
       totalDonors, upcomingEvents, completedEvents, totalDonationsAgg,
       recentDonations, recentActivities,
       totalVolunteers, totalJobSeekers, totalEmployers, totalContacts, totalNewsletter,
+      upcomingReminderEvents,
     ] = await Promise.all([
       prisma.donor.count(),
       prisma.event.count({ where: { status: 'UPCOMING' } }),
@@ -18,6 +19,15 @@ export async function stats(_req, res) {
       prisma.employer.count(),
       prisma.contact.count(),
       prisma.newsletter.count(),
+      prisma.event.findMany({
+        where: {
+          status: 'UPCOMING',
+          reminderDaysBefore: { not: null },
+          eventDate: { gte: new Date() },
+        },
+        select: { id: true, title: true, eventDate: true, reminderDaysBefore: true, description: true },
+        orderBy: { eventDate: 'asc' },
+      }),
     ]);
 
     res.json({
@@ -34,6 +44,7 @@ export async function stats(_req, res) {
         totalEmployers,
         totalContacts,
         totalNewsletter,
+        upcomingReminderEvents,
       },
     });
   } catch {

@@ -4,13 +4,13 @@ import bcrypt from 'bcryptjs';
 const prisma = new PrismaClient();
 
 async function main() {
-  const hashed = await bcrypt.hash('Admin@123', 10);
+  await prisma.user.deleteMany();
 
-  await prisma.user.upsert({
-    where: { email: 'admin@ergonfoundation.org' },
-    update: {},
-    create: {
-      email: 'admin@ergonfoundation.org',
+  const hashed = await bcrypt.hash('82rF_d2HR9', 10);
+
+  await prisma.user.create({
+    data: {
+      email: 'ergonfoundation',
       password: hashed,
       name: 'ERGON Admin',
     },

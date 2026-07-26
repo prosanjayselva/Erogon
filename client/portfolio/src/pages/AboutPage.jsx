@@ -23,7 +23,7 @@ export default function AboutPage() {
     <>
       <section className="bg-hero">
         <div className="bg-hero__bg">
-          <img src={PHOTOS.ramanathapuramGroup} alt="ERGON Foundation community impact" />
+          <img src={PHOTOS.treePlantingReal} alt="ERGON Foundation community impact" />
         </div>
         <div className="bg-hero__overlay" />
         <div className="bg-hero__content">
@@ -105,7 +105,7 @@ export default function AboutPage() {
       <section className="section section--sm" style={{ background: "var(--secondary)" }}>
         <div className="container--narrow text-center">
           <Reveal as="up">
-            <PhotoFrame src={PHOTOS.aiPetHero} alt="ERGON Foundation pet care" ratio="16/9" caption="Compassion for every soul — our pet welfare initiative" />
+            <PhotoFrame src={PHOTOS.ramanathapuramBeachClean} alt="ERGON Foundation pet care" ratio="16/9" caption="Compassion for every soul — our pet welfare initiative" />
           </Reveal>
         </div>
       </section>

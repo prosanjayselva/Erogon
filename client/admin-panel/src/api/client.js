@@ -2,40 +2,55 @@ import axios from 'axios';
 
 const api = axios.create({
   baseURL: '/api/v1',
+  withCredentials: true,
 });
 
-api.interceptors.request.use((config) => {
-  const stored = localStorage.getItem('ergon-auth');
-  if (stored) {
-    const { state } = JSON.parse(stored);
-    if (state.token) {
-      config.headers.Authorization = `Bearer ${state.token}`;
-    }
-  }
-  return config;
-});
+let isRefreshing = false;
+let failedQueue = [];
+
+function processQueue(error) {
+  failedQueue.forEach(({ resolve, reject }) => {
+    if (error) reject(error);
+    else resolve();
+  });
+  failedQueue = [];
+}
 
 api.interceptors.response.use(
   (res) => res,
   async (err) => {
     const original = err.config;
+
     if (err.response?.status === 401 && !original._retry) {
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        }).then(() => api(original)).catch((e) => Promise.reject(e));
+      }
+
       original._retry = true;
-      const stored = localStorage.getItem('ergon-auth');
-      if (stored) {
-        const { state } = JSON.parse(stored);
+      isRefreshing = true;
+
+      try {
+        await axios.post('/api/v1/auth/refresh', null, { withCredentials: true });
+        processQueue(null);
+        return api(original);
+      } catch {
+        processQueue(err);
         try {
-          const { data } = await axios.post('/api/v1/auth/refresh', {
-            refreshToken: state.refreshToken,
-          });
-          const newState = { ...state, token: data.data.accessToken };
-          localStorage.setItem('ergon-auth', JSON.stringify({ state: newState }));
-          original.headers.Authorization = `Bearer ${data.data.accessToken}`;
-          return api(original);
-        } catch {
-          localStorage.removeItem('ergon-auth');
-          window.location.href = `${import.meta.env.BASE_URL}admin-panel/login`;
-        }
+          const stored = localStorage.getItem('ergon-auth');
+          if (stored) {
+            let parsed;
+            try { parsed = JSON.parse(stored); } catch { parsed = null; }
+            if (parsed?.state?.isAuthenticated) {
+              localStorage.removeItem('ergon-auth');
+            }
+          }
+        } catch { /* ignore */ }
+        window.location.href = '/admin-panel/login';
+        return Promise.reject(err);
+      } finally {
+        isRefreshing = false;
       }
     }
     return Promise.reject(err);

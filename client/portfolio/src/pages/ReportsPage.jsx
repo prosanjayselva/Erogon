@@ -83,7 +83,7 @@ export default function ReportsPage() {
                     <h3 className="h-sm mt-8">{report.title}</h3>
                     <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginTop: 10 }}>{report.desc}</p>
                     <span className="link-arrow mt-24">
-                      {report.primaryUrl ? "Open Report" : "Request Report"} <ArrowRightIcon />
+                      {report.primaryUrl ? "Open Report" : "Coming Soon"} <ArrowRightIcon />
                     </span>
                   </div>
                 </button>
@@ -125,29 +125,6 @@ export default function ReportsPage() {
               </Reveal>
             </div>
           )}
-        </div>
-      </section>
-
-      <section className="section" style={{ background: "var(--secondary)" }}>
-        <div className="container">
-          <Reveal as="up">
-            <div className="eyebrow">Report Timeline</div>
-            <h2 className="h-lg">Activity And Annual Records</h2>
-            <div className="timeline mt-32">
-              {REPORTS.map((report) => (
-                <button
-                  type="button"
-                  onClick={() => selectReport(report)}
-                  className="timeline-item timeline-item--link"
-                  key={report.id}
-                >
-                  <span className="yr">{report.category}</span>
-                  <h4>{report.title}</h4>
-                  <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginTop: 4 }}>{report.desc}</p>
-                </button>
-              ))}
-            </div>
-          </Reveal>
         </div>
       </section>
     </>

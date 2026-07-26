@@ -2,12 +2,28 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../../api/client.js';
 import { useToastStore } from '../../stores/toast-store.js';
+import ConfirmDialog from '../../components/admin/ConfirmDialog.jsx';
+
+const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+
+function validateFile(file) {
+  if (!file) return null;
+  if (!ALLOWED_IMAGE_TYPES.includes(file.type)) return 'Only JPEG, PNG, GIF, WebP images are allowed';
+  if (file.size > MAX_FILE_SIZE) return 'File must be under 5MB';
+  return null;
+}
+
+function sanitizeFilename(name) {
+  return (name || '').replace(/[^a-zA-Z0-9._-]/g, '_').slice(0, 200);
+}
 
 const initialForm = {
   title: '',
   description: '',
   eventDate: '',
   status: 'UPCOMING',
+  reminderDaysBefore: '',
 };
 
 export default function EventManagementPage() {
@@ -16,6 +32,8 @@ export default function EventManagementPage() {
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState(initialForm);
   const [banner, setBanner] = useState(null);
+  const [bannerError, setBannerError] = useState('');
+  const [deleteTarget, setDeleteTarget] = useState(null);
   const queryClient = useQueryClient();
   const toast = useToastStore((s) => s.add);
 
@@ -48,17 +66,23 @@ export default function EventManagementPage() {
   const resetForm = () => {
     setForm(initialForm);
     setBanner(null);
+    setBannerError('');
     setEditing(null);
     setShowForm(false);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const fileError = validateFile(banner);
+    if (fileError) { setBannerError(fileError); return; }
+    setBannerError('');
+
     const formData = new FormData();
     formData.append('title', form.title);
     formData.append('description', form.description);
     formData.append('eventDate', form.eventDate);
     formData.append('status', form.status);
+    formData.append('reminderDaysBefore', form.reminderDaysBefore || '');
     if (banner) formData.append('banner', banner);
 
     if (editing) updateMutation.mutate({ id: editing.id, formData });
@@ -72,12 +96,15 @@ export default function EventManagementPage() {
       description: event.description,
       eventDate: event.eventDate.slice(0, 16),
       status: event.status,
+      reminderDaysBefore: event.reminderDaysBefore ?? '',
     });
     setShowForm(true);
   };
 
   const statusClass = (s) =>
     s === 'UPCOMING' ? 'event-status-upcoming' : s === 'COMPLETED' ? 'event-status-completed' : 'event-status-cancelled';
+
+  const showReminder = form.status === 'UPCOMING' && form.eventDate && new Date(form.eventDate) > new Date();
 
   return (
     <div>
@@ -119,8 +146,26 @@ export default function EventManagementPage() {
               </select>
             </label>
             <label>Banner Image
-              <input type="file" accept="image/*" onChange={(e) => setBanner(e.target.files[0])} />
+              <input type="file" accept=".jpg,.jpeg,.png,.gif,.webp" onChange={(e) => {
+                const f = e.target.files[0];
+                const err = validateFile(f);
+                if (err) { setBannerError(err); setBanner(null); return; }
+                setBannerError('');
+                setBanner(f);
+              }} />
+              {bannerError && <span style={{ color: '#DC2626', fontSize: 12, display: 'block', marginTop: 4 }}>{bannerError}</span>}
             </label>
+            {showReminder && (
+              <label>Remind Me Before
+                <select value={form.reminderDaysBefore} onChange={(e) => setForm({ ...form, reminderDaysBefore: e.target.value })}>
+                  <option value="">No Reminder</option>
+                  <option value="1">1 Day Before</option>
+                  <option value="2">2 Days Before</option>
+                  <option value="3">3 Days Before</option>
+                  <option value="7">1 Week Before</option>
+                </select>
+              </label>
+            )}
             <label className="full-width">Description
               <textarea rows={4} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} required />
             </label>
@@ -139,7 +184,7 @@ export default function EventManagementPage() {
               <div key={event.id} className="event-card">
                 <div className="event-card-img">
                   {event.banner ? (
-                    <img src={`http://localhost:3000/uploads/${event.banner}`} alt={event.title}
+                    <img src={`/uploads/${sanitizeFilename(event.banner)}`} alt={event.title}
                          style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   ) : '📅'}
                 </div>
@@ -151,11 +196,14 @@ export default function EventManagementPage() {
                   <div className="event-card-meta">
                     <span>📅 {new Date(event.eventDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
                     <span>📍 {event.description?.slice(0, 50)}</span>
+                    {event.reminderDaysBefore && (
+                      <span>🔔 Reminder: {event.reminderDaysBefore} day{event.reminderDaysBefore > 1 ? 's' : ''} before</span>
+                    )}
                   </div>
                   <div className="event-card-actions">
                     <button className="btn-icon btn-icon-edit" title="Edit" onClick={() => handleEdit(event)}>✏️</button>
                     <button className="btn-icon btn-icon-delete" title="Delete"
-                      onClick={() => { if (confirm('Delete this event?')) deleteMutation.mutate(event.id); }}>🗑️</button>
+                      onClick={() => setDeleteTarget(event)}>🗑️</button>
                   </div>
                 </div>
               </div>
@@ -167,6 +215,14 @@ export default function EventManagementPage() {
           </a>
         </>
       )}
+
+      <ConfirmDialog
+        open={!!deleteTarget}
+        title="Delete Event"
+        message={`Are you sure you want to delete "${deleteTarget?.title}"? This action cannot be undone.`}
+        onConfirm={() => { deleteMutation.mutate(deleteTarget.id); setDeleteTarget(null); }}
+        onCancel={() => setDeleteTarget(null)}
+      />
     </div>
   );
 }

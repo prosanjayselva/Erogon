@@ -5,26 +5,41 @@ export function startEventReminder() {
   cron.schedule('0 8 * * *', async () => {
     try {
       const now = new Date();
-      const twoDaysFromNow = new Date(now.getTime() + 2 * 24 * 60 * 60 * 1000);
 
       const events = await prisma.event.findMany({
         where: {
           status: 'UPCOMING',
-          eventDate: {
-            gte: now,
-            lte: twoDaysFromNow,
-          },
+          reminderDaysBefore: { not: null },
+          eventDate: { gte: now },
         },
       });
 
       for (const event of events) {
-        await prisma.notification.create({
-          data: {
-            message: `"${event.title}" is in 2 days!`,
-            type: 'EVENT_REMINDER',
-          },
-        });
-        console.log(`Reminder created for event: ${event.title}`);
+        const reminderDate = new Date(
+          event.eventDate.getTime() - event.reminderDaysBefore * 24 * 60 * 60 * 1000
+        );
+
+        if (now >= reminderDate) {
+          const existing = await prisma.notification.findFirst({
+            where: {
+              eventId: event.id,
+              type: 'EVENT_REMINDER',
+            },
+          });
+
+          if (!existing) {
+            const daysLeft = event.reminderDaysBefore;
+            const unit = daysLeft === 1 ? 'day' : 'days';
+            await prisma.notification.create({
+              data: {
+                message: `"${event.title}" is in ${daysLeft} ${unit}!`,
+                type: 'EVENT_REMINDER',
+                eventId: event.id,
+              },
+            });
+            console.log(`Reminder created for event: ${event.title}`);
+          }
+        }
       }
     } catch (err) {
       console.error('Event reminder cron failed:', err);

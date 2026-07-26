@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AdminLayout from './components/admin/AdminLayout.jsx';
 import ProtectedRoute from './components/admin/ProtectedRoute.jsx';
+import RouteError from './components/admin/RouteError.jsx';
 import LoginPage from './pages/admin/LoginPage.jsx';
 import DashboardPage from './pages/admin/DashboardPage.jsx';
 import DonorManagementPage from './pages/admin/DonorManagementPage.jsx';
@@ -16,10 +17,12 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />,
+    errorElement: <RouteError />,
   },
   {
     path: '/',
     element: <ProtectedRoute />,
+    errorElement: <RouteError />,
     children: [
       {
         element: <AdminLayout />,
@@ -33,11 +36,12 @@ const router = createBrowserRouter([
           { path: 'newsletter', element: <NewsletterManagementPage /> },
           { path: 'events', element: <EventManagementPage /> },
           { path: 'audit-logs', element: <AuditLogPage /> },
+          { path: '*', element: <RouteError /> },
         ],
       },
     ],
   },
-], { basename: `${import.meta.env.BASE_URL}admin-panel` });
+], { basename: '/admin-panel' });
 
 export default function Router() {
   return <RouterProvider router={router} />;

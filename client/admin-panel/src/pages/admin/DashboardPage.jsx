@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../api/client.js';
 
@@ -12,12 +13,66 @@ const statConfig = [
   { id: 'upcomingEvents', title: 'Upcoming Events', icon: '📅', iconBg: '#FFF3E0', format: 'number' },
 ];
 
+function getActiveReminders(events) {
+  if (!events || events.length === 0) return [];
+  const now = Date.now();
+  return events.filter((ev) => {
+    if (!ev.reminderDaysBefore) return false;
+    const dismissKey = `ergon_reminder_dismiss_${ev.id}`;
+    if (localStorage.getItem(dismissKey)) return false;
+    const snoozeKey = `ergon_reminder_snooze_${ev.id}`;
+    const snoozedUntil = localStorage.getItem(snoozeKey);
+    if (snoozedUntil && now < parseInt(snoozedUntil)) return false;
+    const eventTime = new Date(ev.eventDate).getTime();
+    const reminderStart = eventTime - ev.reminderDaysBefore * 24 * 60 * 60 * 1000;
+    return now >= reminderStart && now < eventTime;
+  });
+}
+
 export default function DashboardPage() {
   const { data, isLoading } = useQuery({
     queryKey: ['dashboard-stats'],
     queryFn: () => api.get('/dashboard/stats').then((r) => r.data.data),
     refetchInterval: 30000,
   });
+
+  const { data: loginLogs } = useQuery({
+    queryKey: ['login-history'],
+    queryFn: () => api.get('/auth/login-history', { params: { limit: 8 } }).then((r) => r.data.data),
+    refetchInterval: 30000,
+  });
+
+  const [reminders, setReminders] = useState([]);
+  const [currentIdx, setCurrentIdx] = useState(0);
+
+  useEffect(() => {
+    if (data?.upcomingReminderEvents) {
+      const active = getActiveReminders(data.upcomingReminderEvents);
+      setReminders(active);
+      setCurrentIdx(0);
+    }
+  }, [data]);
+
+  const handleSnooze = (eventId) => {
+    const snoozeKey = `ergon_reminder_snooze_${eventId}`;
+    const fourHours = 4 * 60 * 60 * 1000;
+    localStorage.setItem(snoozeKey, String(Date.now() + fourHours));
+    setReminders((prev) => {
+      const next = prev.filter((e) => e.id !== eventId);
+      setCurrentIdx((i) => Math.min(i, next.length - 1));
+      return next;
+    });
+  };
+
+  const handleDismiss = (eventId) => {
+    const dismissKey = `ergon_reminder_dismiss_${eventId}`;
+    localStorage.setItem(dismissKey, '1');
+    setReminders((prev) => {
+      const next = prev.filter((e) => e.id !== eventId);
+      setCurrentIdx((i) => Math.min(i, next.length - 1));
+      return next;
+    });
+  };
 
   if (isLoading) return <div className="admin-loading">Loading...</div>;
 
@@ -34,12 +89,47 @@ export default function DashboardPage() {
     { ...statConfig[7], value: data?.upcomingEvents ?? 0 },
   ];
 
+  const currentReminder = reminders[currentIdx] || null;
+  const daysUntil = currentReminder
+    ? Math.ceil((new Date(currentReminder.eventDate).getTime() - Date.now()) / (24 * 60 * 60 * 1000))
+    : 0;
+
   return (
     <div>
       <div className="page-header">
         <h1 className="page-title">Dashboard</h1>
         <p className="page-subtitle">Welcome back, Admin! 👋</p>
       </div>
+
+      {currentReminder && (
+        <div className="reminder-modal-overlay">
+          <div className="reminder-modal">
+            <div className="reminder-modal-icon">🔔</div>
+            <h2 className="reminder-modal-title">Event Reminder</h2>
+            <p className="reminder-modal-msg">
+              <strong>{currentReminder.title}</strong> is in{' '}
+              {daysUntil <= 0 ? 'less than a day' : `${daysUntil} day${daysUntil > 1 ? 's' : ''}`}!
+            </p>
+            <p className="reminder-modal-date">
+              📅 {new Date(currentReminder.eventDate).toLocaleDateString('en-IN', {
+                weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+                hour: '2-digit', minute: '2-digit',
+              })}
+            </p>
+            {reminders.length > 1 && (
+              <p className="reminder-modal-count">{reminders.length} reminders active</p>
+            )}
+            <div className="reminder-modal-actions">
+              <button className="reminder-btn-snooze" onClick={() => handleSnooze(currentReminder.id)}>
+                ⏰ Snooze 4h
+              </button>
+              <button className="reminder-btn-dismiss" onClick={() => handleDismiss(currentReminder.id)}>
+                ✕ Dismiss
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="stat-cards">
         {stats.map((s) => (
@@ -72,6 +162,22 @@ export default function DashboardPage() {
             <div key={a.id} className="activity-row">
               <span className="activity-detail">{a.details || a.action}</span>
               <span className="activity-meta">{new Date(a.createdAt).toLocaleDateString()}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="dashboard-panel">
+          <h2>Recent Logins</h2>
+          {(!loginLogs || loginLogs.length === 0) && <p className="empty-state">No login history</p>}
+          {loginLogs?.map((log) => (
+            <div key={log.id} className="activity-row">
+              <span className="activity-detail">
+                {log.success ? '✅' : '❌'} {log.device || 'Unknown'} — {log.city}, {log.country}
+              </span>
+              <span className="activity-meta">
+                {log.ip && <span style={{ marginRight: 8, color: '#9CA3AF' }}>{log.ip}</span>}
+                {new Date(log.createdAt).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
+              </span>
             </div>
           ))}
         </div>

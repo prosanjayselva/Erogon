@@ -1,6 +1,7 @@
 import { createEmployerSchema } from '../validators/index.js';
 import { prisma } from '../index.js';
 import { createNotification } from '../services/notification.js';
+import { logActivity } from '../services/activity-log.js';
 
 export async function create(req, res) {
   try {
@@ -8,6 +9,7 @@ export async function create(req, res) {
     const jd = req.file ? req.file.filename : null;
     const employer = await prisma.employer.create({ data: { ...data, jd } });
     await createNotification('EMPLOYER', `New employer requirement from ${employer.organization}`);
+    await logActivity(0, 'NEW_EMPLOYER', `New employer requirement: ${employer.organization} (${employer.email})`);
     res.status(201).json({ success: true, message: 'Requirement submitted successfully!', data: employer });
   } catch (err) {
     if (err.name === 'ZodError') return res.status(400).json({ error: err.errors[0].message });
@@ -37,7 +39,8 @@ export async function list(req, res) {
 export async function remove(req, res) {
   try {
     const { id } = req.params;
-    await prisma.employer.delete({ where: { id: parseInt(id) } });
+    const employer = await prisma.employer.delete({ where: { id: parseInt(id) } });
+    await logActivity(req.user.id, 'DELETE_EMPLOYER', `Deleted employer: ${employer.organization} (${employer.email})`);
     res.json({ success: true, message: 'Employer requirement deleted successfully' });
   } catch {
     res.status(500).json({ error: 'Failed to delete employer requirement' });

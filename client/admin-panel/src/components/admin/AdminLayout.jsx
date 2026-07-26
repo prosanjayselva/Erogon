@@ -14,7 +14,7 @@ const menu = [
   { id: 'newsletter', label: 'Newsletter', icon: '📬', path: '/newsletter' },
   { id: 'events', label: 'Event Management', icon: '📅', path: '/events' },
   { id: 'audit', label: 'Audit Logs', icon: '📋', path: '/audit-logs' },
-  { id: 'website', label: 'View Website', icon: '🌐', path: import.meta.env.PROD ? `${import.meta.env.BASE_URL}` : 'http://localhost:5174' },
+  { id: 'website', label: 'View Website', icon: '🌐', path: import.meta.env.PROD ? `${import.meta.env.BASE_URL}` : '/' },
 ];
 
 export default function AdminLayout() {

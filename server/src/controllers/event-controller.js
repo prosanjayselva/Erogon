@@ -6,11 +6,13 @@ export async function create(req, res) {
   try {
     const data = createEventSchema.parse(req.body);
     const banner = req.file ? req.file.filename : null;
+    const isUpcoming = data.status === 'UPCOMING';
 
     const event = await prisma.event.create({
       data: {
         ...data,
         eventDate: new Date(data.eventDate),
+        reminderDaysBefore: isUpcoming ? (data.reminderDaysBefore ?? null) : null,
         banner,
       },
     });
@@ -78,6 +80,11 @@ export async function update(req, res) {
 
     const updateData = { ...data };
     if (data.eventDate) updateData.eventDate = new Date(data.eventDate);
+    if (data.status && data.status !== 'UPCOMING') {
+      updateData.reminderDaysBefore = null;
+    } else if (data.reminderDaysBefore !== undefined) {
+      updateData.reminderDaysBefore = data.reminderDaysBefore ?? null;
+    }
     if (banner) updateData.banner = banner;
 
     const event = await prisma.event.update({

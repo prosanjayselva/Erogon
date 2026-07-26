@@ -16,9 +16,9 @@ import {
 } from "../components/ActivityIllustrations.jsx";
 
 const KEY_ACTIVITIES = [
-  { icon: PeopleIllustration, title: "People", desc: "Education, women's livelihood, healthcare & careers." },
-  { icon: PetsIllustration, title: "Pets", desc: "Rescue and welfare for animals in need." },
-  { icon: PlanetIllustration, title: "Planet", desc: "Environmental protection & sustainability." },
+  { icon: PeopleIllustration, title: "People", desc: "Education Support & Skill Development, Women Empowerment & Livelihood Support, Healthcare & Community Welfare, Career Guidance & Placement Support." },
+  { icon: PetsIllustration, title: "Pets", desc: "Animal Rescue & Welfare Activities." },
+  { icon: PlanetIllustration, title: "Planet", desc: "Environmental Protection & Sustainability, Awareness, Volunteer & Community Development Programmes." },
 ];
 
 const TRUST_ITEMS = [
@@ -307,7 +307,7 @@ export default function HomePage() {
         <div className="container grid-2">
           <Reveal as="left">
             <div className="about-logo-card" aria-label="ERGON Foundation logo">
-              <img src={`${import.meta.env.BASE_URL}images/footer-pillars.png`} alt="ERGON Foundation - The People, The Pets, The Planet" />
+              <img src={PHOTOS.ramanathapuramGroup} alt="ERGON Foundation - The People, The Pets, The Planet" />
             </div>
           </Reveal>
           <Reveal as="right" delay={0.1}>

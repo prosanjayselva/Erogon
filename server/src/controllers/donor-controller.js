@@ -7,6 +7,7 @@ export async function create(req, res) {
     const data = createDonorSchema.parse(req.body);
 
     const donor = await prisma.donor.create({ data });
+    await logActivity(0, 'NEW_DONATION', `New donation from ${donor.name}: ₹${donor.amount}`);
 
     res.status(201).json({
       success: true,

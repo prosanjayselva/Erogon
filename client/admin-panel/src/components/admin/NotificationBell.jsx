@@ -8,6 +8,7 @@ const TYPE_ICONS = {
   JOB_SEEKER: '👤',
   EMPLOYER: '🏢',
   NEWSLETTER: '📫',
+  EVENT_REMINDER: '📅',
 };
 
 function timeAgo(date) {
@@ -83,7 +84,7 @@ export default function NotificationBell() {
               </button>
             )}
           </div>
-          {notifs?.length === 0 && <div className="notif-empty">No notifications</div>}
+          {notifs?.length === 0 && <div className="notif-empty">No unread notifications</div>}
           {notifs?.map((n) => (
             <div
               key={n.id}

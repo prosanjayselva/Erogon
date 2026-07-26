@@ -1,12 +1,14 @@
 import { createContactSchema } from '../validators/index.js';
 import { prisma } from '../index.js';
 import { createNotification } from '../services/notification.js';
+import { logActivity } from '../services/activity-log.js';
 
 export async function create(req, res) {
   try {
     const data = createContactSchema.parse(req.body);
     const contact = await prisma.contact.create({ data });
     await createNotification('CONTACT', `New contact message from ${contact.fullName}`);
+    await logActivity(0, 'NEW_CONTACT', `New contact message from ${contact.fullName} (${contact.email}): ${contact.subject || 'No subject'}`);
     res.status(201).json({ success: true, message: 'Message sent successfully!', data: contact });
   } catch (err) {
     if (err.name === 'ZodError') return res.status(400).json({ error: err.errors[0].message });
@@ -36,7 +38,8 @@ export async function list(req, res) {
 export async function remove(req, res) {
   try {
     const { id } = req.params;
-    await prisma.contact.delete({ where: { id: parseInt(id) } });
+    const contact = await prisma.contact.delete({ where: { id: parseInt(id) } });
+    await logActivity(req.user.id, 'DELETE_CONTACT', `Deleted contact: ${contact.fullName} (${contact.email})`);
     res.json({ success: true, message: 'Contact deleted successfully' });
   } catch {
     res.status(500).json({ error: 'Failed to delete contact' });

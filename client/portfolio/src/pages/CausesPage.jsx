@@ -9,14 +9,14 @@ import { PILLARS } from "../data/content.js";
 
 const PILLAR_ICON = { people: PeopleIcon, pets: PawIcon, planet: LeafIcon };
 const PILLAR_TONE = { people: "", pets: "photo-frame--sage", planet: "photo-frame--gold" };
-const PILLAR_PHOTO = { people: PHOTOS.medicalConsultation, pets: PHOTOS.aiHero1, planet: PHOTOS.ramanathapuramTree1 };
+const PILLAR_PHOTO = { people: PHOTOS.medicalConsultation, pets: PHOTOS.heroGirlDog, planet: PHOTOS.ramanathapuramTree1 };
 
 export default function CausesPage() {
   return (
     <>
       <section className="bg-hero">
         <div className="bg-hero__bg">
-          <img src={PHOTOS.aiCausesBg} alt="Community care and compassion" />
+          <img src={PHOTOS.projectBeachCleanup} alt="Community care and compassion" />
         </div>
         <div className="bg-hero__overlay" />
         <div className="bg-hero__content">
