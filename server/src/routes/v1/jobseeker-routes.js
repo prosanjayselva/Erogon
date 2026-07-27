@@ -1,12 +1,11 @@
 import { Router } from 'express';
-import multer from 'multer';
 import { create, list, remove } from '../../controllers/jobseeker-controller.js';
 import { authenticateWithSession } from '../../middleware/auth.js';
+import { uploadResume } from '../../middleware/upload.js';
 
-const upload = multer({ dest: 'uploads/' });
 const router = Router();
 
-router.post('/', upload.single('resume'), create);
+router.post('/', uploadResume.single('resume'), create);
 router.get('/', authenticateWithSession, list);
 router.delete('/:id', authenticateWithSession, remove);
 

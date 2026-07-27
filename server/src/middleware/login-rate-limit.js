@@ -1,62 +1,65 @@
-const attempts = new Map();
+// NOTE: This is an in-memory store. It resets on server restart.
+// For production with multiple instances, migrate to Redis or database-backed store.
+// Consider using `rate-limit-redis` or similar package.
 
 const MAX_ATTEMPTS = 5;
 const LOCKOUT_MS = 15 * 60 * 1000;
 
-export function getAttemptInfo(identifier) {
-  const key = identifier.toLowerCase();
-  const record = attempts.get(key);
-  const now = Date.now();
+const store = new Map();
 
-  if (!record) return { attempts: 0, maxAttempts: MAX_ATTEMPTS, locked: false, remainingMs: 0 };
-  if (record.lockedUntil > now) {
-    return { attempts: 0, maxAttempts: MAX_ATTEMPTS, locked: true, remainingMs: record.lockedUntil - now };
+function getRecord(key) {
+  const rec = store.get(key);
+  if (!rec) return null;
+  if (rec.lockedUntil > 0 && Date.now() >= rec.lockedUntil) {
+    store.delete(key);
+    return null;
   }
-  return { attempts: record.count, maxAttempts: MAX_ATTEMPTS, locked: false, remainingMs: 0 };
+  return rec;
 }
 
-export function loginRateLimit(req, res, next) {
-  const identifier = (req.body?.email || req.ip).toLowerCase();
-  const now = Date.now();
-  const record = attempts.get(identifier);
-
-  if (record && record.lockedUntil > now) {
-    const remaining = Math.ceil((record.lockedUntil - now) / 1000);
-    return res.status(429).json({
-      error: `Too many failed attempts. Try again in ${remaining} seconds.`,
-      locked: true,
-      remainingMs: record.lockedUntil - now,
-    });
+export function getAttemptInfo(identifier) {
+  const key = identifier.toLowerCase();
+  const rec = getRecord(key);
+  if (!rec) {
+    return { attempts: 0, maxAttempts: MAX_ATTEMPTS, locked: false, remainingMs: 0 };
   }
-
-  if (record && record.lockedUntil <= now) {
-    attempts.delete(identifier);
+  if (rec.lockedUntil > Date.now()) {
+    return { attempts: rec.count, maxAttempts: MAX_ATTEMPTS, locked: true, remainingMs: rec.lockedUntil - Date.now() };
   }
-
-  req._loginAttempt = { identifier };
-  next();
+  return { attempts: rec.count, maxAttempts: MAX_ATTEMPTS, locked: false, remainingMs: 0 };
 }
 
 export function recordFailedLogin(identifier) {
+  const key = identifier.toLowerCase();
   const now = Date.now();
-  const record = attempts.get(identifier) || { count: 0, lockedUntil: 0 };
-  record.count += 1;
+  const rec = store.get(key);
 
-  if (record.count >= MAX_ATTEMPTS) {
-    record.lockedUntil = now + LOCKOUT_MS;
-    record.count = 0;
+  if (rec && rec.lockedUntil > now) {
+    return getAttemptInfo(identifier);
   }
 
-  attempts.set(identifier, record);
+  const count = (rec ? rec.count : 0) + 1;
+  const lockedUntil = count >= MAX_ATTEMPTS ? now + LOCKOUT_MS : 0;
+
+  store.set(key, { count, lockedUntil });
+
+  return { attempts: count, maxAttempts: MAX_ATTEMPTS, locked: count >= MAX_ATTEMPTS, remainingMs: lockedUntil > 0 ? lockedUntil - now : 0 };
 }
 
 export function clearLoginAttempts(identifier) {
-  attempts.delete(identifier);
+  store.delete(identifier.toLowerCase());
 }
 
-setInterval(() => {
-  const now = Date.now();
-  for (const [key, val] of attempts) {
-    if (val.lockedUntil > 0 && val.lockedUntil < now) attempts.delete(key);
+export function loginRateLimit(req, res, next) {
+  const identifier = req.ip;
+  const info = getAttemptInfo(identifier);
+
+  if (info.locked) {
+    return res.status(429).json({
+      error: `Account locked. Try again in ${Math.ceil(info.remainingMs / 1000)} seconds.`,
+      ...info,
+    });
   }
-}, 60 * 1000);
+
+  next();
+}

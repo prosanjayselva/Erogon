@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { loginSchema } from '../validators/index.js';
+import { loginSchema, passwordSchema } from '../validators/index.js';
 import { prisma } from '../index.js';
 import { logActivity } from '../services/activity-log.js';
 import { recordFailedLogin, clearLoginAttempts, getAttemptInfo } from '../middleware/login-rate-limit.js';
@@ -35,31 +35,19 @@ const isProduction = process.env.NODE_ENV === 'production';
 function setAuthCookies(res, accessToken, refreshToken) {
   const accessMaxAge = parseExpiry(process.env.JWT_ACCESS_EXPIRY || '15m');
   const refreshMaxAge = parseExpiry(process.env.JWT_REFRESH_EXPIRY || '7d');
+  const cookieOpts = { httpOnly: true, secure: isProduction, sameSite: 'lax', path: '/' };
 
-  res.cookie('access_token', accessToken, {
-    httpOnly: true,
-    secure: isProduction,
-    sameSite: 'lax',
-    path: '/',
-    maxAge: accessMaxAge,
-  });
-  res.cookie('refresh_token', refreshToken, {
-    httpOnly: true,
-    secure: isProduction,
-    sameSite: 'lax',
-    path: '/',
-    maxAge: refreshMaxAge,
-  });
+  res.cookie('access_token', accessToken, { ...cookieOpts, maxAge: accessMaxAge });
+  res.cookie('refresh_token', refreshToken, { ...cookieOpts, maxAge: refreshMaxAge });
 }
 
 function clearAuthCookies(res) {
-  res.clearCookie('access_token', { path: '/' });
-  res.clearCookie('refresh_token', { path: '/' });
+  const opts = { httpOnly: true, secure: isProduction, sameSite: 'lax', path: '/' };
+  res.clearCookie('access_token', opts);
+  res.clearCookie('refresh_token', opts);
 }
 
 function getClientIp(req) {
-  const xff = req.headers['x-forwarded-for'];
-  if (xff) return xff.split(',')[0].trim();
   return req.ip || req.connection?.remoteAddress || 'unknown';
 }
 
@@ -126,11 +114,8 @@ export async function me(req, res) {
 
 export async function attemptsCheck(req, res) {
   try {
-    const email = (req.query.email || '').toLowerCase();
-    if (!email) {
-      return res.json({ success: true, data: { attempts: 0, maxAttempts: 5, locked: false, remainingMs: 0 } });
-    }
-    const info = getAttemptInfo(email);
+    const ip = getClientIp(req);
+    const info = getAttemptInfo(ip);
     res.json({ success: true, data: info });
   } catch {
     res.status(500).json({ error: 'Failed to check attempts' });
@@ -140,20 +125,24 @@ export async function attemptsCheck(req, res) {
 export async function login(req, res) {
   try {
     const { email, password } = loginSchema.parse(req.body);
+    const ip = getClientIp(req);
+    const key = ip;
 
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
-      recordFailedLogin(email.toLowerCase());
-      return res.status(401).json({ error: 'Invalid credentials' });
+      const info = recordFailedLogin(key);
+      logActivity(0, 'FAILED_LOGIN', `Failed login for "${email}" from IP ${ip} — ${info.attempts}/${info.maxAttempts} attempts`);
+      return res.status(401).json({ error: 'Invalid credentials', ...info });
     }
 
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) {
-      recordFailedLogin(email.toLowerCase());
-      return res.status(401).json({ error: 'Invalid credentials' });
+      const info = recordFailedLogin(key);
+      logActivity(user.id, 'FAILED_LOGIN', `Failed login by "${user.email}" (${user.name}) from IP ${ip} — ${info.attempts}/${info.maxAttempts} attempts`);
+      return res.status(401).json({ error: 'Invalid credentials', ...info });
     }
 
-    clearLoginAttempts(email.toLowerCase());
+    clearLoginAttempts(key);
 
     const sessionId = crypto.randomUUID();
     await prisma.user.update({ where: { id: user.id }, data: { activeSessionId: sessionId } });
@@ -165,14 +154,13 @@ export async function login(req, res) {
     const tokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');
     await prisma.refreshToken.create({ data: { token: tokenHash, userId: user.id, expiresAt } });
 
-    const ip = getClientIp(req);
     const device = parseDevice(req);
     const { city, country } = await geolocate(ip);
     await prisma.loginLog.create({
       data: { userId: user.id, ip, city, country, device, success: true },
     });
 
-    await logActivity(user.id, 'LOGIN', `Admin logged in: ${user.email} from ${city}, ${country} (${device})`);
+    logActivity(user.id, 'LOGIN', `Admin logged in: ${user.email} from ${city}, ${country} (${device})`);
 
     setAuthCookies(res, accessToken, rawToken);
 
@@ -258,10 +246,12 @@ export async function logout(req, res) {
     }
     if (req.user?.id) {
       await prisma.user.update({ where: { id: req.user.id }, data: { activeSessionId: null } });
+      logActivity(req.user.id, 'LOGOUT', `Admin logged out: ${req.user.email}`);
     }
     clearAuthCookies(res);
     res.json({ success: true, message: 'Logged out' });
   } catch {
+    if (req.user?.id) logActivity(req.user.id, 'LOGOUT', `Admin logged out: ${req.user.email}`);
     clearAuthCookies(res);
     res.json({ success: true, message: 'Logged out' });
   }
@@ -291,5 +281,38 @@ export async function loginHistory(req, res) {
     });
   } catch {
     res.status(500).json({ error: 'Failed to fetch login history' });
+  }
+}
+
+export async function changePassword(req, res) {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ error: 'Current and new password are required' });
+    }
+
+    const parsed = passwordSchema.safeParse(newPassword);
+    if (!parsed.success) {
+      return res.status(400).json({ error: parsed.error.errors[0].message });
+    }
+
+    const user = await prisma.user.findUnique({ where: { id: req.user.id } });
+    if (!user) {
+      return res.status(401).json({ error: 'User not found' });
+    }
+
+    const valid = await bcrypt.compare(currentPassword, user.password);
+    if (!valid) {
+      return res.status(401).json({ error: 'Current password is incorrect' });
+    }
+
+    const hashed = await bcrypt.hash(newPassword, 12);
+    await prisma.user.update({ where: { id: user.id }, data: { password: hashed } });
+
+    logActivity(user.id, 'CHANGE_PASSWORD', `Password changed for ${user.email}`);
+
+    res.json({ success: true, message: 'Password changed successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to change password' });
   }
 }

@@ -19,11 +19,13 @@ import employerRoutes from './routes/v1/employer-routes.js';
 import contactRoutes from './routes/v1/contact-routes.js';
 import newsletterRoutes from './routes/v1/newsletter-routes.js';
 import { authenticate, authenticateWithSession } from './middleware/auth.js';
+import { csrfProtection } from './middleware/csrf.js';
 
 export const prisma = new PrismaClient();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+app.set('trust proxy', 1);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -57,13 +59,20 @@ app.use(helmet({
   },
   crossOriginEmbedderPolicy: false,
   referrerPolicy: { policy: 'strict-origin-when-cross-origin' },
+  hsts: isProduction ? { maxAge: 31536000, includeSubDomains: true } : false,
 }));
+
+app.use((_req, res, next) => {
+  res.setHeader('X-Frame-Options', 'DENY');
+  next();
+});
 
 app.use(cors({
   origin: process.env.CORS_ORIGIN || (isProduction ? false : 'http://localhost:5173'),
   credentials: true,
 }));
 app.use(cookieParser());
+app.use(csrfProtection);
 app.use(express.json({ limit: '500kb' }));
 
 const uploadsDir = path.join(__dirname, '../../uploads');
@@ -89,7 +98,7 @@ const globalLimiter = rateLimit({
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 10,
+  max: 30,
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: 'Too many auth requests. Please wait.' },
@@ -104,7 +113,8 @@ const formLimiter = rateLimit({
 });
 
 app.use('/api/', globalLimiter);
-app.use('/api/v1/auth', authLimiter);
+app.post('/api/v1/auth/login', authLimiter);
+app.post('/api/v1/auth/refresh', authLimiter);
 app.use('/api/v1/donors', formLimiter);
 app.use('/api/v1/volunteers', formLimiter);
 app.use('/api/v1/job-seekers', formLimiter);

@@ -12,6 +12,7 @@ import JobSeekerManagementPage from './pages/admin/JobSeekerManagementPage.jsx';
 import EmployerManagementPage from './pages/admin/EmployerManagementPage.jsx';
 import ContactManagementPage from './pages/admin/ContactManagementPage.jsx';
 import NewsletterManagementPage from './pages/admin/NewsletterManagementPage.jsx';
+import SettingsPage from './pages/admin/SettingsPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
           { path: 'newsletter', element: <NewsletterManagementPage /> },
           { path: 'events', element: <EventManagementPage /> },
           { path: 'audit-logs', element: <AuditLogPage /> },
+          { path: 'settings', element: <SettingsPage /> },
           { path: '*', element: <RouteError /> },
         ],
       },

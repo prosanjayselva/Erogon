@@ -4,7 +4,7 @@ import api from '../api/client.js';
 
 export const useAuthStore = create(
   persist(
-    (set) => ({
+    (set, get) => ({
       user: null,
       isAuthenticated: false,
 

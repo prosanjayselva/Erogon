@@ -5,6 +5,22 @@ const api = axios.create({
   withCredentials: true,
 });
 
+function getCsrfToken() {
+  const match = document.cookie.match(/(?:^|;\s*)csrf_token=([^;]*)/);
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
+api.interceptors.request.use((config) => {
+  const method = config.method?.toUpperCase();
+  if (method && !['GET', 'HEAD', 'OPTIONS'].includes(method)) {
+    const token = getCsrfToken();
+    if (token) {
+      config.headers['X-CSRF-Token'] = token;
+    }
+  }
+  return config;
+});
+
 let isRefreshing = false;
 let failedQueue = [];
 
@@ -21,7 +37,8 @@ api.interceptors.response.use(
   async (err) => {
     const original = err.config;
 
-    if (err.response?.status === 401 && !original._retry) {
+    const isAuthEndpoint = original?.url?.includes('/auth/login') || original?.url?.includes('/auth/refresh');
+    if (err.response?.status === 401 && !original._retry && !isAuthEndpoint) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
@@ -37,16 +54,6 @@ api.interceptors.response.use(
         return api(original);
       } catch {
         processQueue(err);
-        try {
-          const stored = localStorage.getItem('ergon-auth');
-          if (stored) {
-            let parsed;
-            try { parsed = JSON.parse(stored); } catch { parsed = null; }
-            if (parsed?.state?.isAuthenticated) {
-              localStorage.removeItem('ergon-auth');
-            }
-          }
-        } catch { /* ignore */ }
         window.location.href = '/admin-panel/login';
         return Promise.reject(err);
       } finally {

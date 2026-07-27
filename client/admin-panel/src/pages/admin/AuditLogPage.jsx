@@ -4,6 +4,7 @@ import api from '../../api/client.js';
 
 const actionColors = {
   LOGIN: { bg: '#E8F5E9', color: '#2E7D32' },
+  FAILED_LOGIN: { bg: '#FEF2F2', color: '#DC2626' },
   CREATE_EVENT: { bg: '#E3F2FD', color: '#1E40AF' },
   UPDATE_EVENT: { bg: '#FFF3E0', color: '#D97706' },
   DELETE_EVENT: { bg: '#FEF2F2', color: '#DC2626' },
@@ -26,6 +27,7 @@ const actionColors = {
 const ACTION_OPTIONS = [
   { value: '', label: 'All Actions' },
   { value: 'LOGIN', label: 'Login' },
+  { value: 'FAILED_LOGIN', label: 'Failed Login' },
   { value: 'NEW_DONATION', label: 'New Donation' },
   { value: 'DELETE_DONOR', label: 'Delete Donor' },
   { value: 'CREATE_EVENT', label: 'Create Event' },
