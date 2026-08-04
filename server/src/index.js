@@ -10,6 +10,8 @@ import { PrismaClient } from '@prisma/client';
 import authRoutes from './routes/v1/auth-routes.js';
 import donorRoutes from './routes/v1/donor-routes.js';
 import eventRoutes from './routes/v1/event-routes.js';
+// Gallery database API is temporarily disabled.
+// import galleryMediaRoutes from './routes/v1/gallery-media-routes.js';
 import dashboardRoutes from './routes/v1/dashboard-routes.js';
 import notificationRoutes from './routes/v1/notification-routes.js';
 import activityLogRoutes from './routes/v1/activity-log-routes.js';
@@ -24,7 +26,7 @@ import { csrfProtection } from './middleware/csrf.js';
 export const prisma = new PrismaClient();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000; // Shared API port used by both development frontends.
 app.set('trust proxy', 1);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -125,6 +127,7 @@ app.use('/api/v1/newsletter', formLimiter);
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/donors', donorRoutes);
 app.use('/api/v1/events', eventRoutes);
+// app.use('/api/v1/gallery-media', galleryMediaRoutes);
 app.use('/api/v1/dashboard', dashboardRoutes);
 app.use('/api/v1/notifications', notificationRoutes);
 app.use('/api/v1/activity-logs', activityLogRoutes);

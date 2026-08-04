@@ -1,13 +1,11 @@
 import Reveal, { Stagger, StaggerItem } from "../components/Reveal.jsx";
-import RootLine from "../components/RootLine.jsx";
 import PhotoFrame from "../components/PhotoFrame.jsx";
 import { motion } from "framer-motion";
 import { PHOTOS } from "../data/photos.js";
-import { ChevronRightIcon, PeopleIcon, PawIcon, LeafIcon, HeartIcon, UsersGroupIcon, GlobeIcon } from "../components/Icons.jsx";
-import { PILLARS, GOVERNING_BODY, STAFF, PATRONS, PARTNERS, DONORS, ABOUT_IMPACT_STATS, ABOUT_VISION } from "../data/content.js";
+import { ChevronRightIcon, HeartIcon, UsersGroupIcon, GlobeIcon } from "../components/Icons.jsx";
+import { GOVERNING_BODY, STAFF, PATRONS, PARTNERS, DONORS, ABOUT_IMPACT_STATS, ABOUT_VISION } from "../data/content.js";
 import { NavLink } from "react-router-dom";
-
-const PILLAR_ICON = { people: PeopleIcon, pets: PawIcon, planet: LeafIcon };
+import { BrandName, BrandText } from "../components/BrandName.jsx";
 
 const CORE_VALUES = ["Compassion", "Integrity", "Transparency", "Empowerment", "Sustainability", "Community"];
 
@@ -35,9 +33,9 @@ export default function AboutPage() {
             </div>
             <span className="bg-hero__eyebrow">Who We Are</span>
             <h1 className="bg-hero__title">Compassion Creates Lasting Change.</h1>
-            <p className="bg-hero__desc">Ergon Foundation exists to empower communities through education, healthcare, environmental sustainability and social responsibility.</p>
+            <p className="bg-hero__desc"><BrandName /> exists to empower communities through education, healthcare, environmental sustainability and social responsibility.</p>
             <div className="hero__cta" style={{ justifyContent: "center", marginTop: "2rem" }}>
-              <NavLink to="/donate" className="btn btn--primary">Support Our Vision</NavLink>
+              <NavLink to="/donate#payment-details" className="btn btn--primary">Support Our Vision</NavLink>
               <NavLink to="/get-involved" className="btn btn--outline">Get Involved</NavLink>
             </div>
           </motion.div>
@@ -54,7 +52,7 @@ export default function AboutPage() {
             <div className="eyebrow" style={{ justifyContent: "center" }}>A Message From Our Founder</div>
             <h2 className="h-lg">Building A Better Tomorrow, <span className="text-gold">Together</span></h2>
             <p className="lede mx-auto mt-24" style={{ fontSize: "1.1rem", maxWidth: 600 }}>
-              "ERGON Foundation was born from a simple belief — that every act of kindness, no matter how small,
+              "<BrandName /> was born from a simple belief — that every act of kindness, no matter how small,
               creates ripples that transform lives. We are committed to transparency, compassion, and measurable
               impact in everything we do."
             </p>
@@ -76,7 +74,7 @@ export default function AboutPage() {
               <motion.div className="glass-card" style={{ padding: "clamp(24px, 5vw, 44px) clamp(18px, 4vw, 36px)", textAlign: "center" }} whileHover={{ y: -6, boxShadow: "var(--shadow-lg)" }}>
                 <GlobeIcon style={{ width: 52, height: 52, color: "var(--primary)", marginBottom: 20 }} />
                 <h3 className="h-md">Our Vision</h3>
-                <p className="lede mx-auto mt-16">{ABOUT_VISION}</p>
+                <p className="lede mx-auto mt-16"><BrandText>{ABOUT_VISION}</BrandText></p>
               </motion.div>
             </Reveal>
           </div>
@@ -106,6 +104,16 @@ export default function AboutPage() {
         <div className="container--narrow text-center">
           <Reveal as="up">
             <PhotoFrame src={PHOTOS.ramanathapuramBeachClean} alt="ERGON Foundation pet care" ratio="16/9" caption="Compassion for every soul — our pet welfare initiative" />
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section section--sm" style={{ background: "var(--secondary)" }}>
+        <div className="container--narrow text-center">
+          <Reveal as="up">
+            <div className="eyebrow" style={{ justifyContent: "center" }}>Our Key Activities</div>
+            <h2 className="h-lg">Three Roots, One Purpose</h2>
+            <img className="about-pillars-image" src={PHOTOS.logoFooter} alt="The People, The Pets, The Planet" />
           </Reveal>
         </div>
       </section>
@@ -142,41 +150,12 @@ export default function AboutPage() {
                   <div className="timeline-item">
                     <span className="yr">{j.year}</span>
                     <h4 className="h-sm" style={{ marginTop: 4 }}>{j.title}</h4>
-                    <p style={{ color: "var(--text-secondary)", fontSize: "0.92rem", marginTop: 4 }}>{j.desc}</p>
+                    <p style={{ color: "var(--text-secondary)", fontSize: "0.92rem", marginTop: 4 }}><BrandText>{j.desc}</BrandText></p>
                   </div>
                 </Reveal>
               ))}
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="section" style={{ background: "var(--secondary)" }}>
-        <div className="container">
-          <Reveal as="up" className="text-center" style={{ maxWidth: 600, marginInline: "auto" }}>
-            <div className="eyebrow" style={{ justifyContent: "center" }}>Our Key Activities</div>
-            <h2 className="h-lg">Three Roots, One Purpose</h2>
-          </Reveal>
-          <div className="root-line-wrap mt-32"><RootLine /></div>
-          <Stagger className="grid-3 mt-32">
-            {PILLARS.map((p) => {
-              const Icon = PILLAR_ICON[p.key];
-              return (
-                <StaggerItem key={p.key}>
-                  <div className="card">
-                    <div className="icon-badge"><Icon /></div>
-                    <h3 className="h-sm">{p.title}</h3>
-                    <p style={{ color: "var(--text-secondary)", fontSize: "0.9rem", marginTop: 6 }}>{p.desc}</p>
-                    <ul className="card-list">
-                      {p.points.map((pt, i) => (
-                        <li key={i}><HeartIcon /> {pt}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </StaggerItem>
-              );
-            })}
-          </Stagger>
         </div>
       </section>
 
@@ -228,23 +207,21 @@ export default function AboutPage() {
       <section className="section section--sm" style={{ background: "var(--secondary)" }}>
         <div className="container grid-2">
           <Reveal as="left">
-            <h3 className="h-sm mb-16">Our Partners & Donors</h3>
+            <h3 className="h-sm mb-16">Our Partners</h3>
             <div className="partner-logo-grid">
               {PARTNERS.map((p, i) => (
-                <div key={i} className="partner-logo-card">
+                <div key={i} className="partner-logo-card partner-logo-card--tech">
                   {p.logoSrc ? <img src={p.logoSrc} alt={`${p.name} logo`} /> : <span>{p.logo}</span>}
-                  <b>{p.name}</b>
                 </div>
               ))}
             </div>
           </Reveal>
           <Reveal as="right" delay={0.1}>
-            <h3 className="h-sm mb-16">Supporters</h3>
+            <h3 className="h-sm mb-16">Our Donors</h3>
             <div className="partner-logo-grid">
               {DONORS.map((p, i) => (
-                <div key={i} className="partner-logo-card">
+                <div key={i} className="partner-logo-card partner-logo-card--donor">
                   {p.logoSrc ? <img src={p.logoSrc} alt={`${p.name} logo`} /> : <span>{p.logo}</span>}
-                  <b>{p.name}</b>
                 </div>
               ))}
             </div>

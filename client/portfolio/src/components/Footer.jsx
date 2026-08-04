@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { MenuFacebook, MenuX, MenuLinkedin, MenuInstagram, MenuYoutube, PinIcon, MailIcon, PhoneIcon } from "./Icons.jsx";
 import api from "../api/client.js";
 import { NEWSLETTER_CONTENT } from "../data/content.js";
+import { BrandName } from "./BrandName.jsx";
 
 const B = import.meta.env.BASE_URL;
 
@@ -33,10 +34,11 @@ export default function Footer() {
           <NavLink to="/" className="brand">
             <img src={`${B}images/logo.png`} alt="ERGON Foundation" className="brand__logo" />
             <span className="brand__word">
-              <b style={{ color: "white" }}>Ergon Foundation</b>
+              <b className="ergon-brand-name">ERGON FOUNDATION</b>
             </span>
           </NavLink>
           <p>A registered charitable trust working across Tamil Nadu and India.</p>
+          <img className="footer-pillars" src={`${B}images/logo-footer.png`} alt="The People, The Pets, The Planet" />
           <div className="footer-social">
             <a href="https://www.facebook.com/share/14r5MoatD84/" target="_blank" rel="noreferrer" aria-label="Facebook"><MenuFacebook /></a>
             <a href="https://x.com/ERGONFoundation" target="_blank" rel="noreferrer" aria-label="X"><MenuX /></a>
@@ -61,8 +63,9 @@ export default function Footer() {
           <h5>Get Involved</h5>
           <ul>
             <li><NavLink to="/gallery">Gallery</NavLink></li>
+            <li><NavLink to="/careers">Career Opportunities</NavLink></li>
             <li><NavLink to="/get-involved">Volunteer</NavLink></li>
-            <li><NavLink to="/donate">Donate</NavLink></li>
+            <li><NavLink to="/donate#payment-details">Donate</NavLink></li>
             <li><NavLink to="/contact">Contact</NavLink></li>
           </ul>
         </div>
@@ -85,7 +88,7 @@ export default function Footer() {
       </div>
 
       <div className="container footer-bottom">
-        <span>&copy; {new Date().getFullYear()} ERGON Foundation. All Rights Reserved.</span>
+        <span>&copy; {new Date().getFullYear()} <BrandName />. All Rights Reserved.</span>
         <div className="flex gap-16">
           <NavLink to="/privacy">Privacy Policy</NavLink>
           <NavLink to="/terms">Terms &amp; Conditions</NavLink>

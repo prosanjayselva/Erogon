@@ -61,6 +61,20 @@ model Event {
   @@map("events")
 }
 
+model GalleryMedia {
+  id           Int      @id @default(autoincrement())
+  activityName String   @map("activity_name")
+  activityDate DateTime @map("activity_date")
+  category     String
+  caption      String?
+  mediaType    String   @map("media_type")
+  media        String
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("gallery_media")
+}
+
 model Notification {
   id          Int       @id @default(autoincrement())
   message     String

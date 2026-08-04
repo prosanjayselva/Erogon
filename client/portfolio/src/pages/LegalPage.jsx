@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { BrandName } from "../components/BrandName.jsx";
 import Reveal from "../components/Reveal.jsx";
 import { ChevronRightIcon } from "../components/Icons.jsx";
 
@@ -20,7 +21,7 @@ export default function LegalPage({ title, crumb }) {
         <div className="wrap" style={{ maxWidth: 780 }}>
           <Reveal as="up">
             <p className="lede">
-              This page is a placeholder for ERGON Foundation's {title.toLowerCase()}. Final legal copy will be
+              This page is a placeholder for <BrandName />'s {title.toLowerCase()}. Final legal copy will be
               supplied by the Foundation and published here.
             </p>
             <div className="divider" />

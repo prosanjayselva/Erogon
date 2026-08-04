@@ -50,6 +50,15 @@ export const updateEventSchema = z.object({
   ),
 });
 
+export const createGalleryMediaSchema = z.object({
+  activityName: z.string().min(2, 'Activity name is required').max(200),
+  activityDate: z.string().refine((value) => !Number.isNaN(Date.parse(value)), 'Invalid activity date'),
+  category: z.enum(['PEOPLE', 'PETS', 'PLANET']),
+  caption: z.string().max(500).optional(),
+});
+
+export const updateGalleryMediaSchema = createGalleryMediaSchema.partial();
+
 export const createVolunteerSchema = z.object({
   fullName: z.string().min(2, 'Name is required').max(100),
   contactNumber: z.string().min(10, 'Valid phone number required').max(15),

@@ -1,7 +1,7 @@
 const B = import.meta.env.BASE_URL;
 
 export const HOME_BANNER =
-  "ERGON Foundation is a registered charitable trust dedicated to innovation for the welfare of people, animals, and the environment. Guided by the vision, ROOTED IN GOOD DEEDS for the People, Pets and Planet.";
+  "ERGON Foundation is a registered charitable trust dedicated to innovation for the welfare of people, animals, and the environment. Guided by the vision, ROOTED IN GOOD DEEDS for the “People • Pets • Planet.”";
 
 export const ABOUT_VISION =
   "The vision of ERGON Foundation is to work for the welfare of People, Pets, and the Planet through charitable and sustainable initiatives. The Foundation is committed to supporting poor and needy communities, caring for animals, and protecting the environment in Tamil Nadu and across India.";
@@ -69,12 +69,12 @@ export const STAFF = [
 export const PATRONS = [];
 
 export const PARTNERS = [
-  { name: "Tech Tycoon Digital Solution LLP", logo: "TT", logoSrc: `${B}images/partners/tech-tycoon.svg` },
+  { name: "Tech Tycoon Digital Solution LLP", logo: "TT", logoSrc: `${B}images/partners/tech-tycoon.jpeg` },
 ];
 
 export const DONORS = [
-  { name: "LOGOS Constructions PVT Ltd.", logo: "LC", logoSrc: `${B}images/partners/logos-constructions.svg` },
-  { name: "Rhema Resorts PVT Ltd.", logo: "RR", logoSrc: `${B}images/partners/rhema-resorts.svg` },
+  { name: "LOGOS Constructions PVT Ltd.", logo: "LC", logoSrc: `${B}images/partners/logos-constructions.jpeg` },
+  { name: "Rhema Resorts PVT Ltd.", logo: "RR", logoSrc: `${B}images/partners/rhema-resorts.jpeg` },
 ];
 
 export const NEWSLETTER_CONTENT = {
@@ -122,15 +122,25 @@ export const CONTACT = {
 
 export const REPORTS = [
   {
-    id: "environment-day-2026",
+    id: "environment-day-ramanathapuram-2026",
     category: "Activity Report",
-    title: "Environment Day 2026",
-    desc: "Tree plantation and beach clean-up drives across Ramanathapuram and Yercaud.",
+    title: "Environment Day 2026 – Ramanathapuram",
+    desc: "Detailed narrative report covering tree plantation, environmental awareness and beach clean-up activities in Ramanathapuram.",
     image: "reportEnvImpact",
     primaryUrl: `${B}reports/world-environment-day-2026-ramanathapuram.pdf`,
     files: [
-      { label: "Impact Infographic", type: "Image", url: `${B}reports/environment-day-2026-impact-infographic.png` },
       { label: "Ramanathapuram Activity Report", type: "PDF", url: `${B}reports/world-environment-day-2026-ramanathapuram.pdf` },
+      { label: "Impact Infographic", type: "Image", url: `${B}reports/environment-day-2026-impact-infographic.png` },
+    ],
+  },
+  {
+    id: "environment-day-yercaud-2026",
+    category: "Activity Report",
+    title: "Environment Day 2026 – Yercaud",
+    desc: "Detailed narrative report covering the Environment Day awareness and community activities held in Yercaud.",
+    image: "yercaudActivity",
+    primaryUrl: `${B}reports/yercaud-environment-day-activity-report-2026.pdf`,
+    files: [
       { label: "Yercaud Activity Report", type: "PDF", url: `${B}reports/yercaud-environment-day-activity-report-2026.pdf` },
     ],
   },
@@ -142,8 +152,8 @@ export const REPORTS = [
     image: "reportMedicalImpact",
     primaryUrl: `${B}reports/medical-camp-report.pdf`,
     files: [
-      { label: "Pictorial Impact Report", type: "Image", url: `${B}reports/medical-camp-impact-pictorial-report.png` },
       { label: "Medical Camp Report", type: "PDF", url: `${B}reports/medical-camp-report.pdf` },
+      { label: "Pictorial Impact Report", type: "Image", url: `${B}reports/medical-camp-impact-pictorial-report.png` },
     ],
   },
   {
@@ -175,7 +185,7 @@ export const FEATURED_REPORTS = [
 ];
 
 export const EDUSPRO_CONTENT = {
-  title: "EduSPro - Educational Sponsors Programme",
+  title: "EduSpro – Educational Sponsorship Programme",
   subtitle:
     "It is an EDUCATIONAL SUPPORT Programme that will reach out to young students at the school level who are in the most difficult situation of their lives, particularly without parents or with single parents in absolute poverty and raise 100,000/- (One lakh only) from various sponsors for their education.",
   amount: "100,000/-",

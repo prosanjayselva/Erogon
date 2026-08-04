@@ -11,6 +11,7 @@ import {
 } from "../components/Icons.jsx";
 import api from "../api/client.js";
 import { CAREER_INTRO } from "../data/content.js";
+import { BrandText } from "../components/BrandName.jsx";
 
 const VOLUNTEER_WAYS = [
   { icon: HeartHandsIcon, title: "Community Drives", desc: "Join education, healthcare and livelihood outreach in the field." },
@@ -65,9 +66,9 @@ const EMPTY_VOLUNTEER = { fullName: "", contactNumber: "", email: "", city: "", 
 const EMPTY_SEEKER = { fullName: "", dob: "", gender: "", qualification: "", address: "", contactNumber: "", email: "", experience: "", skills: "", preferredRole: "", preferredIndustry: "", preferredLocation: "", currentCTC: "", expectedCTC: "", noticePeriod: "", languages: "" };
 const EMPTY_EMPLOYER = { organization: "", contactPerson: "", designation: "", contactNumber: "", email: "", industryType: "", jobRole: "", vacancies: "", qualification: "", experience: "", salaryRange: "", jobLocation: "", employmentType: "", expectations: "" };
 
-export default function GetInvolvedPage() {
+export default function GetInvolvedPage({ careersOnly = false }) {
   const [params] = useSearchParams();
-  const [tab, setTab] = useState(params.get("tab") === "career" ? "career" : "volunteer");
+  const [tab, setTab] = useState(careersOnly || params.get("tab") === "career" ? "career" : "volunteer");
   const [role, setRole] = useState("seeker");
 
   const [volSubmitted, setVolSubmitted] = useState(false);
@@ -157,15 +158,9 @@ export default function GetInvolvedPage() {
           <motion.div className="volunteer-hero__content" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <span className="volunteer-hero__eyebrow">Join Us</span>
             <h1 className="volunteer-hero__title">Be The Reason Someone Smiles Today</h1>
-            <p className="volunteer-hero__sub">Give your time as a volunteer, or connect through ERGON's Career Opportunities programme — for job seekers and employers alike.</p>
-            <div className="volunteer-hero__stats">
-              <div className="volunteer-hero__stat"><b>0</b><span>Active Volunteers</span></div>
-              <div className="volunteer-hero__stat"><b>6</b><span>Ways to Help</span></div>
-              <div className="volunteer-hero__stat"><b>3</b><span>Districts</span></div>
-            </div>
+            <p className="volunteer-hero__sub">Give your time as a volunteer or support ERGON Foundation through a donation — every contribution helps People, Pets and Planet.</p>
             <div className="volunteer-hero__actions">
               <button className="btn btn--primary" onClick={() => { setTab("volunteer"); setTimeout(() => document.getElementById("volunteer")?.scrollIntoView({ behavior: "smooth" }), 50); }}>Become a Volunteer <VolunteerIcon /></button>
-              <button className="btn btn--outline" onClick={() => { setTab("career"); setTimeout(() => document.getElementById("career")?.scrollIntoView({ behavior: "smooth" }), 50); }}>Explore Careers</button>
             </div>
           </motion.div>
         </div>
@@ -173,10 +168,10 @@ export default function GetInvolvedPage() {
 
       <section className="section section--paper">
         <div className="wrap">
-          <Reveal as="up" className="center mb-32">
+          <Reveal as="up" className="center mb-32" style={{ display: careersOnly ? "none" : undefined }}>
             <div className="tabbar mx-auto">
               <button className={tab === "volunteer" ? "active" : ""} onClick={() => setTab("volunteer")}>Volunteer With Us</button>
-              <button className={tab === "career" ? "active" : ""} onClick={() => { setTab("career"); setRole("employer"); }}>Career Opportunities</button>
+              <NavLink className="tabbar-link" to="/donate#payment-details">Donate</NavLink>
             </div>
           </Reveal>
 
@@ -274,14 +269,14 @@ export default function GetInvolvedPage() {
             </Reveal>
           )}
 
-          {tab === "career" && (
+          {careersOnly && tab === "career" && (
             <Reveal as="fade" id="career">
               <div className="glass-card mb-48" style={{ maxWidth: 780, margin: "0 auto 48px", padding: "clamp(20px, 4vw, 36px) clamp(16px, 4vw, 32px)", display: "flex", gap: 20, alignItems: "flex-start", flexWrap: "wrap" }}>
                 <div className="icon-badge" style={{ marginBottom: 0, flex: "none", width: 64, height: 64, background: "var(--gold)", color: "var(--text)" }}><BriefcaseIcon /></div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <h3 className="h-md">ERGON Career Opportunities</h3>
                   <p style={{ color: "var(--text-secondary)", marginTop: 6 }}>
-                    {CAREER_INTRO}
+                    <BrandText>{CAREER_INTRO}</BrandText>
                   </p>
                 </div>
               </div>
@@ -413,7 +408,7 @@ export default function GetInvolvedPage() {
                 <p>Reach out to our team and we'll help you find the right way to get involved.</p>
                 <div className="hero__cta">
                   <NavLink to="/contact" className="btn btn--gold btn--lg">Contact Us <ArrowRightIcon /></NavLink>
-                  <NavLink to="/donate" className="btn btn--white">Support Our Work <HeartHandsIcon /></NavLink>
+                  <NavLink to="/donate#payment-details" className="btn btn--white">Support Our Work <HeartHandsIcon /></NavLink>
                 </div>
               </div>
             </div>

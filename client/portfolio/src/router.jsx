@@ -25,6 +25,7 @@ const router = createHashRouter([
       { path: "projects", element: <ProjectsPage /> },
       { path: "reports", element: <ReportsPage /> },
       { path: "gallery", element: <GalleryPage /> },
+      { path: "careers", element: <GetInvolvedPage careersOnly /> },
       { path: "get-involved", element: <GetInvolvedPage /> },
       { path: "contact", element: <ContactPage /> },
       { path: "donate", element: <DonatePage /> },

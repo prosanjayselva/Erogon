@@ -13,6 +13,8 @@ const menu = [
   { id: 'contacts', label: 'Contacts', icon: '✉️', path: '/contacts' },
   { id: 'newsletter', label: 'Newsletter', icon: '📬', path: '/newsletter' },
   { id: 'events', label: 'Event Management', icon: '📅', path: '/events' },
+  // Gallery database management is temporarily disabled.
+  // { id: 'gallery', label: 'Gallery Management', icon: '🖼️', path: '/gallery' },
   { id: 'audit', label: 'Audit Logs', icon: '📋', path: '/audit-logs' },
   { id: 'settings', label: 'Settings', icon: '⚙️', path: '/settings' },
   { id: 'website', label: 'View Website', icon: '🌐', path: import.meta.env.PROD ? '/' : 'http://localhost:5174/Erogon/' },

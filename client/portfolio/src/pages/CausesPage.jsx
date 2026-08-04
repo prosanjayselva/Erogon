@@ -9,7 +9,7 @@ import { PILLARS } from "../data/content.js";
 
 const PILLAR_ICON = { people: PeopleIcon, pets: PawIcon, planet: LeafIcon };
 const PILLAR_TONE = { people: "", pets: "photo-frame--sage", planet: "photo-frame--gold" };
-const PILLAR_PHOTO = { people: PHOTOS.medicalConsultation, pets: PHOTOS.heroGirlDog, planet: PHOTOS.ramanathapuramTree1 };
+const PILLAR_PHOTO = { people: PHOTOS.medicalConsultation, pets: PHOTOS.heroGirlDog, planet: PHOTOS.yercaudActivity };
 
 export default function CausesPage() {
   return (
@@ -30,7 +30,7 @@ export default function CausesPage() {
             <h1 className="bg-hero__title">Causes We Are Rooted In</h1>
             <p className="bg-hero__desc">Every ERGON programme grows from one of three roots — People, Pets and Planet — each tended with the same care.</p>
             <div className="hero__cta" style={{ justifyContent: "center", marginTop: "2rem" }}>
-              <NavLink to="/donate" className="btn btn--primary">Support a Cause <DonateHeartIcon /></NavLink>
+              <NavLink to="/donate#payment-details" className="btn btn--primary">Support a Cause <DonateHeartIcon /></NavLink>
               <NavLink to="/get-involved" className="btn btn--outline">Get Involved</NavLink>
             </div>
           </motion.div>
@@ -59,7 +59,7 @@ export default function CausesPage() {
                     <li key={idx}><HeartIcon /> {pt}</li>
                   ))}
                 </ul>
-                <NavLink to="/donate" className="btn btn--primary mt-32">Support {p.title} <DonateHeartIcon /></NavLink>
+                <NavLink to="/donate#payment-details" className="btn btn--primary mt-32">Support {p.title} <DonateHeartIcon /></NavLink>
               </Reveal>
             </div>
             {i < PILLARS.length - 1 && (
@@ -78,7 +78,7 @@ export default function CausesPage() {
                 <h2 className="h-lg">Pick A Cause Close To Your Heart</h2>
                 <p>Whichever root you choose to water, the tree grows stronger for everyone.</p>
                 <div className="hero__cta">
-                  <NavLink to="/donate" className="btn btn--gold">Donate Now <DonateHeartIcon /></NavLink>
+                  <NavLink to="/donate#payment-details" className="btn btn--gold">Donate Now <DonateHeartIcon /></NavLink>
                   <NavLink to="/projects" className="btn btn--white">See Our Projects <ArrowRightIcon /></NavLink>
                 </div>
               </div>

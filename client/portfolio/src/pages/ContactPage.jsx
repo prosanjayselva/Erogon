@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Reveal from "../components/Reveal.jsx";
 import PhotoFrame from "../components/PhotoFrame.jsx";
+import { BrandName, BrandText } from "../components/BrandName.jsx";
 import { PinIcon, MailIcon, PhoneIcon, CheckIcon, MenuFacebook, MenuX, MenuLinkedin, MenuInstagram, MenuYoutube } from "../components/Icons.jsx";
 import { PHOTOS } from "../data/photos.js";
 import { CONTACT } from "../data/content.js";
@@ -52,7 +53,7 @@ export default function ContactPage() {
               <div className="contact-hero__card-icon"><PinIcon /></div>
               <div>
                 <h4>Office Address</h4>
-                {CONTACT.address.map((l, i) => <p key={i}>{l}</p>)}
+                {CONTACT.address.map((l, i) => <p key={i}><BrandText>{l}</BrandText></p>)}
               </div>
             </div>
             <div className="contact-hero__card">
@@ -90,7 +91,7 @@ export default function ContactPage() {
 
             <div className="mt-32" style={{ display: "flex", flexDirection: "column", gap: 24 }}>
               {[
-                { icon: PinIcon, title: "Office Address", content: CONTACT.address.map((l, i) => <span key={i} style={{ display: "block", color: "var(--text-secondary)", fontSize: "0.92rem" }}>{l}</span>) },
+                { icon: PinIcon, title: "Office Address", content: CONTACT.address.map((l, i) => <span key={i} style={{ display: "block", color: "var(--text-secondary)", fontSize: "0.92rem" }}><BrandText>{l}</BrandText></span>) },
                 { icon: MailIcon, title: "Email", content: <><a href={`mailto:${CONTACT.email}`} style={{ display: "block", color: "var(--text-secondary)", fontSize: "0.92rem" }}>{CONTACT.email}</a><a href={`mailto:${CONTACT.secretaryEmail}`} style={{ display: "block", color: "var(--text-secondary)", fontSize: "0.92rem" }}>{CONTACT.secretaryEmail}</a></> },
                 { icon: PhoneIcon, title: "Mobile", content: <a href={`tel:${CONTACT.phone.replace(/\s/g, "")}`} style={{ color: "var(--text-secondary)", fontSize: "0.92rem" }}>{CONTACT.phone}</a> },
               ].map((item, i) => (
@@ -113,7 +114,7 @@ export default function ContactPage() {
               <a href={CONTACT.social.youtube} target="_blank" rel="noreferrer" style={{ borderColor: "var(--divider)", color: "var(--primary)" }}><MenuYoutube /></a>
             </div>
 
-            <PhotoFrame src={PHOTOS.ramanathapuramGroup} alt="ERGON Foundation" ratio="16/9" caption="ERGON Foundation - Kodambakkam, Chennai" />
+            <PhotoFrame src={PHOTOS.ramanathapuramGroup} alt="ERGON Foundation" ratio="16/9" caption={<><BrandName /> - Kodambakkam, Chennai</>} />
           </Reveal>
 
           <Reveal as="right" delay={0.1}>

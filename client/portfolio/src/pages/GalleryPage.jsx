@@ -1,134 +1,76 @@
-import { useState, useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import Reveal from "../components/Reveal.jsx";
 import PhotoFrame from "../components/PhotoFrame.jsx";
-import { ImageIcon, VideoIcon, PlayIcon, CloseIcon } from "../components/Icons.jsx";
-
-const B = import.meta.env.BASE_URL;
+import { CloseIcon } from "../components/Icons.jsx";
+// Database-backed gallery loading is temporarily disabled.
+// import api from "../api/client.js";
 import { PHOTOS, GALLERY_WITH_CATEGORIES, GALLERY_CATEGORIES, VIDEOS } from "../data/photos.js";
+import { BrandText } from "../components/BrandName.jsx";
+
+const activityDetails = {
+  people: { name: "Community Welfare Activities", date: "2026-05-15" },
+  pets: { name: "Animal Welfare Activities", date: "2026-06-01" },
+  planet: { name: "Environment and Sustainability Activities", date: "2026-06-05" },
+};
+const formatDate = (date) => new Date(`${date.slice(0, 10)}T00:00:00`).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
 
 export default function GalleryPage() {
-  const [tab, setTab] = useState("images");
-  const [category, setCategory] = useState("all");
+  const [category, setCategory] = useState("people");
+  // const [remoteMedia, setRemoteMedia] = useState([]);
   const [lightbox, setLightbox] = useState(null);
 
-  const filtered = category === "all"
-    ? ["people", "pets", "planet"].flatMap((group) => GALLERY_WITH_CATEGORIES.filter((g) => g.category === group).slice(0, 3))
-    : GALLERY_WITH_CATEGORIES.filter((g) => g.category === category);
+  // useEffect(() => {
+  //   let active = true;
+  //   api.get("/gallery-media").then(({ data }) => {
+  //     if (active) setRemoteMedia(data.data || []);
+  //   }).catch(() => {});
+  //   return () => { active = false; };
+  // }, []);
 
-  const closeLb = useCallback(() => setLightbox(null), []);
+  const media = useMemo(() => {
+    const staticImages = GALLERY_WITH_CATEGORIES.map((item, index) => ({ ...item, id: `image-${index}`, type: "IMAGE", activityName: activityDetails[item.category].name, activityDate: activityDetails[item.category].date }));
+    const staticVideos = VIDEOS.map((item, index) => ({ ...item, id: `video-${index}`, type: "VIDEO", caption: item.desc, activityName: item.title, activityDate: activityDetails[item.category].date }));
+    // const uploaded = remoteMedia.map((item) => ({ id: `uploaded-${item.id}`, src: `/uploads/${item.media}`, caption: item.caption || item.activityName, category: item.category.toLowerCase(), type: item.mediaType, activityName: item.activityName, activityDate: item.activityDate.slice(0, 10), ratio: item.mediaType === "IMAGE" ? "4/3" : "16/9" }));
+    return [...staticImages, ...staticVideos].filter((item) => item.category === category);
+  }, [category]);
+
+  const groups = useMemo(() => Object.values(media.reduce((result, item) => {
+    const key = `${item.activityName}-${item.activityDate}`;
+    if (!result[key]) result[key] = { name: item.activityName, date: item.activityDate, items: [] };
+    result[key].items.push(item);
+    return result;
+  }, {})).sort((a, b) => b.date.localeCompare(a.date)), [media]);
+  const images = media.filter((item) => item.type === "IMAGE");
+  const closeLightbox = useCallback(() => setLightbox(null), []);
+  const currentIndex = images.findIndex((item) => item.src === lightbox);
 
   useEffect(() => {
-    const onKey = (e) => {
+    const onKey = (event) => {
       if (!lightbox) return;
-      if (e.key === "Escape") closeLb();
-      if (e.key === "ArrowLeft") {
-        const idx = filtered.findIndex((g) => g.src === lightbox);
-        if (idx > 0) setLightbox(filtered[idx - 1].src);
-      }
-      if (e.key === "ArrowRight") {
-        const idx = filtered.findIndex((g) => g.src === lightbox);
-        if (idx < filtered.length - 1) setLightbox(filtered[idx + 1].src);
-      }
+      if (event.key === "Escape") closeLightbox();
+      if (event.key === "ArrowLeft" && currentIndex > 0) setLightbox(images[currentIndex - 1].src);
+      if (event.key === "ArrowRight" && currentIndex < images.length - 1) setLightbox(images[currentIndex + 1].src);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [lightbox, filtered, closeLb]);
+  }, [lightbox, currentIndex, images, closeLightbox]);
 
-  const currentIdx = filtered.findIndex((g) => g.src === lightbox);
-
-  return (
-    <>
-      <section className="mosaic-hero">
-        <div className="mosaic-hero__grid">
-          <img className="mosaic-hero__grid-img1" src={PHOTOS.ramanathapuramBeachClean} alt="" />
-          <img className="mosaic-hero__grid-img2" src={PHOTOS.medicalCampGroup} alt="" />
-          <img className="mosaic-hero__grid-img3" src={PHOTOS.yercaudPledge} alt="" />
-          <img className="mosaic-hero__grid-img4" src={PHOTOS.ramanathapuramSaplings} alt="" />
-          <img className="mosaic-hero__grid-img5" src={PHOTOS.heroGirlDog} alt="" />
-          <img className="mosaic-hero__grid-img6" src={PHOTOS.ramanathapuramGroup} alt="" />
-          <img className="mosaic-hero__grid-img7" src={PHOTOS.medicalConsultation} alt="" />
-        </div>
-        <div className="mosaic-hero__overlay" />
-        <motion.div className="mosaic-hero__content" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-          <span className="mosaic-hero__eyebrow">Moments</span>
-          <h1 className="mosaic-hero__title">Gallery</h1>
-          <p className="mosaic-hero__sub">Faces, places and small victories from the field — photographed as they happened.</p>
-        </motion.div>
-      </section>
-
-      <section className="section">
-        <div className="container">
-          <Reveal as="up" className="text-center mb-32">
-            <div className="tabbar">
-              <button className={tab === "images" ? "active" : ""} onClick={() => setTab("images")}><ImageIcon style={{ width: 15, height: 15, marginRight: 6, verticalAlign: -3 }} />Images</button>
-              <button className={tab === "videos" ? "active" : ""} onClick={() => setTab("videos")}><VideoIcon style={{ width: 15, height: 15, marginRight: 6, verticalAlign: -3 }} />Videos</button>
-            </div>
-          </Reveal>
-
-          {tab === "images" ? (
-            <Reveal as="fade" key="images">
-              <div className="flex-center gap-8 mb-24" style={{ flexWrap: "wrap" }}>
-                {GALLERY_CATEGORIES.map((c) => (
-                  <button
-                    key={c.id}
-                    className={`btn btn--sm ${category === c.id ? "btn--primary" : "btn--ghost"}`}
-                    onClick={() => setCategory(c.id)}
-                  >
-                    {c.label}
-                  </button>
-                ))}
-              </div>
-              <div className="gallery-masonry">
-                {filtered.map((g, i) => (
-                  <div key={i} onClick={() => setLightbox(g.src)} style={{ cursor: "pointer" }}>
-                    <PhotoFrame src={g.src} alt={g.caption} caption={g.caption} ratio={g.ratio} />
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-          ) : (
-            <Reveal as="fade" key="videos">
-              <div className="flex-center gap-8 mb-24" style={{ flexWrap: "wrap" }}>
-                {GALLERY_CATEGORIES.map((c) => (
-                  <button
-                    key={c.id}
-                    className={`btn btn--sm ${category === c.id ? "btn--primary" : "btn--ghost"}`}
-                    onClick={() => setCategory(c.id)}
-                  >
-                    {c.label}
-                  </button>
-                ))}
-              </div>
-              <div className="grid-3">
-                {(category === "all" ? VIDEOS : VIDEOS.filter((v) => v.category === category)).map((v, i) => (
-                  <div className="project-card" key={i}>
-                    <div className="photo-frame" style={{ aspectRatio: "16/9", borderRadius: 0, position: "relative", overflow: "hidden" }}>
-                      <video src={v.src} controls playsInline preload="metadata" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-                    </div>
-                    <div className="project-card__body">
-                      <h4 className="h-sm">{v.title}</h4>
-                      <p style={{ fontSize: "0.85rem", color: "var(--text-secondary)", marginTop: 4 }}>{v.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Reveal>
-          )}
-        </div>
-      </section>
-
-      <div className={`lightbox ${lightbox ? "is-open" : ""}`} onClick={closeLb}>
-        <button className="lightbox__close" onClick={closeLb}><CloseIcon /></button>
-        {currentIdx > 0 && (
-          <button className="lightbox__nav lightbox__nav--prev" onClick={(e) => { e.stopPropagation(); setLightbox(filtered[currentIdx - 1].src); }}>&lsaquo;</button>
-        )}
-        {currentIdx < filtered.length - 1 && (
-          <button className="lightbox__nav lightbox__nav--next" onClick={(e) => { e.stopPropagation(); setLightbox(filtered[currentIdx + 1].src); }}>&rsaquo;</button>
-        )}
-        {lightbox && <img src={lightbox} alt="" onClick={(e) => e.stopPropagation()} />}
-        {currentIdx >= 0 && <div className="lightbox__caption">{filtered[currentIdx]?.caption}</div>}
-      </div>
-    </>
-  );
+  return <>
+    <section className="mosaic-hero"><div className="mosaic-hero__grid"><img className="mosaic-hero__grid-img1" src={PHOTOS.ramanathapuramBeachClean} alt="" /><img className="mosaic-hero__grid-img2" src={PHOTOS.medicalCampGroup} alt="" /><img className="mosaic-hero__grid-img3" src={PHOTOS.yercaudPledge} alt="" /><img className="mosaic-hero__grid-img4" src={PHOTOS.ramanathapuramSaplings} alt="" /><img className="mosaic-hero__grid-img5" src={PHOTOS.heroGirlDog} alt="" /><img className="mosaic-hero__grid-img6" src={PHOTOS.ramanathapuramGroup} alt="" /><img className="mosaic-hero__grid-img7" src={PHOTOS.medicalConsultation} alt="" /></div><div className="mosaic-hero__overlay" /><motion.div className="mosaic-hero__content" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}><span className="mosaic-hero__eyebrow">Moments</span><h1 className="mosaic-hero__title">Gallery</h1><p className="mosaic-hero__sub">Faces, places and small victories from the field — photographed as they happened.</p></motion.div></section>
+    <section className="section"><div className="container">
+      <Reveal as="fade"><div className="flex-center gap-8 mb-32 gallery-category-filter">{GALLERY_CATEGORIES.map((item) => <button key={item.id} className={`btn btn--sm ${category === item.id ? "btn--primary" : "btn--ghost"}`} onClick={() => setCategory(item.id)}>{item.label}</button>)}</div>
+      <div className="gallery-activity-list">{groups.map((group) => {
+        const activityImages = group.items.filter((item) => item.type === "IMAGE");
+        const activityVideos = group.items.filter((item) => item.type === "VIDEO");
+        return <section className="gallery-activity" key={`${group.name}-${group.date}`}>
+          <div className="gallery-activity-head"><div><div className="eyebrow">{formatDate(group.date)}</div><h2 className="h-md">{group.name}</h2></div><span className="gallery-media-count">{group.items.length} {group.items.length === 1 ? "item" : "items"}</span></div>
+          {activityImages.length > 0 && <div className="gallery-media-grid gallery-image-grid">{activityImages.map((item) => <div key={item.id} onClick={() => setLightbox(item.src)} className="gallery-image"><PhotoFrame src={item.src} alt={item.caption} caption={<BrandText>{item.caption}</BrandText>} ratio={item.ratio || "4/3"} /></div>)}</div>}
+          {activityVideos.length > 0 && <div className="gallery-media-grid gallery-video-grid">{activityVideos.map((item) => <article className="project-card" key={item.id}><div className="photo-frame gallery-video"><video src={item.src} controls playsInline preload="metadata" /></div>{item.caption && <div className="project-card__body"><p>{item.caption}</p></div>}</article>)}</div>}
+        </section>;
+      })}</div>
+      {!groups.length && <p className="empty-state text-center">No gallery media has been added under this category yet.</p>}</Reveal>
+    </div></section>
+    <div className={`lightbox ${lightbox ? "is-open" : ""}`} onClick={closeLightbox}><button className="lightbox__close" onClick={closeLightbox}><CloseIcon /></button>{currentIndex > 0 && <button className="lightbox__nav lightbox__nav--prev" onClick={(event) => { event.stopPropagation(); setLightbox(images[currentIndex - 1].src); }}>&lsaquo;</button>}{currentIndex < images.length - 1 && <button className="lightbox__nav lightbox__nav--next" onClick={(event) => { event.stopPropagation(); setLightbox(images[currentIndex + 1].src); }}>&rsaquo;</button>}{lightbox && <img src={lightbox} alt="" onClick={(event) => event.stopPropagation()} />}{currentIndex >= 0 && <div className="lightbox__caption"><BrandText>{images[currentIndex]?.caption}</BrandText></div>}</div>
+  </>;
 }

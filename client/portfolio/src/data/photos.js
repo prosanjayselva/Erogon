@@ -74,7 +74,6 @@ export const GALLERY_PHOTOS = [
 ];
 
 export const GALLERY_CATEGORIES = [
-  { id: "all", label: "All" },
   { id: "people", label: "People" },
   { id: "pets", label: "Pets" },
   { id: "planet", label: "Planet" },
@@ -106,5 +105,4 @@ export const GALLERY_WITH_CATEGORIES = [
   { ...GALLERY_PHOTOS[16], category: "people" },
   { ...GALLERY_PHOTOS[17], category: "people" },
   { ...GALLERY_PHOTOS[18], category: "planet" },
-  { ...GALLERY_PHOTOS[19], category: "people" },
 ];

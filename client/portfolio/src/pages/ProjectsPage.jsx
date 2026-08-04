@@ -3,13 +3,14 @@ import Reveal, { Stagger, StaggerItem } from "../components/Reveal.jsx";
 import { NavLink } from "react-router-dom";
 import { ChevronRightIcon, LeafIcon, HeartHandsIcon, PawIcon, ArrowRightIcon } from "../components/Icons.jsx";
 import { PHOTOS } from "../data/photos.js";
+import { BrandName } from "../components/BrandName.jsx";
 
 const PROJECTS = [
   {
     title: "Tree Plantation Drive",
     location: "Ramanathapuram & Yercaud, Tamil Nadu",
     desc: "Tree plantation and coastal care drives across Ramanathapuram and Yercaud as part of World Environment Day 2026.",
-    photo: PHOTOS.ramanathapuramSaplings,
+    photo: PHOTOS.ramanathapuramTree1,
     icon: LeafIcon,
   },
   {
@@ -45,7 +46,7 @@ export default function ProjectsPage() {
             </div>
             <span className="bg-hero__eyebrow">What We Do</span>
             <h1 className="bg-hero__title">Our Projects</h1>
-            <p className="bg-hero__desc">Verified field programmes run by ERGON Foundation across Tamil Nadu — tree plantation, beach clean-ups, medical camps and more.</p>
+            <p className="bg-hero__desc">Verified field programmes run by <BrandName /> across Tamil Nadu — tree plantation, beach clean-ups, medical camps and more.</p>
           </motion.div>
         </div>
       </section>
