@@ -41,6 +41,8 @@ export async function list(req, res) {
             { name: { contains: search, mode: 'insensitive' } },
             { email: { contains: search, mode: 'insensitive' } },
             { phone: { contains: search, mode: 'insensitive' } },
+            { pan: { contains: search, mode: 'insensitive' } },
+            { transactionNumber: { contains: search, mode: 'insensitive' } },
           ],
         }
       : {};

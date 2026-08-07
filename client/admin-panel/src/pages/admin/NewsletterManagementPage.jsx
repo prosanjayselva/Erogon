@@ -54,10 +54,10 @@ export default function NewsletterManagementPage() {
               {data?.data?.length === 0 && <tr><td colSpan={4} className="empty-state">No subscribers found</td></tr>}
               {data?.data?.map((s, i) => (
                 <tr key={s.id}>
-                  <td style={{ color: '#9CA3AF' }}>{(page - 1) * 10 + i + 1}</td>
-                  <td><b>{s.email}</b></td>
-                  <td style={{ fontSize: 13 }}>{new Date(s.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
-                  <td>
+                  <td data-label="#" style={{ color: '#9CA3AF' }}>{(page - 1) * 10 + i + 1}</td>
+                  <td data-label="Email"><b>{s.email}</b></td>
+                  <td data-label="Subscribed On" style={{ fontSize: 13 }}>{new Date(s.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
+                  <td data-label="Actions">
                     <button className="btn-icon btn-icon-delete" title="Delete"
                       onClick={() => setDeleteTarget(s)}>🗑️</button>
                   </td>

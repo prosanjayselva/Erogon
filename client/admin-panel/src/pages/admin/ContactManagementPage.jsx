@@ -49,13 +49,13 @@ export default function ContactManagementPage() {
               {data?.data?.length === 0 && <tr><td colSpan={7} className="empty-state">No contact messages found</td></tr>}
               {data?.data?.map((c) => (
                 <tr key={c.id}>
-                  <td><b>{c.fullName}</b></td>
-                  <td><a href={`mailto:${c.email}`}>{c.email}</a></td>
-                  <td>{c.phone || '—'}</td>
-                  <td><span className="pill">{c.subject || 'General'}</span></td>
-                  <td style={{ maxWidth: 300, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 13 }}>{c.message}</td>
-                  <td style={{ whiteSpace: 'nowrap', fontSize: 13 }}>{new Date(c.createdAt).toLocaleDateString()}</td>
-                  <td>
+                  <td data-label="Name"><b>{c.fullName}</b></td>
+                  <td data-label="Email"><a href={`mailto:${c.email}`}>{c.email}</a></td>
+                  <td data-label="Phone">{c.phone || '—'}</td>
+                  <td data-label="Subject"><span className="pill">{c.subject || 'General'}</span></td>
+                  <td data-label="Message" style={{ maxWidth: 300, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 13 }}>{c.message}</td>
+                  <td data-label="Date" style={{ whiteSpace: 'nowrap', fontSize: 13 }}>{new Date(c.createdAt).toLocaleDateString()}</td>
+                  <td data-label="Actions">
                     <button className="btn-icon btn-icon-delete" title="Delete"
                       onClick={() => setDeleteTarget(c)}>🗑️</button>
                   </td>

@@ -1,9 +1,8 @@
 import Reveal, { Stagger, StaggerItem } from "../components/Reveal.jsx";
-import PhotoFrame from "../components/PhotoFrame.jsx";
 import { motion } from "framer-motion";
 import { PHOTOS } from "../data/photos.js";
 import { ChevronRightIcon, HeartIcon, UsersGroupIcon, GlobeIcon } from "../components/Icons.jsx";
-import { GOVERNING_BODY, STAFF, PATRONS, PARTNERS, DONORS, ABOUT_IMPACT_STATS, ABOUT_VISION } from "../data/content.js";
+import { GOVERNING_BODY, STAFF, PATRONS, PARTNERS, DONORS, ABOUT_VISION } from "../data/content.js";
 import { NavLink } from "react-router-dom";
 import { BrandName, BrandText } from "../components/BrandName.jsx";
 
@@ -20,29 +19,12 @@ export default function AboutPage() {
   return (
     <>
       <section className="bg-hero">
-        <div className="bg-hero__bg">
-          <img src={PHOTOS.treePlantingReal} alt="ERGON Foundation community impact" />
-        </div>
+        <div className="bg-hero__bg"><img src={PHOTOS.treePlantingReal} alt="ERGON Foundation community impact" /></div>
         <div className="bg-hero__overlay" />
         <div className="bg-hero__content">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            <div className="bg-hero__breadcrumb">
-              <NavLink to="/">Home</NavLink>
-              <ChevronRightIcon />
-              <span>About Us</span>
-            </div>
-            <span className="bg-hero__eyebrow">Who We Are</span>
             <h1 className="bg-hero__title">Compassion Creates Lasting Change.</h1>
-            <p className="bg-hero__desc"><BrandName /> exists to empower communities through education, healthcare, environmental sustainability and social responsibility.</p>
-            <div className="hero__cta" style={{ justifyContent: "center", marginTop: "2rem" }}>
-              <NavLink to="/donate#payment-details" className="btn btn--primary">Support Our Vision</NavLink>
-              <NavLink to="/get-involved" className="btn btn--outline">Get Involved</NavLink>
-            </div>
           </motion.div>
-        </div>
-        <div className="bg-hero__scroll">
-          <span>Scroll</span>
-          <div className="bg-hero__scroll-line" />
         </div>
       </section>
 
@@ -78,33 +60,6 @@ export default function AboutPage() {
               </motion.div>
             </Reveal>
           </div>
-        </div>
-      </section>
-
-      <section className="section section--sm" style={{ background: "var(--secondary)" }}>
-        <div className="container">
-          <Reveal as="up" className="text-center" style={{ maxWidth: 620, marginInline: "auto" }}>
-            <div className="eyebrow" style={{ justifyContent: "center" }}>Impact In Numbers</div>
-            <h2 className="h-lg">People, Pets And Planet In Action</h2>
-          </Reveal>
-          <div className="about-impact-grid mt-32">
-            {ABOUT_IMPACT_STATS.map((s, i) => (
-              <Reveal as="up" delay={i * 0.06} key={s.label}>
-                <div className="about-impact-card">
-                  <strong>{s.num}</strong>
-                  <span>{s.label}</span>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section section--sm" style={{ background: "var(--secondary)" }}>
-        <div className="container--narrow text-center">
-          <Reveal as="up">
-            <PhotoFrame src={PHOTOS.ramanathapuramBeachClean} alt="ERGON Foundation pet care" ratio="16/9" caption="Compassion for every soul — our pet welfare initiative" />
-          </Reveal>
         </div>
       </section>
 
@@ -212,6 +167,7 @@ export default function AboutPage() {
               {PARTNERS.map((p, i) => (
                 <div key={i} className="partner-logo-card partner-logo-card--tech">
                   {p.logoSrc ? <img src={p.logoSrc} alt={`${p.name} logo`} /> : <span>{p.logo}</span>}
+                  <b className="partner-logo-card__name">{p.name}</b>
                 </div>
               ))}
             </div>

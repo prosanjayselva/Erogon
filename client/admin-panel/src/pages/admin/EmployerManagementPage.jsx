@@ -49,17 +49,17 @@ export default function EmployerManagementPage() {
               {data?.data?.length === 0 && <tr><td colSpan={11} className="empty-state">No employer requirements found</td></tr>}
               {data?.data?.map((e) => (
                 <tr key={e.id}>
-                  <td><b>{e.organization}</b></td>
-                  <td>{e.contactPerson}</td>
-                  <td>{e.email}</td>
-                  <td>{e.contactNumber}</td>
-                  <td>{e.jobRole || '—'}</td>
-                  <td>{e.vacancies ?? '—'}</td>
-                  <td>{e.jobLocation || '—'}</td>
-                  <td><span className="pill">{e.employmentType || '—'}</span></td>
-                  <td>{e.jd ? <a href={`/uploads/${e.jd}`} target="_blank" rel="noreferrer" className="link-arrow">View</a> : '—'}</td>
-                  <td style={{ whiteSpace: 'nowrap', fontSize: 13 }}>{new Date(e.createdAt).toLocaleDateString()}</td>
-                  <td>
+                  <td data-label="Organization"><b>{e.organization}</b></td>
+                  <td data-label="Contact">{e.contactPerson}</td>
+                  <td data-label="Email">{e.email}</td>
+                  <td data-label="Phone">{e.contactNumber}</td>
+                  <td data-label="Job Role">{e.jobRole || '—'}</td>
+                  <td data-label="Vacancies">{e.vacancies ?? '—'}</td>
+                  <td data-label="Location">{e.jobLocation || '—'}</td>
+                  <td data-label="Type"><span className="pill">{e.employmentType || '—'}</span></td>
+                  <td data-label="JD">{e.jd ? <a href={`/uploads/${e.jd}`} target="_blank" rel="noreferrer" className="link-arrow">View</a> : '—'}</td>
+                  <td data-label="Date" style={{ whiteSpace: 'nowrap', fontSize: 13 }}>{new Date(e.createdAt).toLocaleDateString()}</td>
+                  <td data-label="Actions">
                     <button className="btn-icon btn-icon-delete" title="Delete"
                       onClick={() => setDeleteTarget(e)}>🗑️</button>
                   </td>

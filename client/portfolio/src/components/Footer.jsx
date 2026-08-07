@@ -32,13 +32,12 @@ export default function Footer() {
       <div className="container footer-grid">
         <div className="footer-about">
           <NavLink to="/" className="brand">
-            <img src={`${B}images/logo.png`} alt="ERGON Foundation" className="brand__logo" />
+            <img src={`${B}images/ergon-logo-2026.png`} alt="ERGON Foundation" className="brand__logo" />
             <span className="brand__word">
-              <b className="ergon-brand-name">ERGON FOUNDATION</b>
+              <BrandName className="brand-wordmark" />
             </span>
           </NavLink>
           <p>A registered charitable trust working across Tamil Nadu and India.</p>
-          <img className="footer-pillars" src={`${B}images/logo-footer.png`} alt="The People, The Pets, The Planet" />
           <div className="footer-social">
             <a href="https://www.facebook.com/share/14r5MoatD84/" target="_blank" rel="noreferrer" aria-label="Facebook"><MenuFacebook /></a>
             <a href="https://x.com/ERGONFoundation" target="_blank" rel="noreferrer" aria-label="X"><MenuX /></a>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import Reveal from "../components/Reveal.jsx";
 import { BankIcon, CopyIcon } from "../components/Icons.jsx";
 import { BANK_DETAILS } from "../data/content.js";
-import { BrandName } from "../components/BrandName.jsx";
+import { BrandName, BrandText } from "../components/BrandName.jsx";
 
 export default function DonatePage() {
   const [copied, setCopied] = useState("");
@@ -17,7 +17,6 @@ export default function DonatePage() {
     <section id="payment-details" className="section donation-payment-page">
       <div className="container--narrow">
         <Reveal as="up" className="text-center mb-32">
-          <div className="eyebrow" style={{ justifyContent: "center" }}>Donate</div>
           <h1 className="h-lg">Bank Transfer Details</h1>
           <p className="lede mx-auto mt-16">Use the verified <BrandName /> account details below to make your donation.</p>
         </Reveal>
@@ -31,7 +30,7 @@ export default function DonatePage() {
               {BANK_DETAILS.map((detail) => (
                 <div className="bank-row" key={detail.label}>
                   <span>{detail.label}</span>
-                  <span>{detail.value}<button className="copy-btn" type="button" aria-label={`Copy ${detail.label}`} onClick={() => copy(detail.label, detail.value)}>{copied === detail.label ? "Copied" : <CopyIcon style={{ width: 12, height: 12 }} />}</button></span>
+                  <span><BrandText>{detail.value}</BrandText><button className="copy-btn" type="button" aria-label={`Copy ${detail.label}`} onClick={() => copy(detail.label, detail.value)}>{copied === detail.label ? "Copied" : <CopyIcon style={{ width: 12, height: 12 }} />}</button></span>
                 </div>
               ))}
             </div>

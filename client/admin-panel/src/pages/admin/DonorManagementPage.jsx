@@ -79,6 +79,10 @@ export default function DonorManagementPage() {
                 <th>Donor Name</th>
                 <th>Email</th>
                 <th>Phone</th>
+                <th>PAN</th>
+                <th>Address</th>
+                <th>Bank Name</th>
+                <th>Txn No</th>
                 <th>Amount (₹)</th>
                 <th>Date</th>
                 <th>Actions</th>
@@ -86,27 +90,31 @@ export default function DonorManagementPage() {
             </thead>
             <tbody>
               {data?.data?.length === 0 && (
-                <tr><td colSpan={7} className="empty-state">No donors found</td></tr>
+                <tr><td colSpan={11} className="empty-state">No donors found</td></tr>
               )}
               {data?.data?.map((donor, i) => (
                 <tr key={donor.id}>
-                  <td>
+                  <td className="donor-avatar-cell">
                     <div className="donor-avatar" style={{ background: getAvatarColor(donor.name) }}>
                       {getInitials(donor.name)}
                     </div>
                   </td>
-                  <td>
+                  <td data-label="Name">
                     <div className="donor-cell">
                       <div>
                         <div className="donor-name">{donor.name}</div>
                       </div>
                     </div>
                   </td>
-                  <td>{donor.email}</td>
-                  <td>{donor.phone}</td>
-                  <td><strong>₹{donor.amount}</strong></td>
-                  <td>{new Date(donor.createdAt).toLocaleDateString()}</td>
-                  <td>
+                  <td data-label="Email">{donor.email}</td>
+                  <td data-label="Phone">{donor.phone}</td>
+                  <td data-label="PAN">{donor.pan || '—'}</td>
+                  <td data-label="Address">{donor.address || '—'}</td>
+                  <td data-label="Bank Name">{donor.bankName || '—'}</td>
+                  <td data-label="Txn No">{donor.transactionNumber || '—'}</td>
+                  <td data-label="Amount"><strong>₹{donor.amount}</strong></td>
+                  <td data-label="Date">{new Date(donor.createdAt).toLocaleDateString()}</td>
+                  <td data-label="Actions">
                     <div className="action-cell">
                       <button
                         className="btn-icon btn-icon-delete"

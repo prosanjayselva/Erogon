@@ -71,9 +71,9 @@ export default function Header() {
       <header className={`site-header ${scrolled ? "is-scrolled" : ""}`}>
         <div className="site-header__bar">
           <NavLink to="/" className="brand" onClick={() => setOpen(false)}>
-            <img src={`${B}images/logo.png`} alt="ERGON Foundation" className="brand__logo" />
+            <img src={`${B}images/ergon-logo-header.png`} alt="ERGON Foundation" className="brand__logo" />
             <span className="brand__word">
-              <b className="ergon-brand-name">ERGON FOUNDATION</b>
+              <BrandName className="brand-wordmark" />
             </span>
           </NavLink>
 
@@ -109,7 +109,7 @@ export default function Header() {
       <div className={`nav-overlay ${open ? "is-open" : ""}`} onClick={() => setOpen(false)} />
       <nav className={`nav--mobile ${open ? "is-open" : ""}`} aria-hidden={!open} data-lenis-prevent>
         <div className="nav__header">
-          <img src={`${B}images/logo.png`} alt="ERGON Foundation" className="nav__logo" />
+          <img src={`${B}images/ergon-logo-header.png`} alt="ERGON Foundation" className="nav__logo" />
           <button className="nav__close" aria-label="Close menu" onClick={() => setOpen(false)}>
             <span /><span />
           </button>

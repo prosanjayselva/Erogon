@@ -146,9 +146,6 @@ app.use('/admin-panel/assets', express.static(path.join(adminPanelDist, 'assets'
 app.use('/admin-panel/images', express.static(path.join(adminPanelDist, 'images')));
 
 app.get('/admin-panel', (_req, res) => {
-  res.redirect(302, '/admin-panel/');
-});
-app.get('/admin-panel/', (_req, res) => {
   res.sendFile(path.join(adminPanelDist, 'index.html'));
 });
 app.get('/admin-panel/*', (_req, res) => {

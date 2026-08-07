@@ -15,29 +15,12 @@ export default function CausesPage() {
   return (
     <>
       <section className="bg-hero">
-        <div className="bg-hero__bg">
-          <img src={PHOTOS.projectBeachCleanup} alt="Community care and compassion" />
-        </div>
+        <div className="bg-hero__bg"><img src={PHOTOS.projectBeachCleanup} alt="Community care and compassion" /></div>
         <div className="bg-hero__overlay" />
         <div className="bg-hero__content">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            <div className="bg-hero__breadcrumb">
-              <NavLink to="/">Home</NavLink>
-              <ChevronRightIcon />
-              <span>Our Causes</span>
-            </div>
-            <span className="bg-hero__eyebrow">What We Stand For</span>
             <h1 className="bg-hero__title">Causes We Are Rooted In</h1>
-            <p className="bg-hero__desc">Every ERGON programme grows from one of three roots — People, Pets and Planet — each tended with the same care.</p>
-            <div className="hero__cta" style={{ justifyContent: "center", marginTop: "2rem" }}>
-              <NavLink to="/donate#payment-details" className="btn btn--primary">Support a Cause <DonateHeartIcon /></NavLink>
-              <NavLink to="/get-involved" className="btn btn--outline">Get Involved</NavLink>
-            </div>
           </motion.div>
-        </div>
-        <div className="bg-hero__scroll">
-          <span>Scroll</span>
-          <div className="bg-hero__scroll-line" />
         </div>
       </section>
 

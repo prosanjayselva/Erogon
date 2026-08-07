@@ -49,16 +49,16 @@ export default function JobSeekerManagementPage() {
               {data?.data?.length === 0 && <tr><td colSpan={10} className="empty-state">No job seekers found</td></tr>}
               {data?.data?.map((s) => (
                 <tr key={s.id}>
-                  <td><b>{s.fullName}</b></td>
-                  <td>{s.email}</td>
-                  <td>{s.contactNumber}</td>
-                  <td>{s.qualification || '—'}</td>
-                  <td>{s.experience || '—'}</td>
-                  <td>{s.preferredRole || '—'}</td>
-                  <td>{s.preferredLocation || '—'}</td>
-                  <td>{s.resume ? <a href={`/uploads/${s.resume}`} target="_blank" rel="noreferrer" className="link-arrow">View</a> : '—'}</td>
-                  <td style={{ whiteSpace: 'nowrap', fontSize: 13 }}>{new Date(s.createdAt).toLocaleDateString()}</td>
-                  <td>
+                  <td data-label="Name"><b>{s.fullName}</b></td>
+                  <td data-label="Email">{s.email}</td>
+                  <td data-label="Phone">{s.contactNumber}</td>
+                  <td data-label="Qualification">{s.qualification || '—'}</td>
+                  <td data-label="Experience">{s.experience || '—'}</td>
+                  <td data-label="Role">{s.preferredRole || '—'}</td>
+                  <td data-label="Location">{s.preferredLocation || '—'}</td>
+                  <td data-label="Resume">{s.resume ? <a href={`/uploads/${s.resume}`} target="_blank" rel="noreferrer" className="link-arrow">View</a> : '—'}</td>
+                  <td data-label="Date" style={{ whiteSpace: 'nowrap', fontSize: 13 }}>{new Date(s.createdAt).toLocaleDateString()}</td>
+                  <td data-label="Actions">
                     <button className="btn-icon btn-icon-delete" title="Delete"
                       onClick={() => setDeleteTarget(s)}>🗑️</button>
                   </td>

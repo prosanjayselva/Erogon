@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Reveal from "../components/Reveal.jsx";
-import PhotoFrame from "../components/PhotoFrame.jsx";
-import { BrandName, BrandText } from "../components/BrandName.jsx";
+import { BrandText } from "../components/BrandName.jsx";
 import { PinIcon, MailIcon, PhoneIcon, CheckIcon, MenuFacebook, MenuX, MenuLinkedin, MenuInstagram, MenuYoutube } from "../components/Icons.jsx";
-import { PHOTOS } from "../data/photos.js";
 import { CONTACT } from "../data/content.js";
 import api from "../api/client.js";
 
@@ -36,49 +34,14 @@ export default function ContactPage() {
       <section className="contact-hero">
         <div className="contact-hero__inner">
           <motion.div className="contact-hero__content" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            <span className="contact-hero__eyebrow">Reach Us</span>
             <h1 className="contact-hero__title">We'd Love To Hear From You</h1>
-            <p className="contact-hero__sub">Questions about a project, a sponsorship, or how to get involved — the ERGON team replies personally.</p>
-
-            <div className="contact-hero__map mt-32">
-              <div style={{ textAlign: "center" }}>
-                <PinIcon />
-                <p>Kodambakkam, Chennai — Tamil Nadu</p>
-              </div>
-            </div>
+            <div className="contact-hero__map mt-32"><div style={{ textAlign: "center" }}><PinIcon /><p>Kodambakkam, Chennai — Tamil Nadu</p></div></div>
           </motion.div>
-
           <motion.div className="contact-hero__cards" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}>
-            <div className="contact-hero__card">
-              <div className="contact-hero__card-icon"><PinIcon /></div>
-              <div>
-                <h4>Office Address</h4>
-                {CONTACT.address.map((l, i) => <p key={i}><BrandText>{l}</BrandText></p>)}
-              </div>
-            </div>
-            <div className="contact-hero__card">
-              <div className="contact-hero__card-icon"><MailIcon /></div>
-              <div>
-                <h4>Email</h4>
-                <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
-                <br />
-                <a href={`mailto:${CONTACT.secretaryEmail}`}>{CONTACT.secretaryEmail}</a>
-              </div>
-            </div>
-            <div className="contact-hero__card">
-              <div className="contact-hero__card-icon"><PhoneIcon /></div>
-              <div>
-                <h4>Mobile</h4>
-                <a href={`tel:${CONTACT.phone.replace(/\s/g, "")}`}>{CONTACT.phone}</a>
-              </div>
-            </div>
-            <div className="contact-hero__card">
-              <div className="contact-hero__card-icon" style={{ background: "var(--gold)", color: "white" }}><MenuFacebook /></div>
-              <div>
-                <h4>Connect With Us</h4>
-                <p>Follow us on social media for updates and stories.</p>
-              </div>
-            </div>
+            <div className="contact-hero__card"><div className="contact-hero__card-icon"><PinIcon /></div><div><h4>Office Address</h4>{CONTACT.address.map((l, i) => <p key={i}><BrandText>{l}</BrandText></p>)}</div></div>
+            <div className="contact-hero__card"><div className="contact-hero__card-icon"><MailIcon /></div><div><h4>Email</h4><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a><br /><a href={`mailto:${CONTACT.secretaryEmail}`}>{CONTACT.secretaryEmail}</a></div></div>
+            <div className="contact-hero__card"><div className="contact-hero__card-icon"><PhoneIcon /></div><div><h4>Mobile</h4><a href={`tel:${CONTACT.phone.replace(/\s/g, "")}`}>{CONTACT.phone}</a></div></div>
+            <div className="contact-hero__card"><div className="contact-hero__card-icon" style={{ background: "var(--gold)", color: "white" }}><MenuFacebook /></div><div><h4>Connect With Us</h4><p>Follow us on social media for updates and stories.</p></div></div>
           </motion.div>
         </div>
       </section>
@@ -113,8 +76,6 @@ export default function ContactPage() {
               <a href={CONTACT.social.instagram} target="_blank" rel="noreferrer" style={{ borderColor: "var(--divider)", color: "var(--primary)" }}><MenuInstagram /></a>
               <a href={CONTACT.social.youtube} target="_blank" rel="noreferrer" style={{ borderColor: "var(--divider)", color: "var(--primary)" }}><MenuYoutube /></a>
             </div>
-
-            <PhotoFrame src={PHOTOS.ramanathapuramGroup} alt="ERGON Foundation" ratio="16/9" caption={<><BrandName /> - Kodambakkam, Chennai</>} />
           </Reveal>
 
           <Reveal as="right" delay={0.1}>

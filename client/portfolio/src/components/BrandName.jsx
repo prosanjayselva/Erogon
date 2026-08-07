@@ -1,10 +1,12 @@
 import { Fragment } from "react";
 
+const B = import.meta.env.BASE_URL;
+
 const BRAND_PATTERN = /(ERGON Foundation|Ergon Foundation|ERGON FOUNDATION)/gi;
 const BRAND_EXACT = /^(ERGON Foundation|Ergon Foundation|ERGON FOUNDATION)$/i;
 
 export function BrandName({ className = "" }) {
-  return <span className={`ergon-brand-name ${className}`.trim()}>ERGON FOUNDATION</span>;
+  return <img src={`${B}images/ergon-wordmark.png`} alt="ERGON FOUNDATION" className={`ergon-brand-name ${className}`.trim()} />;
 }
 
 export function BrandText({ children }) {

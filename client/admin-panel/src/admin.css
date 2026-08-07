@@ -46,18 +46,21 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robo
   padding: 24px 24px 20px;
   border-bottom: 1px solid var(--border);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
 }
 .sidebar-logo-img {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
+  width: 76px;
+  height: 76px;
+  border-radius: 0;
   object-fit: contain;
 }
-.sidebar-logo-text { display: flex; flex-direction: column; }
-.sidebar-logo-name { font-size: 20px; font-weight: 800; color: var(--primary); letter-spacing: 1px; line-height: 1.1; }
-.sidebar-logo-sub { font-size: 10px; font-weight: 600; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+.sidebar-logo-text { display: flex; flex-direction: column; align-items: center; gap: 1px; }
+.admin-wordmark { display: block; width: 180px; height: auto; object-fit: contain; }
+.admin-wordmark-inline { display: inline-block; width: 150px; height: auto; max-height: 1.1em; object-fit: contain; vertical-align: -0.12em; }
+.sidebar-logo-name { font-size: 20px; font-weight: 800; color: var(--primary); letter-spacing: 3px; line-height: 1.15; }
+.sidebar-logo-sub { font-size: 10px; font-weight: 600; color: var(--muted); letter-spacing: 4px; text-transform: uppercase; }
 .sidebar-tagline {
   padding: 10px 24px 14px;
   font-size: 11px;
@@ -94,6 +97,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robo
   text-align: center;
 }
 .sidebar-footer-card p { font-size: 12px; color: var(--primary-dark); line-height: 1.5; font-weight: 500; }
+.admin-pillars-art { display: block; width: 100%; height: auto; object-fit: contain; }
 
 /* ───── Main Area ───── */
 .admin-main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
@@ -103,17 +107,20 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robo
   height: var(--header-h);
   background: var(--surface);
   border-bottom: 1px solid var(--border);
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: space-between;
   padding: 0 32px;
   position: sticky;
   top: 0;
   z-index: 40;
 }
-.admin-header-left { display: flex; flex-direction: column; }
+.admin-header-left { display: flex; }
+.admin-header-brand { display: flex; align-items: center; gap: 10px; }
+.admin-header-brand-text { display: flex; flex-direction: column; }
 .admin-header-title { font-size: 20px; font-weight: 700; color: var(--text); }
 .admin-header-subtitle { font-size: 13px; color: var(--muted); margin-top: 2px; }
+.admin-header-logo { width: 34px; height: 34px; border-radius: 50%; object-fit: contain; flex-shrink: 0; }
 .admin-header-right { display: flex; align-items: center; gap: 20px; }
 
 /* Header user */
@@ -200,6 +207,14 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robo
   background: linear-gradient(135deg, #1B5E20, #2E7D32);
   padding: 36px 32px 28px;
   text-align: center;
+}
+.login-brand-logo {
+  display: block;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 22px rgba(0,0,0,.18));
 }
 .login-brand-icon {
   width: 56px; height: 56px;
@@ -499,7 +514,9 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robo
 /* ───── Footer ───── */
 .admin-footer { text-align: center; padding: 20px 32px; border-top: 1px solid var(--border); margin-top: auto; }
 .admin-footer p { font-size: 12px; color: var(--muted); }
+.admin-footer-brand { display: inline-block; font-weight: 800; color: var(--primary); letter-spacing: 2.5px; font-size: 12px; vertical-align: middle; }
 .admin-footer .footer-version { font-size: 11px; margin-top: 2px; }
+.admin-footer-pillars { display: block; width: min(420px, 90%); height: auto; margin: 8px auto 0; object-fit: contain; }
 
 /* ───── Utility ───── */
 .admin-loading { display: flex; align-items: center; justify-content: center; height: 240px; color: var(--muted); font-size: 16px; }
@@ -546,15 +563,34 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robo
 }
 
 /* ───── Responsive: Tablet / Mobile ───── */
+
+/* Small utility / pill tag (used across tables) */
+.pill {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--primary-bg);
+  color: var(--primary-dark);
+  display: inline-block;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Tablet (≤1024px) ── */
 @media (max-width: 1024px) {
   :root { --sidebar-w: 0px; }
   .sidebar-toggle { display: flex; }
   .sidebar-close-btn { display: flex; }
   .admin-sidebar {
+    width: 260px;
     transform: translateX(-100%);
     transition: transform 0.3s ease;
   }
   .admin-sidebar.is-open {
+    width: 260px;
     transform: translateX(0);
     box-shadow: 0 0 40px rgba(0,0,0,0.15);
   }
@@ -573,16 +609,16 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robo
     pointer-events: auto;
   }
   .admin-main { margin-left: 0; }
-  .admin-header { padding: 0 16px; gap: 12px; }
+  .admin-header { padding: 0 16px; gap: 12px; grid-template-columns: 1fr auto 1fr; }
   .admin-header-title { font-size: 16px; }
   .admin-header-subtitle { font-size: 11px; }
   .admin-user-info { display: none; }
-  .admin-content { padding: 16px; }
+  .admin-content { padding: 20px 16px; }
   .admin-footer { padding: 16px; }
   .toolbar { flex-direction: column; align-items: stretch; }
   .toolbar-left { flex-wrap: wrap; }
   .search-wrap { max-width: 100%; }
-  .admin-table-wrap { overflow-x: auto; }
+  .admin-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .admin-table { min-width: 700px; }
   .stat-cards { gap: 12px; }
   .stat-card { padding: 16px; }
@@ -590,24 +626,141 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robo
   .event-form { padding: 16px; }
   .form-grid { grid-template-columns: 1fr; }
   .page-title { font-size: 18px; }
-  .notif-dropdown { width: calc(100vw - 32px); right: -60px; }
+  .notif-dropdown { width: min(360px, calc(100vw - 32px)); right: 0; }
   .login-form { padding: 24px 20px; }
   .login-brand { padding: 28px 20px 22px; }
   .pagination { flex-direction: column; gap: 12px; text-align: center; }
   .admin-logout-btn { padding: 6px 12px; font-size: 12px; }
 }
 
+/* ── Mobile (≤640px) ── */
 @media (max-width: 640px) {
   :root { --header-h: 64px; }
-  .admin-header-title { font-size: 14px; }
+  .admin-header { padding: 0 12px; }
+  .admin-header-right { gap: 10px; }
+  .admin-header-title { font-size: 15px; }
   .admin-header-subtitle { display: none; }
   .admin-user-wrap { gap: 6px; }
   .admin-user-avatar { width: 32px; height: 32px; font-size: 12px; }
   .admin-content { padding: 12px; }
+  .admin-footer { padding: 14px 12px; }
+
+  /* Stat cards: single column */
   .stat-card-value { font-size: 20px; }
   .stat-card-icon { width: 34px; height: 34px; font-size: 15px; }
-  .filter-tabs { flex-wrap: wrap; }
+
+  /* Filter tabs: single horizontally-scrollable row */
+  .filter-tabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .filter-tab { flex: 0 0 auto; }
+
+  /* Full-width primary actions + comfortable touch targets */
+  .btn-add { width: 100%; }
+  .search-input, .form-grid input, .form-grid select, .form-grid textarea {
+    min-height: 44px;
+  }
+
+  /* Tables → stacked cards */
+  .admin-table-wrap {
+    overflow: visible;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+  }
+  .admin-table, .admin-table thead, .admin-table tbody, .admin-table tr, .admin-table td {
+    display: block;
+    width: 100%;
+  }
+  .admin-table { min-width: 0; }
+  .admin-table thead { display: none; }
+  .admin-table tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .admin-table tbody tr {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px 16px;
+  }
+  .admin-table td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 9px 0;
+    border-bottom: 1px dashed #EEF0F3;
+    font-size: 13.5px;
+    text-align: right;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  .admin-table td:last-child { border-bottom: none; }
+  .admin-table td[data-label]::before {
+    content: attr(data-label);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+    max-width: 48%;
+    text-align: left;
+  }
+  .admin-table .donor-avatar-cell { display: none; }
+  .admin-table td.empty-state {
+    display: block;
+    text-align: center;
+    padding: 32px 16px;
+  }
+  .admin-table .action-cell { justify-content: flex-end; }
+  .admin-table td .pill { max-width: 52%; }
+
+  /* Pagination */
+  .pagination-btns { flex-wrap: wrap; justify-content: center; }
+  .pagination-btns button { padding: 8px 14px; }
+
+  /* Notification dropdown → full-width sheet under header */
+  .notif-dropdown {
+    position: fixed;
+    top: calc(var(--header-h) + 8px);
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-height: 60vh;
+  }
+
+  /* Event grid + form */
   .event-grid { grid-template-columns: 1fr; }
+  .event-form { padding: 14px; }
+
+  /* Dashboard */
+  .activity-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .dashboard-panel { padding: 16px; }
+
+  /* Login */
+  .login-page { padding: 12px; }
+  .login-brand-logo { width: 110px; height: 110px; }
+  .login-form { padding: 22px 16px; }
+  .login-brand { padding: 24px 16px 18px; }
+  .login-brand-name { font-size: 20px; letter-spacing: 2px; }
+
+  /* Modals */
+  .reminder-modal, .confirm-dialog { width: calc(100% - 32px); padding: 24px 20px; }
+
+  /* Toolbar */
+  .toolbar { gap: 10px; }
+}
+
+/* ── Small phones (≤420px) ── */
+@media (max-width: 420px) {
+  .admin-header-title { font-size: 13px; }
+  .admin-header-logo { width: 28px; height: 28px; }
+  .admin-user-avatar { display: none; }
+  .sidebar-toggle { width: 36px; height: 36px; }
+  .page-title { font-size: 17px; }
+  .admin-content { padding: 10px; }
+  .admin-logout-btn { padding: 6px 10px; font-size: 11px; }
 }
 a:focus, button:focus { outline: none; }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 4px; }

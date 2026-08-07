@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
-import Reveal, { Stagger, StaggerItem } from "../components/Reveal.jsx";
+import Reveal from "../components/Reveal.jsx";
 import {
   PeopleIcon, PawIcon, LeafIcon, HeartHandsIcon, GraduationCapIcon,
   UsersGroupIcon, ArrowRightIcon, PlayIcon,
   DonateHeartIcon, VolunteerIcon,
 } from "../components/Icons.jsx";
-import { HOME_BANNER, STATS, TESTIMONIALS, PARTNERS, DONORS } from "../data/content.js";
+import { HOME_BANNER } from "../data/content.js";
 import { PHOTOS } from "../data/photos.js";
 import { BrandText } from "../components/BrandName.jsx";
 
@@ -82,10 +82,6 @@ function WordReveal({ text, style = {} }) {
   );
 }
 
-function money(n) {
-  return "₹" + n.toLocaleString("en-IN");
-}
-
 export default function HomePage() {
   const [storyOpen, setStoryOpen] = useState(false);
   const openStory = () => setStoryOpen(true);
@@ -96,14 +92,6 @@ export default function HomePage() {
       <section className="page-hero-split page-hero-split--home">
         <div className="page-hero-split__inner">
           <div className="page-hero-split__content">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <div className="home-hero__tag"><span className="dot" /> Registered Charitable Trust · Tamil Nadu</div>
-            </motion.div>
-
             <motion.p
               className="home-hero__lede"
               initial={{ opacity: 0, y: 20 }}
@@ -125,15 +113,6 @@ export default function HomePage() {
             </motion.div>
           </div>
 
-          <motion.div
-            className="page-hero-split__media"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <img src={PHOTOS.ramanathapuramGroup} alt="ERGON Foundation field activity" />
-            <div className="page-hero-split__media-overlay" />
-          </motion.div>
         </div>
 
         <div className="hero-stats-bar">
@@ -175,46 +154,6 @@ export default function HomePage() {
           </motion.div>
         </motion.div>
       )}
-
-      {/* ============================ STORIES ============================ */}
-      <section className="section" hidden>
-        <div className="container">
-          <Reveal as="up" style={{ textAlign: "center" }}>
-            <div className="eyebrow" style={{ justifyContent: "center" }}>Stories of Hope</div>
-            <h2 className="h-lg">Voices From The <span className="text-gold">Ground</span></h2>
-          </Reveal>
-
-          <Stagger className="grid-3 mt-48">
-            {TESTIMONIALS.map((t, i) => (
-              <StaggerItem key={i}>
-                <div className="card testi-card">
-                  <div className="testi-avatar"><HeartHandsIcon /></div>
-                  <div className="testi-body">
-                    <p>"<BrandText>{t.quote}</BrandText>"</p>
-                    <cite>— {t.name}, {t.role}</cite>
-                  </div>
-                </div>
-              </StaggerItem>
-            ))}
-          </Stagger>
-        </div>
-      </section>
-
-      {/* ============================ PARTNERS ============================ */}
-      <section className="section section--sm" hidden>
-        <div className="container">
-          <Reveal as="up" className="text-center mb-24">
-            <div className="eyebrow" style={{ justifyContent: "center" }}>Our Partners</div>
-          </Reveal>
-          <Reveal as="fade" delay={0.1}>
-            <div className="partner-row">
-              {[...PARTNERS, ...DONORS].map((p, i) => (
-                <span className="partner-item" key={i}>{p.name}</span>
-              ))}
-            </div>
-          </Reveal>
-        </div>
-      </section>
 
       {/* ============================ CTA ============================ */}
       <section className="section">

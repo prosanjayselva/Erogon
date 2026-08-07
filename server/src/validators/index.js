@@ -26,6 +26,10 @@ export const createDonorSchema = z.object({
   phone: z.string().min(10, 'Valid phone number required').max(15),
   amount: z.number().positive('Amount must be greater than 0').max(100000000),
   message: z.string().max(1000).optional(),
+  pan: z.string().max(20).optional(),
+  address: z.string().max(500).optional(),
+  bankName: z.string().max(100).optional(),
+  transactionNumber: z.string().max(100).optional(),
 });
 
 export const createEventSchema = z.object({

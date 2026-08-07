@@ -10,9 +10,7 @@ export default function EduSProPage() {
   return (
     <>
       <section className="bg-hero">
-        <div className="bg-hero__bg">
-          <img src={`${B}images/gallery-06-kids-play.jpg`} alt="Students receiving educational support" />
-        </div>
+        <div className="bg-hero__bg"><img src={`${B}images/gallery-06-kids-play.jpg`} alt="Students receiving educational support" /></div>
         <div className="bg-hero__overlay" />
         <div className="bg-hero__content">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>

@@ -33,20 +33,11 @@ export default function ProjectsPage() {
   return (
     <>
       <section className="bg-hero">
-        <div className="bg-hero__bg">
-          <img src={PHOTOS.projectBeachCleanup} alt="ERGON Foundation projects" />
-        </div>
+        <div className="bg-hero__bg"><img src={PHOTOS.projectBeachCleanup} alt="ERGON Foundation projects" /></div>
         <div className="bg-hero__overlay" />
         <div className="bg-hero__content">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            <div className="bg-hero__breadcrumb">
-              <NavLink to="/">Home</NavLink>
-              <ChevronRightIcon />
-              <span>Projects</span>
-            </div>
-            <span className="bg-hero__eyebrow">What We Do</span>
             <h1 className="bg-hero__title">Our Projects</h1>
-            <p className="bg-hero__desc">Verified field programmes run by <BrandName /> across Tamil Nadu — tree plantation, beach clean-ups, medical camps and more.</p>
           </motion.div>
         </div>
       </section>

@@ -1,8 +1,8 @@
 const B = import.meta.env.BASE_URL;
 
 export const PHOTOS = {
-  logo: `${B}images/logo.png`,
-  logoFooter: `${B}images/logo-footer.png`,
+  logo: `${B}images/ergon-logo-2026.png`,
+  logoFooter: `${B}images/people-pets-planet-transparent.png`,
 
   handsPlant: `${B}images/about-plant.jpg`,
   treePlantingReal: `${B}images/about-real.jpg`,
@@ -79,30 +79,36 @@ export const GALLERY_CATEGORIES = [
   { id: "planet", label: "Planet" },
 ];
 
+export const GALLERY_SUBCATEGORIES = {
+  people: ["All", "Free Medical Camp", "Community Activities", "Foundation"],
+  pets: ["All", "Animal Welfare"],
+  planet: ["All", "Environment Day", "Beach Clean-Up"],
+};
+
 export const VIDEOS = [
-  { src: `${B}videos/ramanathapuram-glimpses.mp4`, title: "Ramanathapuram Glimpses", desc: "Tree planting and coastal care moments from Ramanathapuram.", category: "planet" },
-  { src: `${B}videos/yercaud-climate-dance.mp4`, title: "Yercaud Climate Dance", desc: "Children and volunteers taking part in climate awareness activities.", category: "people" },
-  { src: `${B}videos/medical-camp-avadi.mp4`, title: "Medical Camp — Avadi", desc: "Free health support and care for migrant workers in Avadi, Chennai.", category: "people" },
+  { src: `${B}videos/ramanathapuram-glimpses.mp4`, title: "Ramanathapuram Glimpses", desc: "Tree planting and coastal care moments from Ramanathapuram.", category: "planet", subcategory: "Environment Day" },
+  { src: `${B}videos/yercaud-climate-dance.mp4`, title: "Yercaud Climate Dance", desc: "Children and volunteers taking part in climate awareness activities.", category: "people", subcategory: "Community Activities" },
+  { src: `${B}videos/medical-camp-avadi.mp4`, title: "Medical Camp — Avadi", desc: "Free health support and care for migrant workers in Avadi, Chennai.", category: "people", subcategory: "Free Medical Camp" },
 ];
 
 export const GALLERY_WITH_CATEGORIES = [
-  { ...GALLERY_PHOTOS[0], category: "pets" },
-  { ...GALLERY_PHOTOS[1], category: "people" },
-  { ...GALLERY_PHOTOS[2], category: "people" },
-  { ...GALLERY_PHOTOS[3], category: "people" },
-  { ...GALLERY_PHOTOS[4], category: "planet" },
-  { ...GALLERY_PHOTOS[5], category: "planet" },
-  { ...GALLERY_PHOTOS[6], category: "planet" },
-  { ...GALLERY_PHOTOS[7], category: "planet" },
-  { ...GALLERY_PHOTOS[8], category: "people" },
-  { ...GALLERY_PHOTOS[9], category: "planet" },
-  { ...GALLERY_PHOTOS[10], category: "people" },
-  { ...GALLERY_PHOTOS[11], category: "people" },
-  { ...GALLERY_PHOTOS[12], category: "people" },
-  { ...GALLERY_PHOTOS[13], category: "people" },
-  { ...GALLERY_PHOTOS[14], category: "people" },
-  { ...GALLERY_PHOTOS[15], category: "people" },
-  { ...GALLERY_PHOTOS[16], category: "people" },
-  { ...GALLERY_PHOTOS[17], category: "people" },
-  { ...GALLERY_PHOTOS[18], category: "planet" },
+  { ...GALLERY_PHOTOS[0], category: "pets", subcategory: "Animal Welfare" },
+  { ...GALLERY_PHOTOS[1], category: "people", subcategory: "Community Activities" },
+  { ...GALLERY_PHOTOS[2], category: "people", subcategory: "Foundation" },
+  { ...GALLERY_PHOTOS[3], category: "people", subcategory: "Community Activities" },
+  { ...GALLERY_PHOTOS[4], category: "planet", subcategory: "Environment Day" },
+  { ...GALLERY_PHOTOS[5], category: "planet", subcategory: "Environment Day" },
+  { ...GALLERY_PHOTOS[6], category: "planet", subcategory: "Environment Day" },
+  { ...GALLERY_PHOTOS[7], category: "planet", subcategory: "Environment Day" },
+  { ...GALLERY_PHOTOS[8], category: "planet", subcategory: "Beach Clean-Up" },
+  { ...GALLERY_PHOTOS[9], category: "people", subcategory: "Community Activities" },
+  { ...GALLERY_PHOTOS[10], category: "planet", subcategory: "Environment Day" },
+  { ...GALLERY_PHOTOS[11], category: "people", subcategory: "Community Activities" },
+  { ...GALLERY_PHOTOS[12], category: "people", subcategory: "Free Medical Camp" },
+  { ...GALLERY_PHOTOS[13], category: "people", subcategory: "Free Medical Camp" },
+  { ...GALLERY_PHOTOS[14], category: "people", subcategory: "Free Medical Camp" },
+  { ...GALLERY_PHOTOS[15], category: "people", subcategory: "Free Medical Camp" },
+  { ...GALLERY_PHOTOS[16], category: "people", subcategory: "Free Medical Camp" },
+  { ...GALLERY_PHOTOS[17], category: "people", subcategory: "Free Medical Camp" },
+  { ...GALLERY_PHOTOS[18], category: "people", subcategory: "Free Medical Camp" },
 ];

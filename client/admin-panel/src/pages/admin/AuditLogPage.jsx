@@ -140,15 +140,15 @@ export default function AuditLogPage() {
               )}
               {data?.data?.map((log, idx) => (
                 <tr key={log.id}>
-                  <td style={{ color: '#9CA3AF', fontSize: 13 }}>
+                  <td data-label="#" style={{ color: '#9CA3AF', fontSize: 13 }}>
                     {(page - 1) * 20 + idx + 1}
                   </td>
-                  <td>{getActionBadge(log.action)}</td>
-                  <td style={{ fontSize: 14 }}>{log.details || '—'}</td>
-                  <td style={{ color: '#6B7280', fontSize: 13 }}>
+                  <td data-label="Action">{getActionBadge(log.action)}</td>
+                  <td data-label="Details" style={{ fontSize: 14 }}>{log.details || '—'}</td>
+                  <td data-label="Admin" style={{ color: '#6B7280', fontSize: 13 }}>
                     {log.adminId === 0 ? '🌐 System' : `#${log.adminId}`}
                   </td>
-                  <td style={{ fontSize: 13, color: '#6B7280', whiteSpace: 'nowrap' }}>
+                  <td data-label="Date & Time" style={{ fontSize: 13, color: '#6B7280', whiteSpace: 'nowrap' }}>
                     {new Date(log.createdAt).toLocaleString('en-IN')}
                   </td>
                 </tr>

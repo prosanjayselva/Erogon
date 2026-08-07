@@ -90,9 +90,11 @@ export default function LoginPage() {
     <div className="login-page">
       <div className="login-card">
         <div className="login-brand">
-          <div className="login-brand-icon">E</div>
-          <h1 className="login-brand-name">ERGON</h1>
-          <p className="login-brand-sub">FOUNDATION</p>
+          <img
+            src={`${import.meta.env.BASE_URL}assets/ergon-logo-2026.png`}
+            alt="ERGON Foundation"
+            className="login-brand-logo"
+          />
         </div>
 
         <form className="login-form" onSubmit={handleSubmit} autoComplete="off">
@@ -207,7 +209,7 @@ export default function LoginPage() {
         </form>
 
         <div className="login-footer">
-          <p>ERGON Foundation &copy; 2026</p>
+          <p><span className="admin-footer-brand">ERGON FOUNDATION</span> &copy; 2026</p>
         </div>
       </div>
     </div>

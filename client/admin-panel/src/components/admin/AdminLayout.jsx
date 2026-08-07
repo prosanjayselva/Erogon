@@ -45,7 +45,7 @@ export default function AdminLayout() {
       {/* ─── Sidebar ─── */}
       <aside className={`admin-sidebar ${sidebarOpen ? 'is-open' : ''}`}>
         <div className="sidebar-logo">
-          <img src={`${import.meta.env.BASE_URL}assets/logo.png`} alt="ERGON" className="sidebar-logo-img" />
+          <img src={`${import.meta.env.BASE_URL}assets/ergon-logo-header.png`} alt="ERGON Foundation" className="sidebar-logo-img" />
           <div className="sidebar-logo-text">
             <span className="sidebar-logo-name">ERGON</span>
             <span className="sidebar-logo-sub">FOUNDATION</span>
@@ -57,12 +57,12 @@ export default function AdminLayout() {
         <nav className="sidebar-nav">
           {menu.map((item) => (
             item.id === 'website' ? (
-              <a key={item.id} href={item.path} className="sidebar-nav-link" target="_blank" rel="noopener noreferrer">
+              <a key={item.id} href={item.path} className="sidebar-nav-link" target="_blank" rel="noopener noreferrer" onClick={() => setSidebarOpen(false)}>
                 <span className="sidebar-nav-icon">{item.icon}</span>
                 {item.label}
               </a>
             ) : (
-              <NavLink key={item.id} to={item.path} end={item.id === 'dashboard'} className={linkClass}>
+              <NavLink key={item.id} to={item.path} end={item.id === 'dashboard'} className={linkClass} onClick={() => setSidebarOpen(false)}>
                 <span className="sidebar-nav-icon">{item.icon}</span>
                 {item.label}
               </NavLink>
@@ -71,7 +71,7 @@ export default function AdminLayout() {
         </nav>
 
         <div className="sidebar-footer-card">
-          <p>Together, we can create a better tomorrow for People, Pets & Planet.</p>
+          <img src={`${import.meta.env.BASE_URL}assets/people-pets-planet-transparent.png`} alt="The People, The Pets, The Planet" className="admin-pillars-art" />
         </div>
       </aside>
 
@@ -79,13 +79,16 @@ export default function AdminLayout() {
       <div className="admin-main">
         <header className="admin-header">
           <div className="admin-header-left">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <button className="sidebar-toggle" onClick={() => setSidebarOpen(true)} aria-label="Open sidebar">
-                &#9776;
-              </button>
+            <button className="sidebar-toggle" onClick={() => setSidebarOpen(true)} aria-label="Open sidebar">
+              &#9776;
+            </button>
+          </div>
+          <div className="admin-header-brand">
+            <img src={`${import.meta.env.BASE_URL}assets/ergon-logo-header.png`} alt="ERGON Foundation" className="admin-header-logo" />
+            <div className="admin-header-brand-text">
               <span className="admin-header-title">Admin Panel</span>
+              <span className="admin-header-subtitle">Welcome back, Admin! 👋</span>
             </div>
-            <span className="admin-header-subtitle">Welcome back, Admin! 👋</span>
           </div>
           <div className="admin-header-right">
             <NotificationBell />
@@ -107,8 +110,8 @@ export default function AdminLayout() {
         </main>
 
         <footer className="admin-footer">
-          <p>© 2026 ERGON Foundation. All rights reserved.</p>
-          <p className="footer-version">Made with 💚 for People • Pets • Planet — Version 1.0.0</p>
+          <p>© 2026 <span className="admin-footer-brand">ERGON FOUNDATION</span>. All rights reserved.</p>
+          <img src={`${import.meta.env.BASE_URL}assets/people-pets-planet-transparent.png`} alt="The People, The Pets, The Planet" className="admin-footer-pillars" />
         </footer>
       </div>
     </div>

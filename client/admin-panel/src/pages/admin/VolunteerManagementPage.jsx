@@ -49,14 +49,14 @@ export default function VolunteerManagementPage() {
               {data?.data?.length === 0 && <tr><td colSpan={8} className="empty-state">No volunteers found</td></tr>}
               {data?.data?.map((v) => (
                 <tr key={v.id}>
-                  <td><b>{v.fullName}</b></td>
-                  <td>{v.email}</td>
-                  <td>{v.contactNumber}</td>
-                  <td>{v.city || '—'}</td>
-                  <td><span className="pill">{v.areaOfInterest || '—'}</span></td>
-                  <td>{v.availability || '—'}</td>
-                  <td style={{ whiteSpace: 'nowrap', fontSize: 13 }}>{new Date(v.createdAt).toLocaleDateString()}</td>
-                  <td>
+                  <td data-label="Name"><b>{v.fullName}</b></td>
+                  <td data-label="Email">{v.email}</td>
+                  <td data-label="Phone">{v.contactNumber}</td>
+                  <td data-label="City">{v.city || '—'}</td>
+                  <td data-label="Interest"><span className="pill">{v.areaOfInterest || '—'}</span></td>
+                  <td data-label="Availability">{v.availability || '—'}</td>
+                  <td data-label="Date" style={{ whiteSpace: 'nowrap', fontSize: 13 }}>{new Date(v.createdAt).toLocaleDateString()}</td>
+                  <td data-label="Actions">
                     <button className="btn-icon btn-icon-delete" title="Delete"
                       onClick={() => setDeleteTarget(v)}>🗑️</button>
                   </td>

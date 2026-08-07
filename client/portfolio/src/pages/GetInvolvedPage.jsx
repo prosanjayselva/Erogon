@@ -2,11 +2,10 @@ import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { NavLink, useSearchParams } from "react-router-dom";
 import Reveal, { Stagger, StaggerItem } from "../components/Reveal.jsx";
-import PhotoFrame from "../components/PhotoFrame.jsx";
 import { PHOTOS } from "../data/photos.js";
 import {
   VolunteerIcon, BriefcaseIcon, UploadIcon, CheckIcon, HeartHandsIcon,
-  GraduationCapIcon, PawIcon, LeafIcon, PeopleIcon, SparkleIcon, TargetIcon,
+  PawIcon, LeafIcon, SparkleIcon, TargetIcon,
   UsersGroupIcon, PinIcon, ArrowRightIcon, DonateHeartIcon,
 } from "../components/Icons.jsx";
 import api from "../api/client.js";
@@ -16,10 +15,8 @@ import { BrandText } from "../components/BrandName.jsx";
 const VOLUNTEER_WAYS = [
   { icon: HeartHandsIcon, title: "Community Drives", desc: "Join education, healthcare and livelihood outreach in the field." },
   { icon: PawIcon, title: "Animal Rescue", desc: "Support rescue operations and shelter care for animals in need." },
-  { icon: GraduationCapIcon, title: "Mentor A Child", desc: "Guide an EduSPro sponsored student through their school journey." },
   { icon: LeafIcon, title: "Environment Drives", desc: "Participate in tree planting, beach clean-ups and awareness campaigns." },
   { icon: UsersGroupIcon, title: "Event Support", desc: "Help organise fundraisers, camps and community events." },
-  { icon: PeopleIcon, title: "Admin & Comm", desc: "Lend your skills in communications, design or operations." },
 ];
 
 const VOLUNTEER_BENEFITS = [
@@ -149,22 +146,26 @@ export default function GetInvolvedPage({ careersOnly = false }) {
 
   return (
     <>
-      <section className="volunteer-hero">
-        <div className="volunteer-hero__bg">
-          <img src={PHOTOS.yercaudDance} alt="Volunteers and children enjoying a community event" />
-        </div>
-        <div className="volunteer-hero__overlay" />
-        <div className="volunteer-hero__inner">
-          <motion.div className="volunteer-hero__content" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            <span className="volunteer-hero__eyebrow">Join Us</span>
-            <h1 className="volunteer-hero__title">Be The Reason Someone Smiles Today</h1>
-            <p className="volunteer-hero__sub">Give your time as a volunteer or support ERGON Foundation through a donation — every contribution helps People, Pets and Planet.</p>
-            <div className="volunteer-hero__actions">
-              <button className="btn btn--primary" onClick={() => { setTab("volunteer"); setTimeout(() => document.getElementById("volunteer")?.scrollIntoView({ behavior: "smooth" }), 50); }}>Become a Volunteer <VolunteerIcon /></button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      {careersOnly ? (
+        <section className="career-hero">
+          <div className="career-hero__inner">
+            <motion.div className="career-hero__content" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+              <h1 className="volunteer-hero__title">Build A Career With Purpose</h1>
+              <p className="volunteer-hero__sub">Join a team committed to People, Pets and Planet — and grow while you do good.</p>
+            </motion.div>
+          </div>
+        </section>
+      ) : (
+        <section className="volunteer-hero">
+          <div className="volunteer-hero__bg"><img src={PHOTOS.yercaudDance} alt="Volunteers and children enjoying a community event" /></div>
+          <div className="volunteer-hero__overlay" />
+          <div className="volunteer-hero__inner">
+            <motion.div className="volunteer-hero__content" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+              <h1 className="volunteer-hero__title">Be The Reason Someone Smiles Today</h1>
+            </motion.div>
+          </div>
+        </section>
+      )}
 
       <section className="section section--paper">
         <div className="wrap">
@@ -177,18 +178,6 @@ export default function GetInvolvedPage({ careersOnly = false }) {
 
           {tab === "volunteer" && (
             <Reveal as="fade" id="volunteer">
-              <div className="grid-2 mb-48" style={{ alignItems: "center" }}>
-                <PhotoFrame src={PHOTOS.yercaudPledge} alt="Volunteers and children taking the ERGON pledge together" ratio="16/10" />
-                <div>
-                  <div className="eyebrow">Every Hand Helps</div>
-                  <h3 className="h-md">From The Field, With Gratitude</h3>
-                  <p className="lede mt-16" style={{ maxWidth: "44ch" }}>
-                    Whether it's an afternoon at a rescue drive or mentoring one child through school, ERGON
-                    volunteers are the roots that keep every programme growing.
-                  </p>
-                </div>
-              </div>
-
               <Reveal as="up" className="text-center mb-32">
                 <div className="eyebrow" style={{ justifyContent: "center" }}>Ways To Volunteer</div>
                 <h2 className="h-lg">Choose How You <span className="text-gold">Contribute</span></h2>
