@@ -5,14 +5,10 @@ import { useToastStore } from '../../stores/toast-store.js';
 import ConfirmDialog from '../../components/admin/ConfirmDialog.jsx';
 
 const emptyForm = { activityName: '', activityDate: '', category: 'PEOPLE', caption: '', mediaType: 'IMAGE' };
-const imageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-const videoTypes = ['video/mp4', 'video/webm'];
 const mediaTypeLabel = { IMAGE: 'image', VIDEO: 'video' };
 const mediaEndpoint = (mediaType) => (mediaType === 'VIDEO' ? '/gallery-media/videos' : '/gallery-media/images');
 const fileError = (file, mediaType, required) => {
   if (!file) return required ? 'Please select a file' : '';
-  const types = mediaType === 'VIDEO' ? videoTypes : imageTypes;
-  if (!types.includes(file.type)) return mediaType === 'VIDEO' ? 'Use MP4 or WebM only' : 'Use JPG, PNG, GIF or WebP only';
   const max = mediaType === 'VIDEO' ? 100 : 10;
   return file.size > max * 1024 * 1024 ? `Media must be under ${max}MB` : '';
 };
@@ -62,7 +58,7 @@ export default function GalleryManagementPage() {
       <label>Activity Date<input type="date" value={form.activityDate} onChange={(event) => setForm({ ...form, activityDate: event.target.value })} required /></label>
       <label>Category<select value={form.category} onChange={(event) => setForm({ ...form, category: event.target.value })}><option value="PEOPLE">People</option><option value="PETS">Pets</option><option value="PLANET">Planet</option></select></label>
       <label>Media Type<select value={form.mediaType} onChange={(event) => { setForm({ ...form, mediaType: event.target.value }); setMedia(null); setError(''); }}><option value="IMAGE">Image</option><option value="VIDEO">Video</option></select></label>
-      <label>{editing ? 'Replace Media (optional)' : 'Media'}<input type="file" accept={form.mediaType === 'VIDEO' ? '.mp4,.webm' : '.jpg,.jpeg,.png,.gif,.webp'} required={!editing} onChange={(event) => { const selected = event.target.files[0]; setMedia(selected); setError(fileError(selected, form.mediaType, !editing)); }} />{error && <span className="form-error">{error}</span>}</label>
+      <label>{editing ? 'Replace Media (optional)' : 'Media'}<input type="file" required={!editing} onChange={(event) => { const selected = event.target.files[0]; setMedia(selected); setError(fileError(selected, form.mediaType, !editing)); }} />{error && <span className="form-error">{error}</span>}</label>
       <label className="full-width">Description (optional)<textarea rows="3" value={form.caption} onChange={(event) => setForm({ ...form, caption: event.target.value })} placeholder="Short description shown under the media on the gallery" /></label>
     </div><button className="btn-save" type="submit">{editing ? 'Update Media' : 'Add to Gallery'}</button></form>}
     {isLoading ? <div className="admin-loading">Loading...</div> : <div className="event-grid">{!data?.data?.length && <p className="empty-state">No gallery media found</p>}{data?.data?.map((item) => <article className="event-card" key={`${item.mediaType}-${item.id}`}><div className="event-card-img">{item.mediaType === 'VIDEO' ? <video src={`/uploads/${item.media}`} controls preload="metadata" /> : <img src={`/uploads/${item.media}`} alt={item.caption || item.activityName} />}</div><div className="event-card-body"><span className="event-status event-status-completed">{item.category} · {mediaTypeLabel[item.mediaType]}</span><h3 className="event-card-title">{item.activityName}</h3><div className="event-card-meta"><span>{new Date(item.activityDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</span>{item.caption && <span>{item.caption}</span>}</div><div className="event-card-actions"><button className="btn-icon btn-icon-edit" onClick={() => edit(item)}>Edit</button><button className="btn-icon btn-icon-delete" onClick={() => setDeleteTarget(item)}>Delete</button></div></div></article>)}</div>}

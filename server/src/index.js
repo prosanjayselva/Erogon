@@ -80,7 +80,11 @@ app.use(express.json({ limit: '500kb' }));
 const uploadsDir = path.join(__dirname, '../../uploads');
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 
-const publicUploads = new Set(['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.mp4', '.webm', '.pdf']);
+const publicUploads = new Set([
+  '.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.avif', '.bmp',
+  '.mp4', '.webm', '.mov', '.avi', '.mkv', '.m4v', '.wmv', '.flv', '.mp3', '.wav', '.ogg', '.m4a',
+  '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', '.txt', '.csv', '.zip', '.rar', '.7z',
+]);
 
 app.use('/uploads', (req, res, next) => {
   const ext = path.extname(req.path).toLowerCase();

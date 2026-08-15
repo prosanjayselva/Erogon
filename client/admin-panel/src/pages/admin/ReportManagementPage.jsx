@@ -4,13 +4,11 @@ import api from '../../api/client.js';
 import { useToastStore } from '../../stores/toast-store.js';
 import ConfirmDialog from '../../components/admin/ConfirmDialog.jsx';
 
-const ALLOWED_FILE_TYPES = ['application/pdf', 'image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 const MAX_FILE_SIZE = 20 * 1024 * 1024;
 const CATEGORY_LABEL = { ACTIVITY_REPORT: 'Activity Report', IMPACT_REPORT: 'Impact Report' };
 
 function validateFile(file) {
   if (!file) return null;
-  if (!ALLOWED_FILE_TYPES.includes(file.type)) return 'Only PDF or image files are allowed';
   if (file.size > MAX_FILE_SIZE) return 'File must be under 20MB';
   return null;
 }
@@ -128,7 +126,6 @@ export default function ReportManagementPage() {
             <label>Report File {editing && '(optional)'}
               <input
                 type="file"
-                accept=".pdf,.jpg,.jpeg,.png,.gif,.webp"
                 required={!editing}
                 onChange={(e) => {
                   const f = e.target.files[0];

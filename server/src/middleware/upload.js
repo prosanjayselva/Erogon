@@ -42,12 +42,14 @@ const ALLOWED_TYPES = {
     ext: ['.jpg', '.jpeg', '.png', '.gif', '.webp'],
     maxSize: 10 * 1024 * 1024,
     dest: 'gallery/images',
+    anyType: true,
   },
   galleryVideo: {
     mime: ['video/mp4', 'video/webm'],
     ext: ['.mp4', '.webm'],
     maxSize: 100 * 1024 * 1024,
     dest: 'gallery/videos',
+    anyType: true,
   },
   report: {
     mime: [
@@ -60,6 +62,7 @@ const ALLOWED_TYPES = {
     ext: ['.pdf', '.jpg', '.jpeg', '.png', '.gif', '.webp'],
     maxSize: 20 * 1024 * 1024,
     dest: 'reports',
+    anyType: true,
   },
 };
 
@@ -79,6 +82,7 @@ function createUpload(fieldName) {
     }),
     limits: { fileSize: config.maxSize },
     fileFilter: (req, file, cb) => {
+      if (config.anyType) return cb(null, true);
       const ext = path.extname(file.originalname).toLowerCase();
       if (config.mime.includes(file.mimetype) && config.ext.includes(ext)) {
         cb(null, true);
