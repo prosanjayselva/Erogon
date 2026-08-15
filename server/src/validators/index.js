@@ -120,3 +120,11 @@ export const createContactSchema = z.object({
 export const createNewsletterSchema = z.object({
   email: z.string().email('Invalid email').max(255),
 });
+
+export const createReportSchema = z.object({
+  title: z.string().min(2, 'Title is required').max(200),
+  category: z.enum(['ACTIVITY_REPORT', 'IMPACT_REPORT']),
+  description: z.string().max(2000).optional(),
+});
+
+export const updateReportSchema = createReportSchema.partial();

@@ -11,6 +11,7 @@ import authRoutes from './routes/v1/auth-routes.js';
 import donorRoutes from './routes/v1/donor-routes.js';
 import eventRoutes from './routes/v1/event-routes.js';
 import galleryMediaRoutes from './routes/v1/gallery-media-routes.js';
+import reportRoutes from './routes/v1/report-routes.js';
 import dashboardRoutes from './routes/v1/dashboard-routes.js';
 import notificationRoutes from './routes/v1/notification-routes.js';
 import activityLogRoutes from './routes/v1/activity-log-routes.js';
@@ -79,7 +80,7 @@ app.use(express.json({ limit: '500kb' }));
 const uploadsDir = path.join(__dirname, '../../uploads');
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 
-const publicUploads = new Set(['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.mp4', '.webm']);
+const publicUploads = new Set(['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.mp4', '.webm', '.pdf']);
 
 app.use('/uploads', (req, res, next) => {
   const ext = path.extname(req.path).toLowerCase();
@@ -127,6 +128,7 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/donors', donorRoutes);
 app.use('/api/v1/events', eventRoutes);
 app.use('/api/v1/gallery-media', galleryMediaRoutes);
+app.use('/api/v1/reports', reportRoutes);
 app.use('/api/v1/dashboard', dashboardRoutes);
 app.use('/api/v1/notifications', notificationRoutes);
 app.use('/api/v1/activity-logs', activityLogRoutes);

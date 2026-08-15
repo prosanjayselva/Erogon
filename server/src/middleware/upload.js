@@ -49,6 +49,18 @@ const ALLOWED_TYPES = {
     maxSize: 100 * 1024 * 1024,
     dest: 'gallery/videos',
   },
+  report: {
+    mime: [
+      'application/pdf',
+      'image/jpeg',
+      'image/png',
+      'image/gif',
+      'image/webp',
+    ],
+    ext: ['.pdf', '.jpg', '.jpeg', '.png', '.gif', '.webp'],
+    maxSize: 20 * 1024 * 1024,
+    dest: 'reports',
+  },
 };
 
 function createUpload(fieldName) {
@@ -82,3 +94,4 @@ export const uploadJd = createUpload('jd');
 export const uploadBanner = createUpload('banner');
 export const uploadGalleryImage = createUpload('galleryImage');
 export const uploadGalleryVideo = createUpload('galleryVideo');
+export const uploadReport = createUpload('report');

@@ -7,6 +7,7 @@ import DashboardPage from './pages/admin/DashboardPage.jsx';
 import DonorManagementPage from './pages/admin/DonorManagementPage.jsx';
 import EventManagementPage from './pages/admin/EventManagementPage.jsx';
 import GalleryManagementPage from './pages/admin/GalleryManagementPage.jsx';
+import ReportManagementPage from './pages/admin/ReportManagementPage.jsx';
 import AuditLogPage from './pages/admin/AuditLogPage.jsx';
 import VolunteerManagementPage from './pages/admin/VolunteerManagementPage.jsx';
 import JobSeekerManagementPage from './pages/admin/JobSeekerManagementPage.jsx';
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
           { path: 'newsletter', element: <NewsletterManagementPage /> },
           { path: 'events', element: <EventManagementPage /> },
           { path: 'gallery', element: <GalleryManagementPage /> },
+          { path: 'reports', element: <ReportManagementPage /> },
           { path: 'audit-logs', element: <AuditLogPage /> },
           { path: 'settings', element: <SettingsPage /> },
           { path: '*', element: <RouteError /> },

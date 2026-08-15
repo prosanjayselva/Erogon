@@ -91,6 +91,18 @@ model GalleryVideo {
   @@map("gallery_videos")
 }
 
+model Report {
+  id          Int      @id @default(autoincrement())
+  title       String
+  category    String   // ACTIVITY_REPORT | IMPACT_REPORT
+  description String?
+  file        String
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("reports")
+}
+
 model Notification {
   id          Int       @id @default(autoincrement())
   message     String
