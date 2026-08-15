@@ -1,11 +1,14 @@
 import { Router } from 'express';
-import { list, create, update, remove } from '../../controllers/gallery-media-controller.js';
+import { list, createImage, createVideo, updateImage, updateVideo, removeImage, removeVideo } from '../../controllers/gallery-media-controller.js';
 import { authenticateWithSession } from '../../middleware/auth.js';
-import { uploadGalleryMedia } from '../../middleware/upload.js';
+import { uploadGalleryImage, uploadGalleryVideo } from '../../middleware/upload.js';
 
 const router = Router();
 router.get('/', list);
-router.post('/', authenticateWithSession, uploadGalleryMedia.single('media'), create);
-router.put('/:id', authenticateWithSession, uploadGalleryMedia.single('media'), update);
-router.delete('/:id', authenticateWithSession, remove);
+router.post('/images', authenticateWithSession, uploadGalleryImage.single('media'), createImage);
+router.post('/videos', authenticateWithSession, uploadGalleryVideo.single('media'), createVideo);
+router.put('/images/:id', authenticateWithSession, uploadGalleryImage.single('media'), updateImage);
+router.put('/videos/:id', authenticateWithSession, uploadGalleryVideo.single('media'), updateVideo);
+router.delete('/images/:id', authenticateWithSession, removeImage);
+router.delete('/videos/:id', authenticateWithSession, removeVideo);
 export default router;

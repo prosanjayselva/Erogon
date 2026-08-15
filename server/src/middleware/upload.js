@@ -1,3 +1,4 @@
+import fs from 'fs';
 import multer from 'multer';
 import crypto from 'crypto';
 import path from 'path';
@@ -36,19 +37,28 @@ const ALLOWED_TYPES = {
     ext: ['.jpg', '.jpeg', '.png', '.gif', '.webp'],
     maxSize: 5 * 1024 * 1024,
   },
-  gallery: {
-    mime: ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'video/mp4', 'video/webm'],
-    ext: ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.mp4', '.webm'],
+  galleryImage: {
+    mime: ['image/jpeg', 'image/png', 'image/gif', 'image/webp'],
+    ext: ['.jpg', '.jpeg', '.png', '.gif', '.webp'],
+    maxSize: 10 * 1024 * 1024,
+    dest: 'gallery/images',
+  },
+  galleryVideo: {
+    mime: ['video/mp4', 'video/webm'],
+    ext: ['.mp4', '.webm'],
     maxSize: 100 * 1024 * 1024,
+    dest: 'gallery/videos',
   },
 };
 
 function createUpload(fieldName) {
   const config = ALLOWED_TYPES[fieldName] || ALLOWED_TYPES.banner;
+  const destination = config.dest ? path.join(uploadsDirectory, config.dest) : uploadsDirectory;
+  fs.mkdirSync(destination, { recursive: true });
 
   return multer({
     storage: multer.diskStorage({
-      destination: uploadsDirectory,
+      destination,
       filename: (req, file, cb) => {
         const unique = crypto.randomBytes(16).toString('hex');
         const ext = path.extname(file.originalname).toLowerCase();
@@ -70,4 +80,5 @@ function createUpload(fieldName) {
 export const uploadResume = createUpload('resume');
 export const uploadJd = createUpload('jd');
 export const uploadBanner = createUpload('banner');
-export const uploadGalleryMedia = createUpload('gallery');
+export const uploadGalleryImage = createUpload('galleryImage');
+export const uploadGalleryVideo = createUpload('galleryVideo');
