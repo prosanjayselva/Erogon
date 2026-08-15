@@ -150,8 +150,15 @@ export default function GetInvolvedPage({ careersOnly = false }) {
         <section className="career-hero">
           <div className="career-hero__inner">
             <motion.div className="career-hero__content" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-              <h1 className="volunteer-hero__title">Build A Career With Purpose</h1>
-              <p className="volunteer-hero__sub">Join a team committed to People, Pets and Planet — and grow while you do good.</p>
+              <div className="glass-card career-hero__intro" style={{ display: "flex", gap: 20, alignItems: "flex-start", flexWrap: "wrap" }}>
+                <div className="icon-badge" style={{ marginBottom: 0, flex: "none", width: 64, height: 64, background: "var(--gold)", color: "var(--text)" }}><BriefcaseIcon /></div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <h3 className="h-md">ERGON Career Opportunities</h3>
+                  <p style={{ marginTop: 6 }}>
+                    <BrandText>{CAREER_INTRO}</BrandText>
+                  </p>
+                </div>
+              </div>
             </motion.div>
           </div>
         </section>
@@ -260,16 +267,6 @@ export default function GetInvolvedPage({ careersOnly = false }) {
 
           {careersOnly && tab === "career" && (
             <Reveal as="fade" id="career">
-              <div className="glass-card mb-48" style={{ maxWidth: 780, margin: "0 auto 48px", padding: "clamp(20px, 4vw, 36px) clamp(16px, 4vw, 32px)", display: "flex", gap: 20, alignItems: "flex-start", flexWrap: "wrap" }}>
-                <div className="icon-badge" style={{ marginBottom: 0, flex: "none", width: 64, height: 64, background: "var(--gold)", color: "var(--text)" }}><BriefcaseIcon /></div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <h3 className="h-md">ERGON Career Opportunities</h3>
-                  <p style={{ color: "var(--text-secondary)", marginTop: 6 }}>
-                    <BrandText>{CAREER_INTRO}</BrandText>
-                  </p>
-                </div>
-              </div>
-
               <div className="impact-band mb-48" style={{ background: "var(--primary)" }}>
                 <div className="impact-band__inner impact-band__inner--alt">
                   <div className="impact-band__title">

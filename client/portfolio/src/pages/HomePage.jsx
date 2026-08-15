@@ -86,6 +86,11 @@ export default function HomePage() {
   const [storyOpen, setStoryOpen] = useState(false);
   const openStory = () => setStoryOpen(true);
 
+  useEffect(() => {
+    const t = setTimeout(() => setStoryOpen(true), 900);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
     <>
       {/* ================================ HERO ================================ */}
@@ -107,7 +112,6 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             >
-              <NavLink to="/donate#payment-details" className="btn btn--primary">Donate Now <DonateHeartIcon /></NavLink>
               <NavLink to="/about" className="btn btn--outline">Explore Our Work <ArrowRightIcon /></NavLink>
               <button type="button" className="btn btn--ghost" onClick={openStory}>Live Impact Image <PlayIcon /></button>
             </motion.div>

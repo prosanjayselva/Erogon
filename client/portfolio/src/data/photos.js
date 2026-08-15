@@ -80,7 +80,7 @@ export const GALLERY_CATEGORIES = [
 ];
 
 export const GALLERY_SUBCATEGORIES = {
-  people: ["All", "Free Medical Camp", "Community Activities", "Foundation"],
+  people: ["All"],
   pets: ["All", "Animal Welfare"],
   planet: ["All", "Environment Day", "Beach Clean-Up"],
 };

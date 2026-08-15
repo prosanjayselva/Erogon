@@ -5,7 +5,7 @@ import PhotoFrame from "../components/PhotoFrame.jsx";
 import { CloseIcon } from "../components/Icons.jsx";
 // Database-backed gallery loading is temporarily disabled.
 // import api from "../api/client.js";
-import { PHOTOS, GALLERY_WITH_CATEGORIES, GALLERY_CATEGORIES, GALLERY_SUBCATEGORIES, VIDEOS } from "../data/photos.js";
+import { PHOTOS, GALLERY_WITH_CATEGORIES, GALLERY_CATEGORIES, VIDEOS } from "../data/photos.js";
 import { BrandText } from "../components/BrandName.jsx";
 
 const activityDetails = {
@@ -17,7 +17,6 @@ const formatDate = (date) => new Date(`${date.slice(0, 10)}T00:00:00`).toLocaleD
 
 export default function GalleryPage() {
   const [category, setCategory] = useState("people");
-  const [subcategory, setSubcategory] = useState("All");
   const [mediaType, setMediaType] = useState("Photos");
   // const [remoteMedia, setRemoteMedia] = useState([]);
   const [lightbox, setLightbox] = useState(null);
@@ -37,19 +36,18 @@ export default function GalleryPage() {
     return [...staticImages, ...staticVideos].filter(
       (item) =>
         item.category === category &&
-        (subcategory === "All" || item.subcategory === subcategory) &&
         (mediaType === "Photos" ? item.type === "IMAGE" : item.type === "VIDEO")
     );
-  }, [category, subcategory, mediaType]);
+  }, [category, mediaType]);
 
   const groups = useMemo(() => {
-    const subOrder = GALLERY_SUBCATEGORIES[category];
-    return Object.values(media.reduce((result, item) => {
-      const key = `${item.activityName}-${item.activityDate}`;
-      if (!result[key]) result[key] = { name: item.activityName, date: item.activityDate, items: [] };
-      result[key].items.push(item);
-      return result;
-    }, {})).sort((a, b) => subOrder.indexOf(a.name) - subOrder.indexOf(b.name));
+    const label = GALLERY_CATEGORIES.find((c) => c.id === category)?.label || category;
+    const group = { name: label, date: null, items: [] };
+    media.forEach((item) => {
+      group.items.push(item);
+      if (!group.date || item.activityDate < group.date) group.date = item.activityDate;
+    });
+    return [group];
   }, [media, category]);
   const images = media.filter((item) => item.type === "IMAGE");
   const closeLightbox = useCallback(() => setLightbox(null), []);
@@ -66,7 +64,7 @@ export default function GalleryPage() {
     return () => window.removeEventListener("keydown", onKey);
   }, [lightbox, currentIndex, images, closeLightbox]);
 
-  const selectCategory = (id) => { setCategory(id); setSubcategory("All"); };
+  const selectCategory = (id) => { setCategory(id); };
 
   const MEDIA_TYPES = ["Photos", "Videos"];
 
@@ -76,7 +74,6 @@ export default function GalleryPage() {
       <Reveal as="fade"><div className="gallery-filters">
         <div className="gallery-type-filter">{MEDIA_TYPES.map((type) => <button key={type} className={`gallery-type-btn ${mediaType === type ? "is-active" : ""}`} onClick={() => setMediaType(type)}>{type}</button>)}</div>
         <div className="gallery-category-filter">{GALLERY_CATEGORIES.map((item) => <button key={item.id} className={`gallery-chip ${category === item.id ? "is-active" : ""}`} onClick={() => selectCategory(item.id)}>{item.label}</button>)}</div>
-        <div className="gallery-subcategory-filter">{GALLERY_SUBCATEGORIES[category].map((sub) => <button key={sub} className={`gallery-chip ${subcategory === sub ? "is-active" : ""}`} onClick={() => setSubcategory(sub)}>{sub}</button>)}</div>
       </div>
       <div className="gallery-activity-list">{groups.map((group) => {
         const activityImages = group.items.filter((item) => item.type === "IMAGE");

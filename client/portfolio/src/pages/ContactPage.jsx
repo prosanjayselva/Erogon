@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Reveal from "../components/Reveal.jsx";
 import { BrandText } from "../components/BrandName.jsx";
-import { PinIcon, MailIcon, PhoneIcon, CheckIcon, MenuFacebook, MenuX, MenuLinkedin, MenuInstagram, MenuYoutube } from "../components/Icons.jsx";
+import { PinIcon, MailIcon, PhoneIcon, CheckIcon, MenuFacebook, BrandX, MenuLinkedin, MenuInstagram, MenuYoutube } from "../components/Icons.jsx";
 import { CONTACT } from "../data/content.js";
 import api from "../api/client.js";
 
@@ -32,55 +32,19 @@ export default function ContactPage() {
   return (
     <>
       <section className="contact-hero">
-        <div className="contact-hero__inner">
+        <div className="container contact-hero__inner">
           <motion.div className="contact-hero__content" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <h1 className="contact-hero__title">We'd Love To Hear From You</h1>
-            <div className="contact-hero__map mt-32"><div style={{ textAlign: "center" }}><PinIcon /><p>Kodambakkam, Chennai — Tamil Nadu</p></div></div>
-          </motion.div>
-          <motion.div className="contact-hero__cards" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}>
-            <div className="contact-hero__card"><div className="contact-hero__card-icon"><PinIcon /></div><div><h4>Office Address</h4>{CONTACT.address.map((l, i) => <p key={i}><BrandText>{l}</BrandText></p>)}</div></div>
-            <div className="contact-hero__card"><div className="contact-hero__card-icon"><MailIcon /></div><div><h4>Email</h4><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a><br /><a href={`mailto:${CONTACT.secretaryEmail}`}>{CONTACT.secretaryEmail}</a></div></div>
-            <div className="contact-hero__card"><div className="contact-hero__card-icon"><PhoneIcon /></div><div><h4>Mobile</h4><a href={`tel:${CONTACT.phone.replace(/\s/g, "")}`}>{CONTACT.phone}</a></div></div>
-            <div className="contact-hero__card"><div className="contact-hero__card-icon" style={{ background: "var(--gold)", color: "white" }}><MenuFacebook /></div><div><h4>Connect With Us</h4><p>Follow us on social media for updates and stories.</p></div></div>
           </motion.div>
         </div>
       </section>
 
       <section className="section">
-        <div className="container grid-2" style={{ alignItems: "flex-start" }}>
-          <Reveal as="left">
-            <div className="eyebrow">Office Address</div>
-            <h2 className="h-lg">Get In Touch</h2>
-
-            <div className="mt-32" style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-              {[
-                { icon: PinIcon, title: "Office Address", content: CONTACT.address.map((l, i) => <span key={i} style={{ display: "block", color: "var(--text-secondary)", fontSize: "0.92rem" }}><BrandText>{l}</BrandText></span>) },
-                { icon: MailIcon, title: "Email", content: <><a href={`mailto:${CONTACT.email}`} style={{ display: "block", color: "var(--text-secondary)", fontSize: "0.92rem" }}>{CONTACT.email}</a><a href={`mailto:${CONTACT.secretaryEmail}`} style={{ display: "block", color: "var(--text-secondary)", fontSize: "0.92rem" }}>{CONTACT.secretaryEmail}</a></> },
-                { icon: PhoneIcon, title: "Mobile", content: <a href={`tel:${CONTACT.phone.replace(/\s/g, "")}`} style={{ color: "var(--text-secondary)", fontSize: "0.92rem" }}>{CONTACT.phone}</a> },
-              ].map((item, i) => (
-                <div className="flex gap-16" style={{ alignItems: "flex-start" }} key={i}>
-                  <div className="icon-badge" style={{ marginBottom: 0, flex: "none" }}><item.icon /></div>
-                  <div>
-                    <b style={{ display: "block", color: "var(--text)", marginBottom: 2 }}>{item.title}</b>
-                    {item.content}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="eyebrow mt-48">Connect With Us</div>
-            <div className="footer-social" style={{ marginTop: 8 }}>
-              <a href={CONTACT.social.facebook} target="_blank" rel="noreferrer" style={{ borderColor: "var(--divider)", color: "var(--primary)" }}><MenuFacebook /></a>
-              <a href={CONTACT.social.x} target="_blank" rel="noreferrer" style={{ borderColor: "var(--divider)", color: "var(--primary)" }}><MenuX /></a>
-              <a href={CONTACT.social.linkedin} target="_blank" rel="noreferrer" style={{ borderColor: "var(--divider)", color: "var(--primary)" }}><MenuLinkedin /></a>
-              <a href={CONTACT.social.instagram} target="_blank" rel="noreferrer" style={{ borderColor: "var(--divider)", color: "var(--primary)" }}><MenuInstagram /></a>
-              <a href={CONTACT.social.youtube} target="_blank" rel="noreferrer" style={{ borderColor: "var(--divider)", color: "var(--primary)" }}><MenuYoutube /></a>
-            </div>
-          </Reveal>
-
-          <Reveal as="right" delay={0.1}>
-            <div className="form-card">
-              {sent ? (
+        <div className="container">
+          <Reveal as="right">
+            <div className="contact-split">
+              <div className="form-card">
+                {sent ? (
                 <div className="text-center" style={{ padding: "40px 0" }}>
                   <div className="icon-badge mx-auto" style={{ background: "var(--gold)", color: "var(--text)" }}><CheckIcon /></div>
                   <h3 className="h-md mt-16">Message Sent</h3>
@@ -104,6 +68,45 @@ export default function ContactPage() {
                   <button type="submit" className="btn btn--primary btn--block mt-24" disabled={sending}>{sending ? "Sending…" : "Send Message"} <CheckIcon /></button>
                 </form>
               )}
+              </div>
+              <iframe
+                className="contact-split__map"
+                src="https://www.google.com/maps?q=Kodambakkam,+Chennai,+Tamil+Nadu&output=embed"
+                title="ERGON Foundation — Kodambakkam, Chennai"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+            </div>
+          </Reveal>
+
+          <Reveal as="left">
+            <div className="text-center" style={{ marginTop: 72 }}>
+              <div className="eyebrow" style={{ justifyContent: "center" }}>Get In Touch</div>
+              <h2 className="h-lg">Our Contact Details</h2>
+
+              <div className="contact-details">
+                {[
+                  { icon: PinIcon, title: "Office Address", content: CONTACT.address.map((l, i) => <span key={i} style={{ display: "block", color: "var(--text-secondary)", fontSize: "0.92rem" }}><BrandText>{l}</BrandText></span>) },
+                  { icon: MailIcon, title: "Email", content: <><a href={`mailto:${CONTACT.email}`} style={{ display: "block", color: "var(--text-secondary)", fontSize: "0.92rem" }}>{CONTACT.email}</a><a href={`mailto:${CONTACT.secretaryEmail}`} style={{ display: "block", color: "var(--text-secondary)", fontSize: "0.92rem" }}>{CONTACT.secretaryEmail}</a></> },
+                  { icon: PhoneIcon, title: "Mobile", content: <a href={`tel:${CONTACT.phone.replace(/\s/g, "")}`} style={{ color: "var(--text-secondary)", fontSize: "0.92rem" }}>{CONTACT.phone}</a> },
+                ].map((item, i) => (
+                  <div className="contact-detail" key={i}>
+                    <div className="icon-badge mx-auto" style={{ marginBottom: 12 }}><item.icon /></div>
+                    <b style={{ display: "block", color: "var(--text)" }}>{item.title}</b>
+                    <div style={{ marginTop: 6 }}>{item.content}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="eyebrow" style={{ justifyContent: "center", marginTop: 40 }}>Connect With Us</div>
+              <div className="footer-social" style={{ marginTop: 12, justifyContent: "center" }}>
+                <a href={CONTACT.social.facebook} target="_blank" rel="noreferrer" style={{ borderColor: "var(--divider)", color: "var(--primary)" }}><MenuFacebook /></a>
+                <a href={CONTACT.social.x} target="_blank" rel="noreferrer" style={{ borderColor: "var(--divider)", color: "var(--primary)" }}><BrandX /></a>
+                <a href={CONTACT.social.linkedin} target="_blank" rel="noreferrer" style={{ borderColor: "var(--divider)", color: "var(--primary)" }}><MenuLinkedin /></a>
+                <a href={CONTACT.social.instagram} target="_blank" rel="noreferrer" style={{ borderColor: "var(--divider)", color: "var(--primary)" }}><MenuInstagram /></a>
+                <a href={CONTACT.social.youtube} target="_blank" rel="noreferrer" style={{ borderColor: "var(--divider)", color: "var(--primary)" }}><MenuYoutube /></a>
+              </div>
             </div>
           </Reveal>
         </div>

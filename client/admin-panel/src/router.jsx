@@ -6,8 +6,7 @@ import LoginPage from './pages/admin/LoginPage.jsx';
 import DashboardPage from './pages/admin/DashboardPage.jsx';
 import DonorManagementPage from './pages/admin/DonorManagementPage.jsx';
 import EventManagementPage from './pages/admin/EventManagementPage.jsx';
-// Gallery database management is temporarily disabled.
-// import GalleryManagementPage from './pages/admin/GalleryManagementPage.jsx';
+import GalleryManagementPage from './pages/admin/GalleryManagementPage.jsx';
 import AuditLogPage from './pages/admin/AuditLogPage.jsx';
 import VolunteerManagementPage from './pages/admin/VolunteerManagementPage.jsx';
 import JobSeekerManagementPage from './pages/admin/JobSeekerManagementPage.jsx';
@@ -38,7 +37,7 @@ const router = createBrowserRouter([
           { path: 'contacts', element: <ContactManagementPage /> },
           { path: 'newsletter', element: <NewsletterManagementPage /> },
           { path: 'events', element: <EventManagementPage /> },
-          // { path: 'gallery', element: <GalleryManagementPage /> },
+          { path: 'gallery', element: <GalleryManagementPage /> },
           { path: 'audit-logs', element: <AuditLogPage /> },
           { path: 'settings', element: <SettingsPage /> },
           { path: '*', element: <RouteError /> },
