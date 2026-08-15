@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/admin-panel/',
+  base: process.env.ADMIN_BASE || '/admin-panel/',
   server: {
     port: 5173,
     proxy: {
