@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../../api/client.js';
 import { useToastStore } from '../../stores/toast-store.js';
 import ConfirmDialog from '../../components/admin/ConfirmDialog.jsx';
+import ExportExcelButton from '../../components/admin/ExportExcelButton.jsx';
 
 const avatarColors = ['#2E7D32', '#2563EB', '#7C3AED', '#DC2626', '#D97706', '#0891B2', '#DB2777', '#4F46E5'];
 
@@ -66,6 +67,7 @@ export default function DonorManagementPage() {
             />
           </div>
         </div>
+        <ExportExcelButton rows={data?.data} filename="ergon-donors" />
       </div>
 
       {isLoading ? (

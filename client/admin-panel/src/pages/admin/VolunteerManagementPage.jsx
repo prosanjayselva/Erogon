@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../../api/client.js';
 import { useToastStore } from '../../stores/toast-store.js';
 import ConfirmDialog from '../../components/admin/ConfirmDialog.jsx';
+import ExportExcelButton from '../../components/admin/ExportExcelButton.jsx';
 
 export default function VolunteerManagementPage() {
   const [search, setSearch] = useState('');
@@ -37,6 +38,7 @@ export default function VolunteerManagementPage() {
           <input type="text" placeholder="Search volunteers..." value={search}
             onChange={(e) => { setSearch(e.target.value); setPage(1); }} className="search-input" />
         </div>
+        <ExportExcelButton rows={data?.data} filename="ergon-volunteers" />
       </div>
 
       {isLoading ? <div className="admin-loading">Loading...</div> : (

@@ -3,6 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../../api/client.js';
 import { useToastStore } from '../../stores/toast-store.js';
 import ConfirmDialog from '../../components/admin/ConfirmDialog.jsx';
+import ExportExcelButton from '../../components/admin/ExportExcelButton.jsx';
 
 export default function NewsletterManagementPage() {
   const [search, setSearch] = useState('');
@@ -42,6 +43,7 @@ export default function NewsletterManagementPage() {
             Total: <b>{pagination?.total ?? '...'}</b> subscribers
           </div>
         </div>
+        <ExportExcelButton rows={data?.data} filename="ergon-newsletter-subscribers" />
       </div>
 
       {isLoading ? <div className="admin-loading">Loading...</div> : (

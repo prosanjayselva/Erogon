@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import api from '../../api/client.js';
+import ExportExcelButton from '../../components/admin/ExportExcelButton.jsx';
 
 const actionColors = {
   LOGIN: { bg: '#E8F5E9', color: '#2E7D32' },
@@ -118,6 +119,7 @@ export default function AuditLogPage() {
             </button>
           ))}
         </div>
+        <ExportExcelButton rows={data?.data} filename="ergon-audit-logs" />
       </div>
 
       {isLoading ? (

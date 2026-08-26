@@ -3,8 +3,7 @@ import { motion } from "framer-motion";
 import Reveal from "../components/Reveal.jsx";
 import PhotoFrame from "../components/PhotoFrame.jsx";
 import { CloseIcon } from "../components/Icons.jsx";
-// Database-backed gallery loading is temporarily disabled.
-// import api from "../api/client.js";
+import api from "../api/client.js";
 import { PHOTOS, GALLERY_WITH_CATEGORIES, GALLERY_CATEGORIES, VIDEOS } from "../data/photos.js";
 import { BrandText } from "../components/BrandName.jsx";
 
@@ -18,27 +17,27 @@ const formatDate = (date) => new Date(`${date.slice(0, 10)}T00:00:00`).toLocaleD
 export default function GalleryPage() {
   const [category, setCategory] = useState("people");
   const [mediaType, setMediaType] = useState("Photos");
-  // const [remoteMedia, setRemoteMedia] = useState([]);
+  const [remoteMedia, setRemoteMedia] = useState([]);
   const [lightbox, setLightbox] = useState(null);
 
-  // useEffect(() => {
-  //   let active = true;
-  //   api.get("/gallery-media").then(({ data }) => {
-  //     if (active) setRemoteMedia(data.data || []);
-  //   }).catch(() => {});
-  //   return () => { active = false; };
-  // }, []);
+  useEffect(() => {
+    let active = true;
+    api.get("/gallery-media").then(({ data }) => {
+      if (active) setRemoteMedia(data.data || []);
+    }).catch(() => {});
+    return () => { active = false; };
+  }, []);
 
   const media = useMemo(() => {
     const staticImages = GALLERY_WITH_CATEGORIES.map((item, index) => ({ ...item, id: `image-${index}`, type: "IMAGE", activityName: item.subcategory, activityDate: activityDetails[item.category].date }));
     const staticVideos = VIDEOS.map((item, index) => ({ ...item, id: `video-${index}`, type: "VIDEO", caption: item.desc, activityName: item.subcategory, activityDate: activityDetails[item.category].date }));
-    // const uploaded = remoteMedia.map((item) => ({ id: `uploaded-${item.id}`, src: `/uploads/${item.media}`, caption: item.caption || item.activityName, category: item.category.toLowerCase(), type: item.mediaType, activityName: item.activityName, activityDate: item.activityDate.slice(0, 10), ratio: item.mediaType === "IMAGE" ? "4/3" : "16/9" }));
-    return [...staticImages, ...staticVideos].filter(
+    const uploaded = remoteMedia.map((item) => ({ id: `uploaded-${item.mediaType}-${item.id}`, src: `/uploads/${item.media}`, caption: item.caption || item.activityName, category: item.category.toLowerCase(), type: item.mediaType, activityName: item.activityName, activityDate: item.activityDate.slice(0, 10), ratio: item.mediaType === "IMAGE" ? "4/3" : "16/9" }));
+    return [...uploaded, ...staticImages, ...staticVideos].filter(
       (item) =>
         item.category === category &&
         (mediaType === "Photos" ? item.type === "IMAGE" : item.type === "VIDEO")
     );
-  }, [category, mediaType]);
+  }, [category, mediaType, remoteMedia]);
 
   const groups = useMemo(() => {
     const label = GALLERY_CATEGORIES.find((c) => c.id === category)?.label || category;

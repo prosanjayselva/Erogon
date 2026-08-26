@@ -1172,6 +1172,11 @@ a:focus-visible, button:focus-visible {
   margin: 6px 0 0;
 }
 .reports-results .report-list { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
+.report-slider-controls { display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin: 0 0 18px; color: var(--text-secondary); font-size: 0.9rem; }
+.report-slider-controls button { border: 1px solid rgba(27, 67, 50, 0.25); background: #fff; color: var(--primary); border-radius: 999px; padding: 8px 14px; font: inherit; cursor: pointer; }
+.report-slider-controls button:hover:not(:disabled) { background: var(--primary); color: #fff; }
+.report-slider-controls button:disabled { cursor: not-allowed; opacity: 0.45; }
+.report-slider .report-card__media { display: grid; place-items: center; background: var(--secondary); }
 .reports-results .report-card--clickable,
 .reports-results .impact-report-card {
   grid-template-columns: 1fr;
