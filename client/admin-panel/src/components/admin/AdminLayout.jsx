@@ -15,6 +15,7 @@ const menu = [
   { id: 'events', label: 'Event Management', icon: '📅', path: '/events' },
   { id: 'gallery', label: 'Gallery Management', icon: '🖼️', path: '/gallery' },
   { id: 'reports', label: 'Report Management', icon: '📄', path: '/reports' },
+  { id: 'home-stats', label: 'Homepage Stats', icon: '🔢', path: '/home-stats' },
   { id: 'audit', label: 'Audit Logs', icon: '📋', path: '/audit-logs' },
   { id: 'settings', label: 'Settings', icon: '⚙️', path: '/settings' },
   { id: 'website', label: 'View Website', icon: '🌐', path: import.meta.env.PROD ? '/' : 'http://localhost:5174/Erogon/' },

@@ -12,15 +12,15 @@ import { PHOTOS } from "../data/photos.js";
 import { BrandText } from "../components/BrandName.jsx";
 
 const IMPACT_STATS = [
-  { icon: HeartHandsIcon, num: 373, label: "Lives Impacted", suffix: "" },
-  { icon: HeartHandsIcon, num: 1, label: "Free Medical Camp", suffix: "" },
-  { icon: GraduationCapIcon, num: 3, label: "Education Support", suffix: "" },
-  { icon: UsersGroupIcon, num: 160, label: "Meals Served", suffix: "" },
-  { icon: LeafIcon, num: 41, label: "Trees Planted", suffix: "" },
-  { icon: UsersGroupIcon, num: 0, label: "Placement Support", suffix: "" },
-  { icon: PeopleIcon, num: 0, label: "Women Empowered", suffix: "" },
-  { icon: GraduationCapIcon, num: 0, label: "Youth Skilled", suffix: "" },
-  { icon: PawIcon, num: 0, label: "Animals Rescued & Care", suffix: "" },
+  { key: "lives-impacted", icon: HeartHandsIcon, num: 373, label: "Lives Impacted" },
+  { key: "free-medical-camp", icon: HeartHandsIcon, num: 1, label: "Free Medical Camp" },
+  { key: "education-support", icon: GraduationCapIcon, num: 3, label: "Education Support" },
+  { key: "meals-served", icon: UsersGroupIcon, num: 160, label: "Meals Served" },
+  { key: "trees-planted", icon: LeafIcon, num: 41, label: "Trees Planted" },
+  { key: "placement-support", icon: UsersGroupIcon, num: 0, label: "Placement Support" },
+  { key: "women-empowered", icon: PeopleIcon, num: 0, label: "Women Empowered" },
+  { key: "youth-skilled", icon: GraduationCapIcon, num: 0, label: "Youth Skilled" },
+  { key: "animals-rescued", icon: PawIcon, num: 0, label: "Animals Rescued & Care" },
 ];
 
 function AnimatedCounter({ value, suffix = "" }) {
@@ -85,6 +85,19 @@ function WordReveal({ text, style = {} }) {
 export default function HomePage() {
   const [storyOpen, setStoryOpen] = useState(false);
   const openStory = () => setStoryOpen(true);
+  const [stats, setStats] = useState(IMPACT_STATS);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch('/api/v1/home-stats', { signal: controller.signal, cache: 'no-store' })
+      .then((response) => response.ok ? response.json() : Promise.reject())
+      .then(({ data }) => {
+        const values = new Map(data.map(({ key, value }) => [key, value]));
+        setStats(IMPACT_STATS.map((stat) => ({ ...stat, num: values.get(stat.key) ?? stat.num })));
+      })
+      .catch(() => {});
+    return () => controller.abort();
+  }, []);
 
   useEffect(() => {
     const t = setTimeout(() => setStoryOpen(true), 900);
@@ -122,8 +135,8 @@ export default function HomePage() {
         <div className="hero-stats-bar">
           <div className="container">
             <div className="hero-stats-bar__grid">
-              {IMPACT_STATS.map((s, i) => (
-                <div key={i} className="hero-stats-bar__item">
+              {stats.map((s) => (
+                <div key={s.key} className="hero-stats-bar__item">
                   <span className="hero-stats-bar__num">
                     <AnimatedCounter value={s.num} suffix={s.suffix} />
                   </span>

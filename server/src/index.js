@@ -20,6 +20,7 @@ import jobseekerRoutes from './routes/v1/jobseeker-routes.js';
 import employerRoutes from './routes/v1/employer-routes.js';
 import contactRoutes from './routes/v1/contact-routes.js';
 import newsletterRoutes from './routes/v1/newsletter-routes.js';
+import homeStatRoutes from './routes/v1/home-stat-routes.js';
 import { authenticate, authenticateWithSession } from './middleware/auth.js';
 import { csrfProtection } from './middleware/csrf.js';
 
@@ -141,6 +142,7 @@ app.use('/api/v1/job-seekers', jobseekerRoutes);
 app.use('/api/v1/employers', employerRoutes);
 app.use('/api/v1/contacts', contactRoutes);
 app.use('/api/v1/newsletter', newsletterRoutes);
+app.use('/api/v1/home-stats', homeStatRoutes);
 
 app.get('/api/v1/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
