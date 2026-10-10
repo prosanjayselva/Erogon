@@ -2611,7 +2611,7 @@ a:focus-visible, button:focus-visible {
   border-top: 1px solid var(--divider);
 }
 .donation-qr {
-  max-width: 280px;
+  max-width: 420px;
   margin-inline: auto;
   padding: 16px;
   background: white;
@@ -2619,6 +2619,8 @@ a:focus-visible, button:focus-visible {
   border-radius: var(--radius-sm);
 }
 .donation-qr img { display: block; width: 100%; height: auto; object-fit: contain; }
+.donation-qr-full-size { text-align: center; }
+.donation-qr-full-size a { text-decoration: underline; text-underline-offset: 3px; }
 .donation-qr-placeholder {
   display: grid;
   place-items: center;

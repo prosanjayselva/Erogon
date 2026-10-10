@@ -1,14 +1,14 @@
 # Donation QR asset
 
-Place the Foundation-approved UPI QR image here as `upi-qr-ergon.png`, then rebuild the portfolio. Until supplied, the donation page shows a labeled placeholder; it never generates payment instructions or a QR destination.
+The client-supplied QR is stored as `upi-qr-ergon.jpeg`, copied byte-for-byte from `payment qr png/Payment qr.jpeg`. The entire image, including the QR border and SBI Payments branding, is preserved. CSS scales it without cropping; a link opens the verified image at full size.
 
 After independently confirming the QR payee and UPI ID with the Foundation, calculate the approved file's fingerprint:
 
 ```powershell
-(Get-FileHash -Algorithm SHA256 -LiteralPath client/portfolio/public/assets/images/upi-qr-ergon.png).Hash.ToLower()
+(Get-FileHash -Algorithm SHA256 -LiteralPath client/portfolio/public/assets/images/upi-qr-ergon.jpeg).Hash.ToLower()
 ```
 
-Set `VITE_UPI_QR_SHA256` to that 64-character value in the portfolio build environment and rebuild. The fingerprint is public, not a secret. Do not automatically recalculate it during deployment: replacing the image must require a fresh approval. PNG only, maximum 2 MiB. The browser checks same-origin loading, rejects redirects, verifies PNG bytes and SHA-256, and displays only those verified bytes. Failed verification hides the QR.
+The approved filename and 64-character fingerprint are pinned in `src/data/qr-approval.js`; no environment variable is needed for this supplied image. The fingerprint is public, not a secret. Do not automatically recalculate it during deployment: replacing the image requires review and an explicit fingerprint update, then a rebuild. PNG/JPEG only, maximum 2 MiB. The browser checks same-origin loading, rejects redirects, verifies file signatures, MIME type and SHA-256, and displays only those verified bytes. Failed verification hides the QR.
 
 Deploy over HTTPS. Protect source code, build configuration, and hosting access: an attacker who can replace both the application and its fingerprint can bypass a browser-side integrity check. A matching fingerprint proves that the file is unchanged, not that its payee is legitimate or a payment has succeeded.
 

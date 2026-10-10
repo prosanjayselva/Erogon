@@ -31,6 +31,7 @@ export default function UpiDonation() {
           <img src={verifiedImage} alt="ERGON Foundation UPI payment QR code" onError={() => setImageFailed(true)} />
         ) : <div className="donation-qr-placeholder">[Insert ERGON Foundation UPI QR Code Here]</div>}
       </div>
+      {verifiedImage && !imageFailed && <p className="donation-qr-full-size"><a href={verifiedImage} target="_blank" rel="noopener noreferrer">Open full-size QR code</a></p>}
       {imageFailed && <p role="status">The UPI QR code is unavailable. Please use SBI Collect or bank transfer.</p>}
       <p className="donation-link-note">Before confirming payment, check the recipient name and payment details in your banking or UPI app.</p>
       <p>After donating via the UPI QR code, kindly share your Name, Donation Amount, Transaction Date, UPI Transaction ID/UTR, Mobile Number, Email Address, and PAN (if applicable) along with the payment screenshot (if available).</p>

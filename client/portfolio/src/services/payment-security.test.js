@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
+import { readFile } from "node:fs/promises";
+import { APPROVED_QR_FILENAME, APPROVED_QR_SHA256 } from "../data/qr-approval.js";
 import { approvedPaymentLink, loadApprovedQr, verifyQrBytes } from "./payment-security.js";
 
 const png = new Uint8Array(Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jfWQAAAAASUVORK5CYII=", "base64"));
@@ -17,6 +19,14 @@ test("accepts matching approved PNG bytes", async () => {
   await verifyQrBytes(png, fingerprint);
 });
 
+test("client JPEG matches its pinned approval; changing it is rejected", async () => {
+  const jpeg = new Uint8Array(await readFile(new URL(`../../public/assets/images/${APPROVED_QR_FILENAME}`, import.meta.url)));
+  assert.equal(await verifyQrBytes(jpeg, APPROVED_QR_SHA256), "image/jpeg");
+  const altered = jpeg.slice();
+  altered[20] ^= 1;
+  await assert.rejects(verifyQrBytes(altered, APPROVED_QR_SHA256));
+});
+
 test("rejects missing/malformed approval and substituted image bytes", async () => {
   for (const hash of ["", "not-a-hash", "0".repeat(64)]) await assert.rejects(verifyQrBytes(png, hash));
   const altered = png.slice();
@@ -24,7 +34,7 @@ test("rejects missing/malformed approval and substituted image bytes", async () 
   await assert.rejects(verifyQrBytes(altered, fingerprint));
 });
 
-test("rejects non-PNG and oversized images", async () => {
+test("rejects unsupported formats and oversized images", async () => {
   await assert.rejects(verifyQrBytes(new TextEncoder().encode("<svg></svg>"), fingerprint));
   await assert.rejects(verifyQrBytes(new Uint8Array(2 * 1024 * 1024 + 1), fingerprint));
 });
