@@ -2804,6 +2804,74 @@ a:focus-visible, button:focus-visible {
 }
 .copy-btn:hover { background: var(--gold); color: var(--text); border-color: var(--gold); }
 
+/* Donation choices share a row on desktop and stack in reading order on mobile. */
+.section.donation-payment-page { padding-top: calc(var(--nav-height) + 60px); }
+.donation-methods {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+.donation-method {
+  min-width: 0;
+  padding: clamp(20px, 3vw, 32px);
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow-wrap: anywhere;
+}
+.donation-method h2 { margin-bottom: 20px; }
+.donation-method p { margin-top: 16px; }
+.donation-method .btn { margin-top: 24px; }
+.donation-link-note { font-size: 0.85rem; color: var(--text-secondary); }
+.donation-upi {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--divider);
+}
+.donation-qr {
+  max-width: 420px;
+  margin-inline: auto;
+  padding: 16px;
+  background: white;
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-sm);
+}
+.donation-qr img { display: block; width: 100%; height: auto; object-fit: contain; }
+.donation-qr-full-size { text-align: center; }
+.donation-qr-full-size a { text-decoration: underline; text-underline-offset: 3px; }
+.donation-qr-placeholder {
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+  padding: 20px;
+  text-align: center;
+  color: var(--text-secondary);
+  background: var(--background);
+  border: 2px dashed var(--divider);
+}
+.donation-contact a { text-decoration: underline; text-underline-offset: 3px; }
+.donation-contact { margin-top: 16px; }
+.donation-contact p { display: flex; align-items: flex-start; gap: 10px; margin-top: 8px; }
+.donation-contact-icon { width: 20px; height: 20px; flex-shrink: 0; margin-top: 3px; color: var(--primary); }
+.donation-contact-icon--whatsapp { color: #128c7e; }
+.donation-payment-page .donation-bank { min-width: 0; border-radius: var(--radius-lg); }
+.donation-payment-page .donation-bank::after { pointer-events: none; }
+.donation-bank h2 { margin-bottom: 20px; }
+.donation-payment-page .bank-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+.donation-payment-page .bank-row > span { max-width: 100%; overflow-wrap: anywhere; }
+.donation-bank h3 .ergon-brand-name { max-width: 100%; }
+.donation-bank .bank-row .ergon-brand-name { max-width: calc(100% - 54px); }
+.donation-copy-status { margin-top: 12px; font-size: 0.85rem; }
+.donation-methods a:focus-visible, .donation-methods button:focus-visible {
+  outline: 3px solid var(--gold-light);
+  outline-offset: 4px;
+}
+@media (max-width: 1100px) {
+  .donation-methods { grid-template-columns: minmax(0, 1fr); }
+}
+
 .amount-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 .amount-pill {
   border: 1.5px solid var(--divider);

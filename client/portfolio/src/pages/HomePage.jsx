@@ -192,7 +192,7 @@ export default function HomePage() {
                 <h2 className="h-lg">One Small Donation Can Change A Life.</h2>
                 <p>Whether you give an hour or a rupee, it becomes part of something rooted, lasting and shared.</p>
                 <div className="hero__cta">
-                  <NavLink to="/donate#payment-details" className="btn btn--gold btn--lg">Donate Today <DonateHeartIcon /></NavLink>
+                  <NavLink to="/donate" className="btn btn--gold btn--lg">Donate Today <DonateHeartIcon /></NavLink>
                   <NavLink to="/get-involved" className="btn btn--white">Become a Volunteer <VolunteerIcon /></NavLink>
                 </div>
               </div>

@@ -91,7 +91,7 @@ export default function Header() {
           </nav>
 
           <div className="header-cta">
-            <NavLink to="/donate#payment-details" className="btn btn--gold btn--sm">
+            <NavLink to="/donate" className="btn btn--gold btn--sm">
               Donate Now <DonateHeartIcon />
             </NavLink>
             <button
@@ -129,7 +129,7 @@ export default function Header() {
           ))}
         </div>
         <div className="nav__footer">
-          <NavLink to="/donate#payment-details" className="nav__donate" onClick={() => setOpen(false)}>
+          <NavLink to="/donate" className="nav__donate" onClick={() => setOpen(false)}>
             Donate Now <DonateHeartIcon />
           </NavLink>
           <p className="nav__copyright">&copy; {new Date().getFullYear()} <BrandName />. All rights reserved.</p>

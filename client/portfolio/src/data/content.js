@@ -98,13 +98,13 @@ export const TESTIMONIALS = [
   { quote: "Their support helped me start a new journey and rebuild a life for my family.", name: "Lakshmi", role: "Livelihood Beneficiary" },
 ];
 
-export const BANK_DETAILS = [
+export const BANK_DETAILS = Object.freeze([
   { label: "Name of the Account", value: "ERGON FOUNDATION" },
   { label: "Name of the Bank", value: "STATE BANK OF INDIA" },
   { label: "Account Number", value: "45185422472" },
   { label: "Branch", value: "SBI HNI Ashok Nagar, Chennai" },
   { label: "IFSC Code", value: "SBIN0018228" },
-];
+].map(detail => Object.freeze(detail)));
 
 export const CONTACT = {
   address: ["ERGON Foundation", "10/13, 2nd Floor, 1st Street,", "Dr. Subbarayan Nagar,", "Kodambakkam,", "Chennai - 600024"],
