@@ -61,7 +61,7 @@ export default function CausesPage() {
                 <h2 className="h-lg">Pick A Cause Close To Your Heart</h2>
                 <p>Whichever root you choose to water, the tree grows stronger for everyone.</p>
                 <div className="hero__cta">
-                  <NavLink to="/donate#payment-details" className="btn btn--gold">Donate Now <DonateHeartIcon /></NavLink>
+                  <NavLink to="/donate" className="btn btn--gold">Donate Now <DonateHeartIcon /></NavLink>
                   <NavLink to="/projects" className="btn btn--white">See Our Projects <ArrowRightIcon /></NavLink>
                 </div>
               </div>

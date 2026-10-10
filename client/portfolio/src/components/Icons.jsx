@@ -8,6 +8,13 @@ const base = {
   strokeLinejoin: "round",
 };
 
+export const WhatsAppIcon = (p) => (
+  <svg viewBox="0 0 24 24" {...base} {...p}>
+    <path d="M20.5 11.7a8.5 8.5 0 0 1-12.7 7.4L3 20.5l1.4-4.7a8.5 8.5 0 1 1 16.1-4.1Z" />
+    <path d="m8.2 7.4 1.4 2.7-1 1.1c.9 1.8 2.4 3.2 4.2 4l1.1-1.2 2.7 1.3c-.2 1.2-1 2-2.2 2-3.5-.4-7.4-4.1-7.8-7.5 0-1.2.6-2.1 1.6-2.4Z" />
+  </svg>
+);
+
 export const PeopleIcon = (p) => (
   <svg viewBox="0 0 24 24" {...base} {...p}>
     <circle cx="9" cy="8" r="3.2" />
