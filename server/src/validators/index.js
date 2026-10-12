@@ -43,11 +43,14 @@ const transactionDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Enter a v
 
 export const createUpiDonorSchema = createDonorSchema.pick({ name: true, email: true, phone: true, amount: true }).extend({
   name: z.string().trim().min(2, 'Name is required').max(100),
+  email: z.string().trim().email('Invalid email').max(255),
   phone: z.string().trim().regex(/^\+?[0-9]{10,15}$/, 'Enter a valid mobile number'),
+  amount: z.number().positive('Amount must be greater than 0').max(100000000)
+    .refine((value) => Math.round(value * 100) / 100 === value, 'Amount can have at most two decimal places'),
   transactionNumber: z.string().trim().min(6, 'Enter the UPI transaction ID/UTR').max(100)
     .regex(/^[A-Za-z0-9\-/]+$/, 'Use only letters, numbers, hyphens, or slashes in the UTR'),
   transactionDate: transactionDateSchema,
-  pan: z.string().trim().regex(/^[A-Z]{5}[0-9]{4}[A-Z]$/, 'Enter a valid PAN').optional(),
+  pan: z.string().trim().toUpperCase().regex(/^[A-Z]{5}[0-9]{4}[A-Z]$/, 'Enter a valid PAN').optional(),
 });
 
 export const createEventSchema = z.object({

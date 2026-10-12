@@ -12,9 +12,10 @@ const valid = {
 };
 
 test('accepts UPI details and converts the transaction date for storage', () => {
-  const parsed = createUpiDonorSchema.parse(valid);
+  const parsed = createUpiDonorSchema.parse({ ...valid, amount: 500.25, pan: 'abcde1234f' });
   assert.equal(parsed.transactionDate.toISOString(), '2026-10-10T00:00:00.000Z');
   assert.equal(parsed.transactionNumber, valid.transactionNumber);
+  assert.equal(parsed.pan, 'ABCDE1234F');
 });
 
 test('requires a transaction date and UTR; rejects malformed, future and invalid dates', () => {
@@ -29,8 +30,8 @@ test('requires a transaction date and UTR; rejects malformed, future and invalid
   }
 });
 
-test('rejects missing contact details and nonpositive amounts', () => {
-  for (const patch of [{ name: '' }, { email: 'invalid' }, { phone: '123' }, { phone: '123456789x' }, { amount: 0 }, { pan: '1234567890' }]) {
+test('rejects missing contact details and invalid payment amounts', () => {
+  for (const patch of [{ name: '' }, { email: 'invalid' }, { phone: '123' }, { phone: '123456789x' }, { amount: 0 }, { amount: 1.234 }, { amount: 100000001 }, { pan: '1234567890' }]) {
     assert.equal(createUpiDonorSchema.safeParse({ ...valid, ...patch }).success, false);
   }
 });
