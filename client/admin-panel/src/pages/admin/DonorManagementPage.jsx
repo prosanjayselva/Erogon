@@ -52,6 +52,7 @@ export default function DonorManagementPage() {
       <div className="page-header">
         <h1 className="page-title">Donor Management</h1>
         <p className="page-subtitle">View and manage all donor details</p>
+        <p className="page-subtitle">UPI form entries are donor-reported. Check the bank transaction and screenshot before treating a payment as verified.</p>
       </div>
 
       <div className="toolbar">
@@ -85,6 +86,7 @@ export default function DonorManagementPage() {
                 <th>Address</th>
                 <th>Bank Name</th>
                 <th>Txn No</th>
+                <th>Txn Date</th>
                 <th>Amount (₹)</th>
                 <th>Date</th>
                 <th>Actions</th>
@@ -92,7 +94,7 @@ export default function DonorManagementPage() {
             </thead>
             <tbody>
               {data?.data?.length === 0 && (
-                <tr><td colSpan={11} className="empty-state">No donors found</td></tr>
+                <tr><td colSpan={12} className="empty-state">No donors found</td></tr>
               )}
               {data?.data?.map((donor, i) => (
                 <tr key={donor.id}>
@@ -114,6 +116,7 @@ export default function DonorManagementPage() {
                   <td data-label="Address">{donor.address || '—'}</td>
                   <td data-label="Bank Name">{donor.bankName || '—'}</td>
                   <td data-label="Txn No">{donor.transactionNumber || '—'}</td>
+                  <td data-label="Txn Date">{donor.transactionDate ? donor.transactionDate.slice(0, 10) : '—'}</td>
                   <td data-label="Amount"><strong>₹{donor.amount}</strong></td>
                   <td data-label="Date">{new Date(donor.createdAt).toLocaleDateString()}</td>
                   <td data-label="Actions">

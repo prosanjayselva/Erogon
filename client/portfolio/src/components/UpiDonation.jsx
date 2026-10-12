@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { MailIcon, WhatsAppIcon } from "./Icons.jsx";
-import { DONATION_EMAIL_URL, DONATION_WHATSAPP_URL, UPI_QR_IMAGE, UPI_QR_SHA256 } from "../data/payments.js";
+import { Link } from "react-router-dom";
+import DonationContact from "./DonationContact.jsx";
+import { UPI_QR_IMAGE, UPI_QR_SHA256 } from "../data/payments.js";
 import { loadApprovedQr } from "../services/payment-security.js";
 
 export default function UpiDonation() {
@@ -31,14 +32,11 @@ export default function UpiDonation() {
           <img src={verifiedImage} alt="ERGON Foundation UPI payment QR code" onError={() => setImageFailed(true)} />
         ) : <div className="donation-qr-placeholder">[Insert ERGON Foundation UPI QR Code Here]</div>}
       </div>
+      <p className="donation-upi-instructions">After donating via the UPI QR code, <Link to="/donate/transaction">click here</Link> to submit your transaction details. Please also WhatsApp or email your payment screenshot for verification.</p>
       {verifiedImage && !imageFailed && <p className="donation-qr-full-size"><a href={verifiedImage} target="_blank" rel="noopener noreferrer">Open full-size QR code</a></p>}
       {imageFailed && <p role="status">The UPI QR code is unavailable. Please use SBI Collect or bank transfer.</p>}
       <p className="donation-link-note">Before confirming payment, check the recipient name and payment details in your banking or UPI app.</p>
-      <p>After donating via the UPI QR code, kindly share your Name, Donation Amount, Transaction Date, UPI Transaction ID/UTR, Mobile Number, Email Address, and PAN (if applicable) along with the payment screenshot (if available).</p>
-      <div className="donation-contact">
-        <p><WhatsAppIcon className="donation-contact-icon donation-contact-icon--whatsapp" aria-hidden="true" /><span>WhatsApp: <a href={DONATION_WHATSAPP_URL} target="_blank" rel="noopener noreferrer">+91 84385 40850</a></span></p>
-        <p><MailIcon className="donation-contact-icon" aria-hidden="true" /><span>Email: <a href={DONATION_EMAIL_URL}>admin@ergonfoundation.org</a></span></p>
-      </div>
+      <DonationContact />
     </section>
   );
 }

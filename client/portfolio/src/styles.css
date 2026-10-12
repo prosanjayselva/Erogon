@@ -2839,6 +2839,19 @@ a:focus-visible, button:focus-visible {
   border-radius: var(--radius-sm);
 }
 .donation-qr img { display: block; width: 100%; height: auto; object-fit: contain; }
+.donation-upi-instructions {
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  background: var(--background);
+  border: 1px solid var(--divider);
+  line-height: 1.6;
+}
+.donation-upi-instructions a, .donation-back-link {
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .donation-qr-full-size { text-align: center; }
 .donation-qr-full-size a { text-decoration: underline; text-underline-offset: 3px; }
 .donation-qr-placeholder {
@@ -2865,6 +2878,23 @@ a:focus-visible, button:focus-visible {
 .donation-bank .bank-row .ergon-brand-name { max-width: calc(100% - 54px); }
 .donation-copy-status { margin-top: 12px; font-size: 0.85rem; }
 .donation-methods a:focus-visible, .donation-methods button:focus-visible {
+  outline: 3px solid var(--gold-light);
+  outline-offset: 4px;
+}
+.donation-transaction-card {
+  padding: clamp(20px, 4vw, 40px);
+  background: var(--surface);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.donation-transaction-card h1 { margin-top: 20px; }
+.donation-transaction-card > p { margin-top: 12px; color: var(--text-secondary); }
+.donation-transaction-form { margin-top: 28px; }
+.donation-form-note { margin: 20px 0; color: var(--text-secondary); }
+.donation-submit-success { margin-top: 28px; padding: 24px; background: var(--background); border-radius: var(--radius-sm); }
+.donation-submit-success p { margin-top: 12px; }
+.donation-transaction-card a:focus-visible, .donation-transaction-card button:focus-visible {
   outline: 3px solid var(--gold-light);
   outline-offset: 4px;
 }

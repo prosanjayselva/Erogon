@@ -46,6 +46,7 @@ model Donor {
   address           String?  @map("address")
   bankName          String?  @map("bank_name")
   transactionNumber String?  @map("transaction_number")
+  transactionDate   DateTime? @db.Date @map("transaction_date")
   createdAt         DateTime @default(now()) @map("created_at")
 
   @@map("donors")

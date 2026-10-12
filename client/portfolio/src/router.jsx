@@ -10,6 +10,7 @@ import GalleryPage from "./pages/GalleryPage.jsx";
 import GetInvolvedPage from "./pages/GetInvolvedPage.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
 import DonatePage from "./pages/DonatePage.jsx";
+import UpiTransactionPage from "./pages/UpiTransactionPage.jsx";
 import LegalPage from "./pages/LegalPage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 
@@ -29,6 +30,7 @@ const router = createHashRouter([
       { path: "get-involved", element: <GetInvolvedPage /> },
       { path: "contact", element: <ContactPage /> },
       { path: "donate", element: <DonatePage /> },
+      { path: "donate/transaction", element: <UpiTransactionPage /> },
       { path: "privacy", element: <LegalPage title="Privacy Policy" crumb="Privacy Policy" /> },
       { path: "terms", element: <LegalPage title="Terms & Conditions" crumb="Terms & Conditions" /> },
       { path: "*", element: <NotFoundPage /> },

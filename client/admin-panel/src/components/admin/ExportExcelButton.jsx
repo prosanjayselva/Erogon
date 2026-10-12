@@ -1,11 +1,7 @@
-function valueForExport(value) {
-  if (value === null || value === undefined) return '';
-  if (typeof value === 'object') return JSON.stringify(value);
-  return String(value);
-}
+import { spreadsheetText } from '../../utils/spreadsheet.js';
 
 function escapeHtml(value) {
-  return valueForExport(value)
+  return spreadsheetText(value)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')

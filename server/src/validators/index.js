@@ -32,6 +32,24 @@ export const createDonorSchema = z.object({
   transactionNumber: z.string().max(100).optional(),
 });
 
+// The Foundation operates in India, so today's cutoff follows IST rather than server time.
+const transactionDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Enter a valid transaction date')
+  .refine((value) => {
+    const date = new Date(`${value}T00:00:00.000Z`);
+    return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value
+      && value <= new Date(Date.now() + 330 * 60 * 1000).toISOString().slice(0, 10);
+  }, 'Transaction date cannot be invalid or in the future')
+  .transform((value) => new Date(`${value}T00:00:00.000Z`));
+
+export const createUpiDonorSchema = createDonorSchema.pick({ name: true, email: true, phone: true, amount: true }).extend({
+  name: z.string().trim().min(2, 'Name is required').max(100),
+  phone: z.string().trim().regex(/^\+?[0-9]{10,15}$/, 'Enter a valid mobile number'),
+  transactionNumber: z.string().trim().min(6, 'Enter the UPI transaction ID/UTR').max(100)
+    .regex(/^[A-Za-z0-9\-/]+$/, 'Use only letters, numbers, hyphens, or slashes in the UTR'),
+  transactionDate: transactionDateSchema,
+  pan: z.string().trim().regex(/^[A-Z]{5}[0-9]{4}[A-Z]$/, 'Enter a valid PAN').optional(),
+});
+
 export const createEventSchema = z.object({
   title: z.string().min(2, 'Title is required').max(200),
   description: z.string().min(10, 'Description must be at least 10 characters').max(5000),

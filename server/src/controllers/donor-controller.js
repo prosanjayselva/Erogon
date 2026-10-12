@@ -1,18 +1,20 @@
-import { createDonorSchema } from '../validators/index.js';
+import { createDonorSchema, createUpiDonorSchema } from '../validators/index.js';
 import { prisma } from '../index.js';
 import { logActivity } from '../services/activity-log.js';
 
-export async function create(req, res) {
+async function saveDonor(req, res, schema, message, isUpi = false) {
   try {
-    const data = createDonorSchema.parse(req.body);
+    const data = schema.parse(req.body);
 
     const donor = await prisma.donor.create({ data });
-    await logActivity(0, 'NEW_DONATION', `New donation from ${donor.name}: ₹${donor.amount}`);
+    await logActivity(0, 'NEW_DONATION', isUpi
+      ? `UPI transaction details submitted (donor ${donor.id}; awaiting verification)`
+      : `New donation from ${donor.name}: ₹${donor.amount}`);
 
     res.status(201).json({
       success: true,
-      message: 'Thank you for your donation!',
-      data: donor,
+      message,
+      data: isUpi ? { id: donor.id } : donor,
     });
   } catch (err) {
     if (err.name === 'ZodError') {
@@ -21,6 +23,9 @@ export async function create(req, res) {
     res.status(500).json({ error: 'Failed to create donor' });
   }
 }
+
+export const create = (req, res) => saveDonor(req, res, createDonorSchema, 'Donor details submitted.');
+export const createUpi = (req, res) => saveDonor(req, res, createUpiDonorSchema, 'UPI transaction details submitted for verification.', true);
 
 export async function list(req, res) {
   try {

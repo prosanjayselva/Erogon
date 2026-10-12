@@ -119,10 +119,19 @@ const formLimiter = rateLimit({
   message: { error: 'Too many submissions. Please wait.' },
 });
 
+const upiSubmissionLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many UPI submissions. Please try again later.' },
+});
+
 app.use('/api/', globalLimiter);
 app.post('/api/v1/auth/login', authLimiter);
 app.post('/api/v1/auth/refresh', authLimiter);
 app.use('/api/v1/donors', formLimiter);
+app.post('/api/v1/donors/upi', upiSubmissionLimiter);
 app.use('/api/v1/volunteers', formLimiter);
 app.use('/api/v1/job-seekers', formLimiter);
 app.use('/api/v1/employers', formLimiter);
